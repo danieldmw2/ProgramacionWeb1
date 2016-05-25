@@ -15,7 +15,7 @@
     <div class="uk-container uk-container-center">
         <a href="\home" class="uk-navbar-brand">Practica 2</a>
         <ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
-            <li><a href="\insert">Nuevos Estudiantes</a></li>
+            <li><a href="\insert">New Estudiantes</a></li>
         </ul>
         <div class="uk-navbar-flip">
             <a href="#my-id" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas="{target:'#my-id'}"></a>
@@ -26,7 +26,7 @@
 <div id="my-id" class="uk-offcanvas">
     <div class="uk-offcanvas-bar">
         <ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
-            <li><a href="\insert">Nuevos Estudiantes</a></li>
+            <li><a href="">New Estudiantes</a></li>
         </ul>
     </div>
 </div>
@@ -35,7 +35,8 @@
 <br>
 
 <div class="uk-container uk-container-center">
-    ${table}
+    <h1>UIKit starter template</h1>
+    <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
 </div>
 </body>
 </html>
