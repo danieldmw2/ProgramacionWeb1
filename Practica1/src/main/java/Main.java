@@ -21,7 +21,6 @@ public class Main
         Scanner scanner = new Scanner(System.in);
         String url = scanner.nextLine().trim();
         System.out.println();
-        scanner.close();
 
         Document doc;
         try
@@ -50,7 +49,7 @@ public class Main
             for (int j = 0; j < inputs.size(); j++)
                 System.out.println(
                         String.format("\tInput #%s: El tipo es %s %s",
-                        (i + 1), (j + 1), inputs.get(j).attr("type"),
+                        (j + 1), inputs.get(j).attr("type"),
                         inputs.get(j).attr("submit").equalsIgnoreCase("post") ? "y es enviado por POST" : "")
                 );
             System.out.println();
