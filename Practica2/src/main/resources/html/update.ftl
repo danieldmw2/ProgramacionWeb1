@@ -35,8 +35,7 @@
 <br>
 
 <div class="uk-container uk-container-center">
-    <h1>UIKit starter template</h1>
-    <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+    ${form}
 </div>
 </body>
 </html>

@@ -38,7 +38,7 @@ public class Main
 
             ResultSet rs = Database.executeQuery("SELECT * FROM ESTUDIANTES");
             while (rs.next())
-                table += String.format("<tr onclick=\"document.location='\\visualize?id=%s';\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
+                table += String.format("<tr onclick=\"document.location='\\vvisualize?id=%s';\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
                         rs.getString("matricula"), rs.getString("matricula"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("telefono"));
 
 
@@ -53,21 +53,69 @@ public class Main
         }, freeMarker);
 
         get("/update", (req, res) -> {
-            return new ModelAndView(null, "update.ftl");
+
+            String matricula = req.queryParams("matricula");
+
+            ResultSet rs = Database.executeQuery(String.format("SELECT * FROM ESTUDIANTES WHERE MATRICULA = '%s'", matricula));
+            rs.next();
+
+            String form = String.format(
+                    "<form class=\"uk-form\" action=\"\\updateDB\" method=\"post\"><fieldset data-uk-margin>" +
+                    "Matricula: <input type=\"text\" name=\"matricula\" value=\"%s\">" +
+                    "Nombre: <input type=\"text\" name=\"nombre\" value=\"%s\">" +
+                    "Apellidos: <input type=\"text\" name=\"apellidos\" value=\"%s\">" +
+                    "Telefono: <input type=\"text\" name=\"telefono\" value=\"%s\">" +
+                    "<input type=\"hidden\" name=\"hiddenBox\" value=\"%s\">" +
+                    "<button class=\"uk-button\">Update</button>" +
+                    "</fieldset></form>", rs.getString("matricula"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("telefono"), rs.getString("matricula"));
+
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("form", form);
+
+            return new ModelAndView(map, "update.ftl");
         }, freeMarker);
 
         get("/visualize", (req, res) -> {
             String matricula = req.queryParams("id");
-            return new ModelAndView(null, "visualize.ftl");
+
+            ResultSet rs = Database.executeQuery(String.format("SELECT * FROM ESTUDIANTES WHERE MATRICULA = '%s'", matricula));
+            rs.next();
+
+            String form = String.format("<form class=\"uk-form\" action=\"\\decide\" method=\"post\"><fieldset data-uk-margin> Matricula: <input type=\"text\" name=\"matricula\" value=\"%s\" readonly>" +
+                    "Nombre: <input type=\"text\" name=\"nombre\" value=\"%s\" readonly>" +
+                    "Apellidos: <input type=\"text\" name=\"apellidos\" value=\"%s\" readonly>" +
+                    "Telefono: <input type=\"text\" name=\"telefono\" value=\"%s\" readonly>" +
+                    "<input type=\"submit\" name=\"action\" value=\"Update\" />\n" +
+                    "<input type=\"submit\" name=\"action\" value=\"Delete\" />" +
+                    "</fieldset></form>", rs.getString("matricula"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("telefono"));
+
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("form", form);
+
+            return new ModelAndView(map, "visualize.ftl");
         }, freeMarker);
 
         post("/insertDB", (req, res) -> {
-            boolean bool = Database.executeInsert(req.queryParams("matricula"), req.queryParams("nombre"), req.queryParams("apellidos"), req.queryParams("telefonos"));
+            Database.executeInsert(req.queryParams("matricula"), req.queryParams("nombre"), req.queryParams("apellidos"), req.queryParams("telefono"));
+            res.redirect("/home");
+            return null;
+        });
 
-            if (bool)
-                res.redirect("/home");
+        post("/updateDB", (req, res) -> {
+            Database.executeUpdate(new String[]{ req.queryParams("matricula"), req.queryParams("nombre"), req.queryParams("apellidos"), req.queryParams("telefono")}, req.queryParams("hiddenBox"));
+            res.redirect("/home");
+            return null;
+        });
+
+        post("/decide", (req, res) -> {
+            String decide = req.queryParams("action");
+            if (decide.equalsIgnoreCase("Update"))
+                res.redirect("/update?matricula=" + req.queryParams("matricula"));
             else
-                res.status(500);
+            {
+                Database.executeDelete(req.queryParams("matricula"));
+                res.redirect("/home");
+            }
             return null;
         });
     }
