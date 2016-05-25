@@ -23,7 +23,29 @@ public class Main
         freeMarker.setConfiguration(configuration);
 
         get("/home", (req, res) -> {
-            return new ModelAndView(null, "home.ftl");
+
+            String table = "<div class=\"uk-overflow-container\"><table class=\"uk-table uk-table-hover \">" +
+                    "    <caption>Lista de Estudiantes</caption>" +
+                    "    <thead>" +
+                    "        <tr>" +
+                    "            <th>Matricula</th>" +
+                    "            <th>Nombre</th>" +
+                    "            <th>Apellidos</th>" +
+                    "            <th>Telefono</th>" +
+                    "        </tr>" +
+                    "    </thead>" +
+                    "    <tbody>";
+
+            ResultSet rs = Database.executeQuery("SELECT * FROM ESTUDIANTES");
+            while (rs.next())
+                table += String.format("<tr onclick=\"document.location='\\visualize?id=%s';\"><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
+                        rs.getString("matricula"), rs.getString("matricula"), rs.getString("nombre"), rs.getString("apellidos"), rs.getString("telefono"));
+
+
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("table", table + "</tbody></table></div>");
+
+            return new ModelAndView(map, "home.ftl");
         }, freeMarker);
 
         get("/insert", (req, res) -> {
@@ -34,10 +56,15 @@ public class Main
             return new ModelAndView(null, "update.ftl");
         }, freeMarker);
 
+        get("/visualize", (req, res) -> {
+            String matricula = req.queryParams("id");
+            return new ModelAndView(null, "visualize.ftl");
+        }, freeMarker);
+
         post("/insertDB", (req, res) -> {
             boolean bool = Database.executeInsert(req.queryParams("matricula"), req.queryParams("nombre"), req.queryParams("apellidos"), req.queryParams("telefonos"));
 
-            if(bool)
+            if (bool)
                 res.redirect("/home");
             else
                 res.status(500);
