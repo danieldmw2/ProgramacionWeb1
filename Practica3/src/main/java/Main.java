@@ -6,6 +6,10 @@ import spark.ModelAndView;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import static spark.Spark.*;
 
 public class Main
@@ -20,7 +24,18 @@ public class Main
         freeMarker.setConfiguration(configuration);
 
         get("/home", (req, res) -> {
-            return new ModelAndView(null, "home.ftl");
+            List<Object> list = new ArrayList<>();
+            list.add(new Object());
+            list.add(new Object());
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("items", list);
+            map.put("title", "Let's Blog a bit!");
+            map.put("intro", "Computer Science's hideout");
+            map.put("user", "Ariel Salce");
+            map.put("date", "May 31, 2016");
+            map.put("summary", "So delicious like I can eat you up every day all day and never dislike your taste you damn yum yum babe.");
+            return new ModelAndView(map, "home.ftl");
         }, freeMarker);
+
     }
 }
