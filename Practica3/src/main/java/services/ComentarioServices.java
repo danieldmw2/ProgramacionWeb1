@@ -1,7 +1,13 @@
 package services;
 
+import domain.Articulo;
 import domain.Comentario;
+import domain.Etiqueta;
+import domain.Usuario;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -61,31 +67,210 @@ public class ComentarioServices extends DatabaseServices
 
     protected ArrayList<Object> select()
     {
-        return null;
+        Connection con = null;
+        ArrayList<Object> toReturn = new ArrayList<Object>();
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM COMENTARIOS");
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+            {
+                toReturn.add(
+                        new Comentario(
+                                rs.getLong("id"),
+                                rs.getString("comentario"),
+                                (Usuario)(UsuarioServices.getInstance().selectByID(rs.getString("username"))),
+                                (Articulo)(ArticuloServices.getInstance().selectByID(rs.getInt("ID_ARTICULO"))))
+                );
+            }
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return null;
+        }
+
+        return toReturn;
     }
 
-    protected ArrayList<Comentario> select(long articuloID)
+    protected ArrayList<Comentario> select(long comentarioID)
     {
-        return null;
+        Connection con = null;
+        ArrayList<Comentario> toReturn = new ArrayList<Comentario>();
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement(
+                            "SELECT C.* " +
+                            "FROM ARTICULO_COMENTARIO AC, COMENTARIOS C " +
+                            "WHERE AC.ID_ARTICULO = ? AND C.ID = AE.ID_COMENTARIO");
+            ps.setLong(1, comentarioID);
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+            {
+                toReturn.add(
+                        new Comentario(
+                                rs.getLong("id"),
+                                rs.getString("comentario"),
+                                (Usuario)(UsuarioServices.getInstance().selectByID(rs.getString("username"))),
+                                (Articulo)(ArticuloServices.getInstance().selectByID(rs.getInt("ID_ARTICULO"))))
+                );
+            }
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return null;
+        }
+
+        return toReturn;
     }
 
     protected Object selectByID(Object o)
     {
-        return null;
+        Connection con = null;
+        Comentario toReturn = null;
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ETIQUETAS WHERE ID = ?");
+            ps.setInt(1, (Integer) o);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            toReturn = new Comentario(
+                            rs.getLong("id"),
+                            rs.getString("comentario"),
+                            (Usuario)(UsuarioServices.getInstance().selectByID(rs.getString("username"))),
+                            (Articulo)(ArticuloServices.getInstance().selectByID(rs.getInt("ID_ARTICULO"))));
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return null;
+        }
+
+        return toReturn;
     }
 
     protected boolean insert(Object o)
     {
+        if(!(o instanceof Comentario))
+            return false;
+
+        Connection con = null;
+        try
+        {
+            Comentario c = (Comentario) o;
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("INSERT INTO COMENTARIOS VALUES(?, ?, ?, ?)");
+            ps.setLong(1, c.getId());
+            ps.setString(2, c.getComentario());
+            ps.setString(3, c.getAutor().getUsername());
+            ps.setLong(4, c.getArticulo().getId());
+
+            ps.execute();
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected boolean insertComment(Comentario c, Articulo a)
+    {
+        insert(c);
+        Connection con = null;
+
+        try
+        {
+            con = getConnection();
+            PreparedStatement ps;
+
+            ps = con.prepareStatement("INSERT INTO ARTICULO_COMENTARIO VALUES(?, ?)");
+            ps.setLong(1, a.getId());
+            ps.setLong(2, c.getId());
+
+            ps.execute();
+        }
+        catch (SQLException ex)
+        {
+            return false;
+        }
+
         return true;
     }
 
     protected boolean update(Object o)
     {
+        if(!(o instanceof Comentario))
+            return false;
+
+        Connection con = null;
+        try
+        {
+            Comentario c = (Comentario) o;
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("UPDATE COMENTARIOS SET ID = ?, COMENTARIO = ?, " +
+                    "USERNAME = ?, ID_ARTICULO = ? WHERE ID = ?");
+
+            ps.setLong(1, c.getId());
+            ps.setString(2, c.getComentario());
+            ps.setString(3, c.getAutor().getUsername());
+            ps.setLong(4, c.getArticulo().getId());
+            ps.setLong(5, c.getId());
+
+            ps.execute();
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
+
         return true;
     }
 
     protected boolean delete(Object o)
     {
+        if(!(o instanceof Comentario))
+            return false;
+
+        Connection con = null;
+        try
+        {
+            Comentario c = (Comentario) o;
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("DELETE FROM COMENTARIOS WHERE ID = ?");
+            ps.setLong(1, c.getId());
+
+            ps.execute();
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
+
         return true;
     }
 }

@@ -1,7 +1,12 @@
 package services;
 
+import domain.Articulo;
 import domain.Etiqueta;
+import domain.Usuario;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -58,31 +63,191 @@ public class EtiquetaServices extends DatabaseServices
 
     protected ArrayList<Object> select()
     {
-        return null;
+        Connection con = null;
+        ArrayList<Object> toReturn = new ArrayList<Object>();
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ETIQUETAS");
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+            {
+                toReturn.add(
+                        new Etiqueta(rs.getLong("id"), rs.getString("etiqueta"))
+                        );
+            }
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return null;
+        }
+
+        return toReturn;
     }
 
     protected ArrayList<Etiqueta> select(long articuloID)
     {
-        return null;
+        Connection con = null;
+        ArrayList<Etiqueta> toReturn = new ArrayList<Etiqueta>();
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT E.ETIQUETA, E.ID " +
+                    "FROM ARTICULO_ETIQUETA AE, ETIQUETA E " +
+                    "WHERE AE.ID_ARTICULO = ? AND E.ID = AE.ID_ETIQUETA");
+            ps.setLong(1, articuloID);
+
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+            {
+                toReturn.add(
+                        new Etiqueta(rs.getLong(2), rs.getString(1))
+                );
+            }
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return null;
+        }
+
+        return toReturn;
     }
 
     protected Object selectByID(Object o)
     {
-        return null;
+        Connection con = null;
+        Etiqueta toReturn = null;
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ETIQUETAS WHERE ID = ?");
+            ps.setInt(1, (Integer) o);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            toReturn =  new Etiqueta(rs.getLong("id"), rs.getString("etiqueta"));
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return null;
+        }
+
+        return toReturn;
     }
 
     protected boolean insert(Object o)
     {
+        if(!(o instanceof Etiqueta))
+            return false;
+
+        Connection con = null;
+        try
+        {
+            Etiqueta u = (Etiqueta) o;
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("INSERT INTO ETIQUETAS VALUES(?, ?)");
+            ps.setLong(1, u.getId());
+            ps.setString(2, u.getEtiqueta());
+
+            ps.execute();
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected boolean insertTag(Etiqueta e, Articulo a)
+    {
+        Connection con = null;
+
+        try
+        {
+            con = getConnection();
+            PreparedStatement ps;
+
+            ps = con.prepareStatement("INSERT INTO ARTICULO_ETIQUETA VALUES(?, ?)");
+            ps.setLong(1, a.getId());
+            ps.setLong(2, e.getId());
+
+            ps.execute();
+        }
+        catch (SQLException ex)
+        {
+            return false;
+        }
+
         return true;
     }
 
     protected boolean update(Object o)
     {
+        if(!(o instanceof Etiqueta))
+            return false;
+
+        Connection con = null;
+        try
+        {
+            Etiqueta u = (Etiqueta) o;
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("UPDATE ETIQUETAS SET ID = ?, ETIQUETA = ? WHERE ID = ?");
+            ps.setLong(1, u.getId());
+            ps.setString(2, u.getEtiqueta());
+            ps.setLong(3, u.getId());
+
+            ps.execute();
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
+
         return true;
     }
 
     protected boolean delete(Object o)
     {
+        if(!(o instanceof Etiqueta))
+            return false;
+
+        Connection con = null;
+        try
+        {
+            Etiqueta u = (Etiqueta) o;
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("DELETE FROM ETIQUETAS WHERE ID = ?");
+            ps.setLong(1, u.getId());
+
+            ps.execute();
+
+            con.close();
+        }
+        catch (SQLException e)
+        {
+            return false;
+        }
+
         return true;
     }
 }

@@ -39,7 +39,7 @@ public class ArticuloServices extends DatabaseServices
                 "(\n" +
                 "  ID       INTEGER,\n" +
                 "  TITULO   VARCHAR(200)  NOT NULL,\n" +
-                "  CUERPO   VARCHAR(1000) NOT NULL,\n" +
+                "  CUERPO   VARCHAR(MAX) NOT NULL,\n" +
                 "  USERNAME VARCHAR(50)   NOT NULL,\n" +
                 "  FECHA    DATETIME      NOT NULL,\n" +
                 "  PRIMARY KEY (ID),\n" +
@@ -179,52 +179,6 @@ public class ArticuloServices extends DatabaseServices
         return true;
     }
 
-    protected boolean insertTag(Etiqueta e, Articulo a)
-    {
-        Connection con = null;
-
-        try
-        {
-            con = getConnection();
-            PreparedStatement ps;
-
-            ps = con.prepareStatement("INSERT INTO ARTICULO_ETIQUETA VALUES(?, ?)");
-            ps.setLong(1, a.getId());
-            ps.setLong(2, e.getId());
-
-            ps.execute();
-        }
-        catch (SQLException ex)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    protected boolean insertComment(Comentario c, Articulo a)
-    {
-        Connection con = null;
-
-        try
-        {
-            con = getConnection();
-            PreparedStatement ps;
-
-            ps = con.prepareStatement("INSERT INTO ARTICULO_COMENTARIO VALUES(?, ?)");
-            ps.setLong(1, a.getId());
-            ps.setLong(2, c.getId());
-
-            ps.execute();
-        }
-        catch (SQLException ex)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     protected boolean update(Object o)
     {
         if(!(o instanceof Articulo))
@@ -246,8 +200,6 @@ public class ArticuloServices extends DatabaseServices
             ps.setLong(6, a.getId());
 
             ps.execute();
-
-            con.close();
         }
         catch (SQLException e)
         {
