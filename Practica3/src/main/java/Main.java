@@ -73,5 +73,19 @@ public class Main
             return new ModelAndView(map,"login.ftl");
         }, freeMarker);
 
+        get("/registration", (req, res)->
+        {
+            List<Object> list = new ArrayList<>();
+            list.add(new Object());
+            list.add(new Object());
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("intro", "Computer Science's hideout");
+            map.put("title", "Article");
+            map.put("items", list);
+            map.put("postTitle", "Hello my friends, I am dying.");
+            map.put("user", "Ariel Salce");
+            return new ModelAndView(map, "registration.ftl");
+        }, freeMarker);
+
     }
 }

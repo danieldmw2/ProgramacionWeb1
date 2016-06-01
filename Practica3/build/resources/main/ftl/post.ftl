@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <textarea class="form-control" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span> Post</button>
                 </form>
             </div>
 
@@ -58,11 +58,12 @@
                 <a class="pull-left" href="#">
                 </a>
                 <div class="media-body">
-                    <h4 class="media-heading">Start Bootstrap
+                    <h4 class="media-heading">Manuel
                         <small>August 25, 2014 at 9:30 PM</small>
                     </h4>
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
 
-                   </div>
+                </div>
             </div>
 
             <!-- Comment -->
@@ -70,7 +71,7 @@
                 <a class="pull-left" href="#">
                 </a>
                 <div class="media-body">
-                    <h4 class="media-heading">Start Bootstrap
+                    <h4 class="media-heading">Pedro
                         <small>August 25, 2014 at 9:30 PM</small>
                     </h4>
                     Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
@@ -79,7 +80,7 @@
                         <a class="pull-left" href="#">
                         </a>
                         <div class="media-body">
-                            <h4 class="media-heading">Nested Start Bootstrap
+                            <h4 class="media-heading">Juan
                                 <small>August 25, 2014 at 9:30 PM</small>
                             </h4>
                             Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.

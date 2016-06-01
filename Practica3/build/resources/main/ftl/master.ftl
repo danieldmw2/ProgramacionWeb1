@@ -50,7 +50,7 @@
             <form method="GET" action="/home">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a><span class="glyphicon glyphicon-home"></span> Home</a>
+                        <a href="/home"><span class="glyphicon glyphicon-home"></span> Home</a>
                     </li>
                     <li>
                         <!-- Not yet implemented -->
