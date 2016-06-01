@@ -52,7 +52,7 @@ public class UsuarioServices extends DatabaseServices
         return true;
     }
 
-    protected ArrayList<Object> select()
+    public ArrayList<Object> select()
     {
         Connection con = null;
         ArrayList<Object> toReturn = new ArrayList<Object>();
@@ -85,7 +85,7 @@ public class UsuarioServices extends DatabaseServices
         return toReturn;
     }
 
-    protected Object selectByID(Object o)
+    public Object selectByID(Object o)
     {
         Connection con = null;
         Usuario toReturn = null;
@@ -117,7 +117,7 @@ public class UsuarioServices extends DatabaseServices
         return toReturn;
     }
 
-    protected boolean insert(Object o)
+    public boolean insert(Object o)
     {
         if(!(o instanceof Usuario))
             return false;
@@ -148,7 +148,7 @@ public class UsuarioServices extends DatabaseServices
         return true;
     }
 
-    protected boolean update(Object o)
+    public boolean update(Object o)
     {
         if(!(o instanceof Usuario))
             return false;
@@ -181,7 +181,7 @@ public class UsuarioServices extends DatabaseServices
         return true;
     }
 
-    protected boolean delete(Object o)
+    public boolean delete(Object o)
     {
         if(!(o instanceof Usuario))
             return false;

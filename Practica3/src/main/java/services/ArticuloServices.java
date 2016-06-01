@@ -60,7 +60,7 @@ public class ArticuloServices extends DatabaseServices
         return true;
     }
 
-    protected ArrayList<Object> select()
+    public ArrayList<Object> select()
     {
         Connection con = null;
         ArrayList<Object> toReturn = new ArrayList<Object>();
@@ -97,7 +97,7 @@ public class ArticuloServices extends DatabaseServices
         return toReturn;
     }
 
-    protected Object selectByID(Object o)
+    public Object selectByID(Object o)
     {
         Connection con = null;
         Articulo toReturn = null;
@@ -131,7 +131,7 @@ public class ArticuloServices extends DatabaseServices
         return toReturn;
     }
 
-    protected boolean insert(Object o)
+    public boolean insert(Object o)
     {
         if(!(o instanceof Articulo))
             return false;
@@ -162,11 +162,7 @@ public class ArticuloServices extends DatabaseServices
 
             for(int i = 0; i < a.getListaComentarios().size(); i++)
             {
-                ps = con.prepareStatement("INSERT INTO ARTICULO_COMENTARIO VALUES(?, ?)");
-                ps.setLong(1, a.getId());
-                ps.setLong(2, a.getListaComentarios().get(i).getId());
-
-                ps.execute();
+                ComentarioServices.getInstance().insertComment(a.getListaComentarios().get(i), a);
             }
 
             con.close();
@@ -179,7 +175,7 @@ public class ArticuloServices extends DatabaseServices
         return true;
     }
 
-    protected boolean update(Object o)
+    public boolean update(Object o)
     {
         if(!(o instanceof Articulo))
             return false;
@@ -209,7 +205,7 @@ public class ArticuloServices extends DatabaseServices
         return true;
     }
 
-    protected boolean delete(Object o)
+    public boolean delete(Object o)
     {
         if(!(o instanceof Articulo))
             return false;

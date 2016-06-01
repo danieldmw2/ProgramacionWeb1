@@ -61,7 +61,7 @@ public class EtiquetaServices extends DatabaseServices
         return true;
     }
 
-    protected ArrayList<Object> select()
+    public ArrayList<Object> select()
     {
         Connection con = null;
         ArrayList<Object> toReturn = new ArrayList<Object>();
@@ -89,7 +89,7 @@ public class EtiquetaServices extends DatabaseServices
         return toReturn;
     }
 
-    protected ArrayList<Etiqueta> select(long articuloID)
+    public ArrayList<Etiqueta> select(long articuloID)
     {
         Connection con = null;
         ArrayList<Etiqueta> toReturn = new ArrayList<Etiqueta>();
@@ -121,7 +121,7 @@ public class EtiquetaServices extends DatabaseServices
         return toReturn;
     }
 
-    protected Object selectByID(Object o)
+    public Object selectByID(Object o)
     {
         Connection con = null;
         Etiqueta toReturn = null;
@@ -147,7 +147,7 @@ public class EtiquetaServices extends DatabaseServices
         return toReturn;
     }
 
-    protected boolean insert(Object o)
+    public boolean insert(Object o)
     {
         if(!(o instanceof Etiqueta))
             return false;
@@ -174,7 +174,7 @@ public class EtiquetaServices extends DatabaseServices
         return true;
     }
 
-    protected boolean insertTag(Etiqueta e, Articulo a)
+    public boolean insertTag(Etiqueta e, Articulo a)
     {
         Connection con = null;
 
@@ -197,7 +197,7 @@ public class EtiquetaServices extends DatabaseServices
         return true;
     }
 
-    protected boolean update(Object o)
+    public boolean update(Object o)
     {
         if(!(o instanceof Etiqueta))
             return false;
@@ -225,7 +225,7 @@ public class EtiquetaServices extends DatabaseServices
         return true;
     }
 
-    protected boolean delete(Object o)
+    public boolean delete(Object o)
     {
         if(!(o instanceof Etiqueta))
             return false;

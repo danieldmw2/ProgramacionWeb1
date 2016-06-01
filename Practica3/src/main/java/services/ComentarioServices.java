@@ -65,7 +65,7 @@ public class ComentarioServices extends DatabaseServices
         return true;
     }
 
-    protected ArrayList<Object> select()
+    public ArrayList<Object> select()
     {
         Connection con = null;
         ArrayList<Object> toReturn = new ArrayList<Object>();
@@ -97,7 +97,7 @@ public class ComentarioServices extends DatabaseServices
         return toReturn;
     }
 
-    protected ArrayList<Comentario> select(long comentarioID)
+    public ArrayList<Comentario> select(long comentarioID)
     {
         Connection con = null;
         ArrayList<Comentario> toReturn = new ArrayList<Comentario>();
@@ -133,7 +133,7 @@ public class ComentarioServices extends DatabaseServices
         return toReturn;
     }
 
-    protected Object selectByID(Object o)
+    public Object selectByID(Object o)
     {
         Connection con = null;
         Comentario toReturn = null;
@@ -163,7 +163,7 @@ public class ComentarioServices extends DatabaseServices
         return toReturn;
     }
 
-    protected boolean insert(Object o)
+    public boolean insert(Object o)
     {
         if(!(o instanceof Comentario))
             return false;
@@ -192,7 +192,7 @@ public class ComentarioServices extends DatabaseServices
         return true;
     }
 
-    protected boolean insertComment(Comentario c, Articulo a)
+    public boolean insertComment(Comentario c, Articulo a)
     {
         insert(c);
         Connection con = null;
@@ -216,7 +216,7 @@ public class ComentarioServices extends DatabaseServices
         return true;
     }
 
-    protected boolean update(Object o)
+    public boolean update(Object o)
     {
         if(!(o instanceof Comentario))
             return false;
@@ -248,7 +248,7 @@ public class ComentarioServices extends DatabaseServices
         return true;
     }
 
-    protected boolean delete(Object o)
+    public boolean delete(Object o)
     {
         if(!(o instanceof Comentario))
             return false;
