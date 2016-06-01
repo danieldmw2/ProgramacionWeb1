@@ -7,14 +7,16 @@ public class Usuario
 {
     private String username;
     private String nombre;
+    private String apellidos;
     private String password;
     private boolean administrator;
     private boolean autor;
 
-    public Usuario(String username, String nombre, String password, boolean administrator, boolean autor)
+    public Usuario(String username, String nombre, String apellidos, String password, boolean administrator, boolean autor)
     {
         this.username = username;
         this.nombre = nombre;
+        this.apellidos = apellidos;
         this.password = password;
         this.administrator = administrator;
         this.autor = autor;
@@ -38,6 +40,16 @@ public class Usuario
     public void setNombre(String nombre)
     {
         this.nombre = nombre;
+    }
+
+    public String getApellidos()
+    {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos)
+    {
+        this.apellidos = apellidos;
     }
 
     public String getPassword()
@@ -68,5 +80,11 @@ public class Usuario
     public void setAutor(boolean autor)
     {
         this.autor = autor;
+    }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%s - %s - %s - %s - %s - %s", username, nombre, apellidos, password, administrator, autor);
     }
 }

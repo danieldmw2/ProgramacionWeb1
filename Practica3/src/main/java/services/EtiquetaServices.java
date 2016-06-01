@@ -1,6 +1,7 @@
 package services;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by Daniel's Laptop on 5/31/2016.
@@ -50,6 +51,31 @@ public class EtiquetaServices extends DatabaseServices
             return false;
         }
 
+        return true;
+    }
+
+    protected ArrayList<Object> select()
+    {
+        return null;
+    }
+
+    protected Object selectByID(Object o)
+    {
+        return null;
+    }
+
+    protected boolean insert(Object o)
+    {
+        return true;
+    }
+
+    protected boolean update(Object o)
+    {
+        return true;
+    }
+
+    protected boolean delete(Object o)
+    {
         return true;
     }
 }
