@@ -1,5 +1,7 @@
 package services;
 
+import domain.Comentario;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -58,6 +60,11 @@ public class ComentarioServices extends DatabaseServices
     }
 
     protected ArrayList<Object> select()
+    {
+        return null;
+    }
+
+    protected ArrayList<Comentario> select(long articuloID)
     {
         return null;
     }

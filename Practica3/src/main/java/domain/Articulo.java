@@ -96,4 +96,10 @@ public class Articulo
     {
         this.listaEtiquetas = listaEtiquetas;
     }
+
+    @Override
+    public String toString()
+    {
+        return String.format("%s - %s - %s - %s - %s - %s", id, titulo, cuerpo, fecha.toString(), listaComentarios.toString(), listaEtiquetas.toString());
+    }
 }

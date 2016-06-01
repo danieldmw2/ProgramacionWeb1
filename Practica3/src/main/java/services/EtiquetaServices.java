@@ -1,5 +1,7 @@
 package services;
 
+import domain.Etiqueta;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -55,6 +57,11 @@ public class EtiquetaServices extends DatabaseServices
     }
 
     protected ArrayList<Object> select()
+    {
+        return null;
+    }
+
+    protected ArrayList<Etiqueta> select(long articuloID)
     {
         return null;
     }
