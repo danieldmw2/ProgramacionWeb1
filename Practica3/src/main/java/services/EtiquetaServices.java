@@ -147,7 +147,33 @@ public class EtiquetaServices extends DatabaseServices
         return toReturn;
     }
 
-    public boolean insert(Object o)
+    public Etiqueta selectByName(String o)
+    {
+        Connection con = null;
+        Etiqueta toReturn = null;
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM ETIQUETAS WHERE ETIQUETA = ?");
+            ps.setString(1, o);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            toReturn =  new Etiqueta(rs.getLong("id"), rs.getString("etiqueta"));
+
+            con.close();
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
+
+        return toReturn;
+    }
+
+    protected boolean insert(Object o)
     {
         if(!(o instanceof Etiqueta))
             return false;
@@ -177,6 +203,12 @@ public class EtiquetaServices extends DatabaseServices
     public boolean insertTag(Etiqueta e, Articulo a)
     {
         Connection con = null;
+        Etiqueta etiqueta = selectByName(e.getEtiqueta());
+
+        if(etiqueta == null)
+            insert(e);
+        else
+            e = etiqueta;
 
         try
         {

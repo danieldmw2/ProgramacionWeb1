@@ -163,7 +163,7 @@ public class ComentarioServices extends DatabaseServices
         return toReturn;
     }
 
-    public boolean insert(Object o)
+    protected boolean insert(Object o)
     {
         if(!(o instanceof Comentario))
             return false;

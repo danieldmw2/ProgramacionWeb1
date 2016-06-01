@@ -152,18 +152,10 @@ public class ArticuloServices extends DatabaseServices
             ps.execute();
 
             for(int i = 0; i < a.getListaEtiquetas().size(); i++)
-            {
-                ps = con.prepareStatement("INSERT INTO ARTICULO_ETIQUETA VALUES(?, ?)");
-                ps.setLong(1, a.getId());
-                ps.setLong(2, a.getListaEtiquetas().get(i).getId());
-
-                ps.execute();
-            }
+                EtiquetaServices.getInstance().insertTag(a.getListaEtiquetas().get(i), a);
 
             for(int i = 0; i < a.getListaComentarios().size(); i++)
-            {
                 ComentarioServices.getInstance().insertComment(a.getListaComentarios().get(i), a);
-            }
 
             con.close();
         }
