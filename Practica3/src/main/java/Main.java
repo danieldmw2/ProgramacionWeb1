@@ -33,7 +33,6 @@ public class Main
         FreeMarkerEngine freeMarker = new FreeMarkerEngine();
         freeMarker.setConfiguration(configuration);
 
-
         //Pagina principal de la aplicacion, muestra los diferentes articulos de los mas recientes a los mas antiguos
         //Solo se muestran 70 caracteres del texto (excluyendo el titulo del articulo), y se incluye un enlace para el post completo
         //Se visualizan todas las etiquetas del articulo
@@ -57,8 +56,7 @@ public class Main
 
             return new ModelAndView(map, "home.ftl");
         }, freeMarker);
-
-
+        
         get("/post", (req, res) ->
         {
             HashMap<String, Object> map = null;

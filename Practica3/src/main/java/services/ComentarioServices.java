@@ -97,7 +97,7 @@ public class ComentarioServices extends DatabaseServices
         return toReturn;
     }
 
-    public ArrayList<Comentario> select(long comentarioID)
+    public ArrayList<Comentario> select(Articulo articulo)
     {
         Connection con = null;
         ArrayList<Comentario> toReturn = new ArrayList<Comentario>();
@@ -108,8 +108,8 @@ public class ComentarioServices extends DatabaseServices
             PreparedStatement ps = con.prepareStatement(
                             "SELECT C.* " +
                             "FROM ARTICULO_COMENTARIO AC, COMENTARIOS C " +
-                            "WHERE AC.ID_ARTICULO = ? AND C.ID = AE.ID_COMENTARIO");
-            ps.setLong(1, comentarioID);
+                            "WHERE AC.ID_ARTICULO = ? AND C.ID = AC.ID_COMENTARIO");
+            ps.setLong(1, articulo.getId());
 
             ResultSet rs = ps.executeQuery();
             while(rs.next())
@@ -119,7 +119,7 @@ public class ComentarioServices extends DatabaseServices
                                 rs.getLong("id"),
                                 rs.getString("comentario"),
                                 (Usuario)(UsuarioServices.getInstance().selectByID(rs.getString("username"))),
-                                (Articulo)(ArticuloServices.getInstance().selectByID(rs.getInt("ID_ARTICULO"))))
+                                articulo)
                 );
             }
 
@@ -141,7 +141,7 @@ public class ComentarioServices extends DatabaseServices
         {
             con = getConnection();
 
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM ETIQUETAS WHERE ID = ?");
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM COMENTARIOS WHERE ID = ?");
             ps.setInt(1, (Integer) o);
 
             ResultSet rs = ps.executeQuery();

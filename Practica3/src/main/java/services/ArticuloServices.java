@@ -73,17 +73,18 @@ public class ArticuloServices extends DatabaseServices
             ResultSet rs = ps.executeQuery();
             while(rs.next())
             {
-                toReturn.add(
+                Articulo articulo =
                         new Articulo(
                                 rs.getLong("id"),
                                 rs.getString("titulo"),
                                 rs.getString("cuerpo"),
                                 (Usuario)UsuarioServices.getInstance().selectByID(rs.getString("username")),
                                 rs.getDate("fecha"),
-                                ComentarioServices.getInstance().select(rs.getLong("id")),
+                                null,
                                 EtiquetaServices.getInstance().select(rs.getLong("id"))
-                                )
-                );
+                        );
+                articulo.setListaComentarios(ComentarioServices.getInstance().select(articulo));
+                toReturn.add(articulo);
             }
 
 
@@ -117,9 +118,10 @@ public class ArticuloServices extends DatabaseServices
                     rs.getString("cuerpo"),
                     (Usuario)UsuarioServices.getInstance().selectByID(rs.getString("username")),
                     rs.getDate("fecha"),
-                    ComentarioServices.getInstance().select(rs.getLong("id")),
+                    null,
                     EtiquetaServices.getInstance().select(rs.getLong("id"))
             );
+            toReturn.setListaComentarios(ComentarioServices.getInstance().select(toReturn));
 
             con.close();
         }
