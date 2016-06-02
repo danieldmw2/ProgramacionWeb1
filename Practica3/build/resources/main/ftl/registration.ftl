@@ -26,8 +26,6 @@
                 </div>
 
                 <div class="row">
-
-
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         Nombre:<span style="color: red">*</span>
                     </div>
@@ -38,10 +36,19 @@
 
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        Apellidos:<span style="color: red">*</span>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
+                        <input name="apellidos" type="text" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         Contraseña:<span style="color: red">*</span>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                        <input name="password" oninvalid="setCustomValidity('La cantidad de caracteres debe ser mayor a 0')" oninput="setCustomValidity('')" type="text" required>
+                        <input name="password" type="password" required>
                     </div>
                 </div>
 

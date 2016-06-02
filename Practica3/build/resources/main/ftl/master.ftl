@@ -50,7 +50,7 @@
             <form method="GET" action="/home">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/home"><span class="glyphicon glyphicon-home"></span> Home</a>
+                        <a href="/home"><span class="glyphicon glyphicon-home"></span>  Home</a>
                     </li>
                     <li>
                         <!-- Not yet implemented -->
@@ -75,7 +75,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
-                    <h1>${intro}</h1>
+                    <h1>Computer Science's hideout</h1>
                     <hr class="medium">
 
                     <span class="subheading">A place where the CS community can share their thoughts with the world</span>

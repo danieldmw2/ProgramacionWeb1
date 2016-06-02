@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -102,4 +103,6 @@ public class Articulo
     {
         return String.format("%s - %s - %s - %s - %s - %s", id, titulo, cuerpo, fecha.toString(), listaComentarios.toString(), listaEtiquetas.toString());
     }
+
+
 }

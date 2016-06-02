@@ -1,5 +1,5 @@
 <#import "master.ftl" as layout/>
-<@layout.master title="Hello">
+<@layout.master title="Post">
 
 <!-- Page Content -->
 <div class="container">
@@ -16,23 +16,19 @@
 
             <!-- Author -->
             <p class="lead">
-                by <a href="#">${user}</a>
+                by <a>${autor}</a>
             </p>
 
             <hr>
 
             <!-- Date/Time -->
             <div class="post-preview">
-                <p class="post-meta"><span class="glyphicon glyphicon-time"></span> Posted on August 24, 2013 at 9:00 PM</p>
+                <p class="post-meta"><span class="glyphicon glyphicon-time"></span> Posted on ${fecha}</p>
             </div>
             <hr>
 
             <!-- Post Content -->
-            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
+            <p class="lead">${contenido}</p>
 
             <hr>
 
@@ -40,7 +36,7 @@
 
             <!-- Comments Form -->
             <div class="well">
-                <h4>Leave a Comment:</h4>
+                <h4>Leave a comment:</h4>
                 <form role="form">
                     <div class="form-group">
                         <textarea class="form-control" rows="3"></textarea>
@@ -53,42 +49,18 @@
 
             <!-- Posted Comments -->
 
+            <#list comentarios as c>
             <!-- Comment -->
             <div class="media">
                 <a class="pull-left" href="#">
                 </a>
                 <div class="media-body">
-                    <h4 class="media-heading">Manuel
-                        <small>August 25, 2014 at 9:30 PM</small>
+                    <h4 class="media-heading">${c.autor.username}
                     </h4>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
+                    ${c.comentario}
                 </div>
             </div>
-
-            <!-- Comment -->
-            <div class="media">
-                <a class="pull-left" href="#">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">Pedro
-                        <small>August 25, 2014 at 9:30 PM</small>
-                    </h4>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    <!-- Nested Comment -->
-                    <div class="media">
-                        <a class="pull-left" href="#">
-                        </a>
-                        <div class="media-body">
-                            <h4 class="media-heading">Juan
-                                <small>August 25, 2014 at 9:30 PM</small>
-                            </h4>
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                        </div>
-                    </div>
-                    <!-- End Nested Comment -->
-                </div>
-            </div>
+            </#list>
 
         </div>
 
@@ -101,8 +73,8 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <ul class="list-inline list-tags">
-                            <#list items as item>
-                                <li><button class="btn-danger"><span class="btn-xs">${blogs}</span></button></li>
+                            <#list tags as tag>
+                                <li><button class="btn-danger"><span class="btn-xs">${tag.etiqueta}</span></button></li>
                             </#list>
                         </ul>
                     </div>

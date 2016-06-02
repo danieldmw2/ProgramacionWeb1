@@ -1,5 +1,5 @@
 <#import "master.ftl" as layout/>
-<@layout.master title="Hello">
+<@layout.master title="Welcome! Please make yourselves at home.">
 <!-- Main Content -->
 <div class="container">
     <div class="row">
@@ -9,17 +9,18 @@
         <#list articulos as articulo>
             <form method="GET" action="/post">
                 <div class="post-preview">
-                    <p class="post-meta">Posted by <a href="#">${articulo.autor.username}</a> on ${articulo.fecha}</p>
+                    <p class="post-meta">Posted by <a>${articulo.autor.username}</a> on ${articulo.fecha}</p>
+
 
                     <h2 class="post-title">
-                        Man must explore, and this is exploration at its greatest
+                        ${articulo.titulo}
                     </h2>
                     <i class="post-subtitle">
                         ${articulo.cuerpo?substring(0,70) + "..."}
                     </i>
                     <br />
 
-                    <button class="btn btn-primary">Read More <span class="glyphicon glyphicon-chevron-right"></span></button>
+                    <button name="${articulo.id}">Read More <span class="glyphicon glyphicon-chevron-right"></span></button>
 
                     <h4>Tags:</h4>
                     <ul class="list-inline list-tags">

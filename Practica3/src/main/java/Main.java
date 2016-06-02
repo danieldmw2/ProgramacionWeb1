@@ -6,16 +6,18 @@ import domain.Articulo;
 import domain.Comentario;
 import domain.Etiqueta;
 import domain.Usuario;
+import freemarker.template.Template;
 import services.*;
 import spark.ModelAndView;
 import freemarker.template.Configuration;
+import spark.Request;
+import spark.Response;
+import spark.Route;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.io.StringWriter;
 import java.lang.reflect.Array;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static spark.Spark.*;
 
@@ -36,15 +38,16 @@ public class Main
         get("/home", (req, res) ->
         {
             HashMap<String, Object> map = null;
-            try {
+            try
+            {
                 ArrayList<Object> articulos = ArticuloServices.getInstance().select();
+
                 map = new HashMap<>();
                 map.put("articulos", articulos);
                 map.put("title", "Let's Blog a bit!");
-                map.put("intro", "Computer Science's hideout");
-                Articulo a = (Articulo)articulos.get(0);
-                System.out.println("Satanas");
-                System.out.println(a.getListaEtiquetas().get(1).getEtiqueta());
+                map.put("house", "Home");
+                map.put("registro", "¡Regístrate!");
+                map.put("login", "Iniciar Sesión");
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -56,26 +59,66 @@ public class Main
 
         get("/post", (req, res) ->
         {
-            List<Object> list = new ArrayList<>();
-            list.add(new Object());
-            list.add(new Object());
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("intro", "Computer Science's hideout");
-            map.put("title", "Article");
-            map.put("items", list);
-            map.put("postTitle", "Hello my friends, I am dying.");
-            map.put("user", "Ariel Salce");
-            map.put("tag", "blogs");
-            map.put("blogs", "unstyled");
+            HashMap<String, Object> map = null;
+            try {
+
+                String id = "";
+                for (String s : req.queryParams())
+                    id = s;
+
+                System.out.println(req.queryParams());
+                ArrayList<Object> objects = ComentarioServices.getInstance().select();
+                ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
+                for (int i = 0; i < objects.size(); i++)
+                {
+                    if (((Comentario) objects.get(i)).getArticulo().getId() == Integer.parseInt(id))
+                        comentarios.add((Comentario) objects.get(i));
+                }
+
+                System.out.println(comentarios);
+                ArrayList<Object> objects2 = ArticuloServices.getInstance().select();
+                Articulo a = null;
+                for (int j = 0; j < objects2.size(); j++)
+                {
+                    if (((Articulo) objects2.get(j)).getId() == Integer.parseInt(id))
+                        a = ((Articulo) objects2.get(j));
+                }
+
+
+                if (a != null) {
+                    map = new HashMap<>();
+                    map.put("title", "Article");
+                    map.put("postTitle", a.getTitulo());
+                    map.put("autor", a.getAutor().getUsername());
+                    map.put("tags", a.getListaEtiquetas());
+                    map.put("fecha", a.getFecha());
+                    map.put("contenido", a.getCuerpo());
+                    map.put("comentarios", comentarios);
+                }
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
             return new ModelAndView(map,"post.ftl");
         }, freeMarker);
+
+        post("/userRegistration", (req, res) ->
+        {
+            UsuarioServices.getInstance().insert(
+                    new Usuario(req.queryParams("username"), req.queryParams("name"),
+                            req.queryParams("apellidos"), req.queryParams("password"), false, false));
+            res.redirect("/home");
+            return modelAndView(null, "");
+        });
+
+
 
         get("/login", (req, res) -> {
             List<Object> list = new ArrayList<>();
             list.add(new Object());
             list.add(new Object());
             HashMap<String, Object> map = new HashMap<>();
-            map.put("intro", "Computer Science's hideout");
             map.put("title", "Article");
             map.put("items", list);
             map.put("postTitle", "Hello my friends, I am dying.");
@@ -89,10 +132,8 @@ public class Main
             list.add(new Object());
             list.add(new Object());
             HashMap<String, Object> map = new HashMap<>();
-            map.put("intro", "Computer Science's hideout");
             map.put("title", "Article");
             map.put("items", list);
-            map.put("postTitle", "Hello my friends, I am dying.");
             map.put("user", "Ariel Salce");
             return new ModelAndView(map, "registration.ftl");
         }, freeMarker);
