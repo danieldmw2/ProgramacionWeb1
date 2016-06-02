@@ -1,5 +1,5 @@
 <#import "master.ftl" as layout/>
-<@layout.master title="Hello">
+<@layout.master title="Login">
 
 <!-- Page Content -->
 <div class="container">

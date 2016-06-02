@@ -23,6 +23,7 @@ import static spark.Spark.*;
 
 public class Main
 {
+    static Usuario loggedInUser = null;
     public static void main(String[] args)
     {
         staticFiles.location("/public");
@@ -31,6 +32,7 @@ public class Main
         configuration.setClassForTemplateLoading(Main.class, "/ftl");
         FreeMarkerEngine freeMarker = new FreeMarkerEngine();
         freeMarker.setConfiguration(configuration);
+
 
         //Pagina principal de la aplicacion, muestra los diferentes articulos de los mas recientes a los mas antiguos
         //Solo se muestran 70 caracteres del texto (excluyendo el titulo del articulo), y se incluye un enlace para el post completo
@@ -103,18 +105,18 @@ public class Main
             return new ModelAndView(map,"post.ftl");
         }, freeMarker);
 
-        post("/userRegistration", (req, res) ->
+        post("/registrationPost", (req, res) ->
         {
-            UsuarioServices.getInstance().insert(
-                    new Usuario(req.queryParams("username"), req.queryParams("name"),
-                            req.queryParams("apellidos"), req.queryParams("password"), false, false));
+            Usuario usuario = new Usuario(req.queryParams("username"), req.queryParams("name"),
+                    req.queryParams("apellidos"), req.queryParams("password"), false, false);
+            UsuarioServices.getInstance().insert(usuario);
             res.redirect("/home");
             return modelAndView(null, "");
         });
 
 
-
-        get("/login", (req, res) -> {
+        get("/login", (req, res) ->
+        {
             List<Object> list = new ArrayList<>();
             list.add(new Object());
             list.add(new Object());
@@ -124,6 +126,14 @@ public class Main
             map.put("postTitle", "Hello my friends, I am dying.");
             map.put("user", "Ariel Salce");
             return new ModelAndView(map,"login.ftl");
+        }, freeMarker);
+
+        post("/loginPost", (req, res) ->
+        {
+            if(req.queryParams("username").equals(loggedInUser.getUsername()))
+
+            res.redirect("/home");
+            return new ModelAndView(null, "");
         }, freeMarker);
 
         get("/registration", (req, res)->

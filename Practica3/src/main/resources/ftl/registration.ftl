@@ -1,5 +1,5 @@
 <#import "master.ftl" as layout/>
-<@layout.master title="Hello">
+<@layout.master title="Registration">
 
 <!-- Page Content -->
 <div class="container">
@@ -8,7 +8,7 @@
         <!-- Blog Post Content Column -->
         <div class="col-lg-8">
 
-            <form role="form" action="post" class="inline">
+            <form role="form" method="POST" action="/registrationPost" class="inline">
 
                 <div class="post-preview">
                     <h3 class="post-title">Para registrarse favor de llenar los campos que se presentan a continuacion (Campos con <span style="color: red">*</span> son mandatorios):</h3>
@@ -55,7 +55,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-lg-offset-4 col-lg-2 col-md-offset-4 col-md-2 col-sm-offset-6 col-sm-4 col-xs-12">
-                        <button type="submit" class="btn btn-primary"><span class="glyphicon gly"></span>Submit</button>
+                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Submit</button>
                     </div>
                 </div>
 
