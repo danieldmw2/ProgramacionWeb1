@@ -186,7 +186,7 @@ public class EtiquetaServices extends DatabaseServices
             con = getConnection();
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO ETIQUETAS VALUES(?, ?)");
-            ps.setLong(1, u.getId());
+            ps.setLong(1, getNewID());
             ps.setString(2, u.getEtiqueta());
 
             ps.execute();
@@ -282,5 +282,31 @@ public class EtiquetaServices extends DatabaseServices
         }
 
         return true;
+    }
+
+    private long getNewID()
+    {
+        long toReturn;
+        Connection con = null;
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("SELECT ID_ETIQUETA FROM IDENTIFICADORES");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            toReturn = rs.getLong("ID_ETIQUETA");
+            ps = con.prepareStatement("UPDATE IDENTIFICADORES SET ID_ETIQUETA = (ID_ETIQUETA + 1)");
+            ps.execute();
+
+            con.close();
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
+
+        return toReturn;
     }
 }

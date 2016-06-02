@@ -175,7 +175,7 @@ public class ComentarioServices extends DatabaseServices
             con = getConnection();
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO COMENTARIOS VALUES(?, ?, ?, ?)");
-            ps.setLong(1, c.getId());
+            ps.setLong(1, getNewID());
             ps.setString(2, c.getComentario());
             ps.setString(3, c.getAutor().getUsername());
             ps.setLong(4, c.getArticulo().getId());
@@ -272,5 +272,31 @@ public class ComentarioServices extends DatabaseServices
         }
 
         return true;
+    }
+
+    private long getNewID()
+    {
+        long toReturn;
+        Connection con = null;
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("SELECT ID_COMENTARIO FROM IDENTIFICADORES");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            toReturn = rs.getLong("ID_COMENTARIO");
+            ps = con.prepareStatement("UPDATE IDENTIFICADORES SET ID_COMENTARIO = (ID_COMENTARIO + 1)");
+            ps.execute();
+
+            con.close();
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
+
+        return toReturn;
     }
 }

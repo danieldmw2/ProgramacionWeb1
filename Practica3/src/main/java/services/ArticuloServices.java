@@ -145,7 +145,7 @@ public class ArticuloServices extends DatabaseServices
             con = getConnection();
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO ARTICULOS VALUES(?, ?, ?, ?, ?)");
-            ps.setLong(1, a.getId());
+            ps.setLong(1, getNewID());
             ps.setString(2, a.getTitulo());
             ps.setString(3, a.getCuerpo());
             ps.setString(4, a.getAutor().getUsername());
@@ -223,5 +223,31 @@ public class ArticuloServices extends DatabaseServices
         }
 
         return true;
+    }
+
+    private long getNewID()
+    {
+        long toReturn;
+        Connection con = null;
+        try
+        {
+            con = getConnection();
+
+            PreparedStatement ps = con.prepareStatement("SELECT ID_ARTICULO FROM IDENTIFICADORES");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+
+            toReturn = rs.getLong("ID_ARTICULO");
+            ps = con.prepareStatement("UPDATE IDENTIFICADORES SET ID_ARTICULO = (ID_ARTICULO + 1)");
+            ps.execute();
+
+            con.close();
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
+
+        return toReturn;
     }
 }
