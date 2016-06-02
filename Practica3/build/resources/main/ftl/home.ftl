@@ -6,26 +6,25 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
         <!-- Not yet implemented el ordenar por las fechas. Ademas la lista necesita las entidades.-->
-        <#list items as i>
+        <#list articulos as articulo>
             <form method="GET" action="/post">
                 <div class="post-preview">
-                    <p class="post-meta">Posted by <a href="#">${user}</a> on ${date}</p>
+                    <p class="post-meta">Posted by <a href="#">${articulo.autor.username}</a> on ${articulo.fecha}</p>
 
                     <h2 class="post-title">
                         Man must explore, and this is exploration at its greatest
                     </h2>
                     <i class="post-subtitle">
-                        ${summary?substring(0,70) + "..."}
+                        ${articulo.cuerpo?substring(0,70) + "..."}
                     </i>
                     <br />
 
                     <button class="btn btn-primary">Read More <span class="glyphicon glyphicon-chevron-right"></span></button>
 
                     <h4>Tags:</h4>
-
                     <ul class="list-inline list-tags">
-                        <#list items as item>
-                            <li><button class="btn-danger"><span class="btn-xs">${blogs}</span></button></li>
+                        <#list articulo.listaEtiquetas as etiqueta>
+                            <li><button class="btn-danger"><span class="btn-xs">${etiqueta.etiqueta}</span></button></li>
                         </#list>
                     </ul>
 

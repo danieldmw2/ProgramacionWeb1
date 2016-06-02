@@ -99,13 +99,14 @@ public class EtiquetaServices extends DatabaseServices
 
             PreparedStatement ps = con.prepareStatement(
                     "SELECT E.ETIQUETA, E.ID " +
-                    "FROM ARTICULO_ETIQUETA AE, ETIQUETA E " +
+                    "FROM ARTICULO_ETIQUETA AE, ETIQUETAS E " +
                     "WHERE AE.ID_ARTICULO = ? AND E.ID = AE.ID_ETIQUETA");
             ps.setLong(1, articuloID);
 
             ResultSet rs = ps.executeQuery();
             while(rs.next())
             {
+
                 toReturn.add(
                         new Etiqueta(rs.getLong(2), rs.getString(1))
                 );
