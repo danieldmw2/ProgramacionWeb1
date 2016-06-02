@@ -4,7 +4,11 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <button class="btn btn-primary">Crear Articulo</button>
+
+        <form method="GET" action="/articleCreation">
+            <button class="btn btn-primary">Crear Articulo</button>
+        </form>
+
         <hr>
         <!-- Not yet implemented el ordenar por las fechas. Ademas la lista necesita las entidades.-->
         <#list articulos as articulo>
@@ -21,7 +25,7 @@
                     </i>
                     <br />
 
-                    <a name="${articulo.id}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                    <button name="${articulo.id}">Read More <span class="glyphicon glyphicon-chevron-right"></span></button>
 
                     <h4>Tags:</h4>
                     <ul class="list-inline list-tags">

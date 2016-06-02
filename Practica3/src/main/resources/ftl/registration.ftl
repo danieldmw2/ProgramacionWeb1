@@ -23,6 +23,7 @@
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                         <input name="username" type="text" required>
                     </div>
+
                 </div>
 
                 <div class="row">
@@ -49,6 +50,15 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
                         <input name="password" type="password" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        ¿Es el Usuario Autor?
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                        <input name="autor" type="checkbox">
                     </div>
                 </div>
 

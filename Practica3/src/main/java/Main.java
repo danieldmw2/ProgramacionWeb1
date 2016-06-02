@@ -56,7 +56,9 @@ public class Main
 
             return new ModelAndView(map, "home.ftl");
         }, freeMarker);
-        
+
+
+        //Articulo mostrandose
         get("/post", (req, res) ->
         {
             HashMap<String, Object> map = null;
@@ -66,23 +68,9 @@ public class Main
                 for (String s : req.queryParams())
                     id = s;
 
-                System.out.println(req.queryParams());
-                ArrayList<Object> objects = ComentarioServices.getInstance().select();
-                ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
-                for (int i = 0; i < objects.size(); i++)
-                {
-                    if (((Comentario) objects.get(i)).getArticulo().getId() == Integer.parseInt(id))
-                        comentarios.add((Comentario) objects.get(i));
-                }
+                Articulo a  = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(id));
+                ArrayList<Comentario> listComentarios = ComentarioServices.getInstance().select(a);
 
-                System.out.println(comentarios);
-                ArrayList<Object> objects2 = ArticuloServices.getInstance().select();
-                Articulo a = null;
-                for (int j = 0; j < objects2.size(); j++)
-                {
-                    if (((Articulo) objects2.get(j)).getId() == Integer.parseInt(id))
-                        a = ((Articulo) objects2.get(j));
-                }
 
 
                 if (a != null) {
@@ -93,7 +81,7 @@ public class Main
                     map.put("tags", a.getListaEtiquetas());
                     map.put("fecha", a.getFecha());
                     map.put("contenido", a.getCuerpo());
-                    map.put("comentarios", comentarios);
+                    map.put("comentarios", listComentarios);
                 }
             } catch (Exception e)
             {
@@ -111,6 +99,37 @@ public class Main
             res.redirect("/home");
             return modelAndView(null, "");
         });
+
+        get("/articleCreation", (req, res) ->
+        {
+            HashMap<String, Object> map = null;
+            try
+            {
+                map = new HashMap<String, Object>();
+                map.put("title", "Article");
+
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return new ModelAndView(map,"articleCreation.ftl");
+        }, freeMarker);
+
+        post("/articleCreationPost", (req, res) ->
+        {
+            String[] sa = req.queryParams("tags").split(",");
+            long id = ArticuloServices.getInstance().select().size()+1;
+            try
+            {
+                ArticuloServices.getInstance().insert(new Articulo(id, req.queryParams("titulo"),req.queryParams("cuerpo"),loggedInUser, new Date(), null, null));
+            } catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            res.redirect("/home");
+            return new ModelAndView(null,"");
+        }, freeMarker);
 
 
         get("/login", (req, res) ->
