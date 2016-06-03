@@ -97,6 +97,16 @@ public class Main
             return new ModelAndView(map,"post.ftl");
         }, freeMarker);
 
+        get("/registration", (req, res)->
+        {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("title", "Article");
+            map.put("home", "Home");
+            map.put("registro", "¡Regístrate!");
+            map.put("iniciarSesion", login);
+            return new ModelAndView(map, "registration.ftl");
+        }, freeMarker);
+
         post("/registrationPost", (req, res) ->
         {
             System.out.println(req.queryParams("autor"));
@@ -193,15 +203,64 @@ public class Main
             return new ModelAndView(null, "");
         }, freeMarker);
 
-        get("/registration", (req, res)->
+
+        get("/modificarArticulo", (req, res) ->
         {
+            String id = req.queryParams("modificarArticulo");
+            Articulo a = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(id));
+            System.out.println(a.getAutor().getUsername());
             HashMap<String, Object> map = new HashMap<>();
             map.put("title", "Article");
             map.put("home", "Home");
             map.put("registro", "¡Regístrate!");
             map.put("iniciarSesion", login);
-            return new ModelAndView(map, "registration.ftl");
+            map.put("titulo", a.getTitulo());
+            map.put("cuerpo", a.getCuerpo());
+            map.put("id", a.getId());
+
+            String s = "";
+            for(int i = 0; i<a.getListaEtiquetas().size(); i++)
+            {
+                if(i == (a.getListaEtiquetas().size() - 1))
+                    s += a.getListaEtiquetas().get(i).getEtiqueta();
+                else
+                    s += a.getListaEtiquetas().get(i).getEtiqueta() + ",";
+            }
+            map.put("etiquetas", s);
+
+            return new ModelAndView(map,"modificarArticulo.ftl");
         }, freeMarker);
 
+        post("/modificarArticuloPost", (req, res) ->
+        {
+            String id = req.queryParams("modificarArticulo");
+            System.out.println();
+            String etiquetas = req.queryParams("etiquetas");
+            String[] ss = etiquetas.trim().split(",");
+
+            ArrayList<Etiqueta> ets = new ArrayList<Etiqueta>();
+            for(int i = 0; i < ss.length ; i++)
+                ets.add(new Etiqueta(1, ss[i]));
+
+            Articulo a1 = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(id));
+
+            Articulo a = new Articulo(Integer.parseInt(id), req.queryParams("titulo"), req.queryParams("cuerpo"),
+                    a1.getAutor(), a1.getFecha(), new ArrayList<Comentario>(), ets);
+
+            ArticuloServices.getInstance().update(a);
+            System.out.println(a.getAutor().getUsername());
+
+            res.redirect("/home");
+            return new ModelAndView(null,"");
+        }, freeMarker);
+
+        post("/borrarArticuloPost", (req, res) ->
+        {
+            Articulo a = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(req.queryParams("borrarArticulo")));
+            ArticuloServices.getInstance().delete(a);
+
+            res.redirect("/home");
+            return new ModelAndView(null, "");
+        }, freeMarker);
     }
 }

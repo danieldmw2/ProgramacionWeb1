@@ -16,7 +16,6 @@
                 <div class="post-preview">
                     <p class="post-meta">Posted by <a>${articulo.autor.username}</a> on ${articulo.fecha}</p>
 
-
                     <h2 class="post-title">
                         ${articulo.titulo}
                     </h2>
@@ -39,8 +38,8 @@
                         </#list>
                     </ul>
 
-                    <button class="btn btn-primary">Editar Articulo</button>
-                    <button name="borrarArticulo" value="${articulo.id}" class="btn btn-primary">Eliminar Articulo</button>
+                    <button name="modificarArticulo" formaction="/modificarArticulo" value="${articulo.id}" class="btn btn-primary">Editar Articulo</button>
+                    <button name="borrarArticulo" formmethod="POST" formaction="/borrarArticuloPost" value="${articulo.id}" class="btn btn-primary">Eliminar Articulo</button>
 
                 </div>
                 <hr>

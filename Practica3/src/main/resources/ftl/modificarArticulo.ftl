@@ -22,7 +22,8 @@
                         Titulo:
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                        <input name="titulo" value="" type="text" required>
+                        <input name="titulo" value="${titulo}" type="text" required>
+
                     </div>
                 </div>
                 <br />
@@ -31,7 +32,7 @@
                         Cuerpo:
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                        <textarea name="cuerpo" rows="4" cols="50" ></textarea>
+                        <textarea name="cuerpo" rows="4" cols="50" >${cuerpo}</textarea>
                     </div>
                 </div>
                 <br />
@@ -41,14 +42,14 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
 
-                        <input name="etiquetas" value="" type="text" required>
+                        <input name="etiquetas" value="${etiquetas}" type="text" required>
                     </div>
                 </div>
 
                 <hr>
                 <div class="row">
                     <div class="col-lg-offset-1 col-lg-3 col-md-offset-1 col-md-2 col-sm-offset-6 col-sm-4 col-xs-12">
-                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Submit</button>
+                        <button formaction="/modificarArticuloPost" name="modificarArticulo" value="${id}" type="submit" class="btn btn-primary" method=<span class="glyphicon glyphicon-user"></span> Submit</button>
                     </div>
                 </div>
 
