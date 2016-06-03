@@ -1,4 +1,4 @@
-/**
+package main; /**
  * Created by Daniel's Laptop on 5/29/2016.
  */
 
@@ -6,19 +6,11 @@ import domain.Articulo;
 import domain.Comentario;
 import domain.Etiqueta;
 import domain.Usuario;
-import freemarker.template.Template;
-import main.Filtros;
-import main.ZonaAdmin;
 import services.*;
 import spark.ModelAndView;
 import freemarker.template.Configuration;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 import spark.template.freemarker.FreeMarkerEngine;
 
-import java.io.StringWriter;
-import java.lang.reflect.Array;
 import java.util.*;
 //import spark.debug.
 
@@ -27,8 +19,8 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main
 {
-    static Usuario loggedInUser = null;
-    static String login = "Iniciar Sesión";
+    public static Usuario loggedInUser = null;
+    public static String login = "Iniciar Sesión";
 
     public static void main(String[] args)
     {
@@ -114,7 +106,7 @@ public class Main
 
             loggedInUser = usuario;
 
-            req.session().attribute("loggedInUser", loggedInUser);
+            req.session().attribute("usuario", usuario);
             res.redirect("/home");
             return modelAndView(null, "");
         });
@@ -183,6 +175,7 @@ public class Main
             HashMap<String, Object> map = new HashMap<String, Object>();
             loggedInUser = (Usuario)UsuarioServices.getInstance().selectByID(req.queryParams("username"));
             req.session(true).attribute("usuario", loggedInUser);
+            res.cookie("user", loggedInUser.getUsername()); // TODO Donde se haga el logout esto debe ser eliminado o ser igualado a nada
 
             login = "Cerrar Sesión";
             map.put("home", "Home");

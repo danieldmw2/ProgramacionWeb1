@@ -3,6 +3,7 @@ package main;
 import domain.Articulo;
 import domain.Usuario;
 import services.ArticuloServices;
+import services.UsuarioServices;
 
 import static spark.Spark.before;
 import static spark.Spark.halt;
@@ -14,6 +15,19 @@ public class Filtros
 {
     public static void aplicarFiltros()
     {
+        before("/*", (request, response) -> {
+            if(Main.loggedInUser == null)
+            {
+                if(request.cookie("user") != null && !request.cookie("user").equals(""))
+                {
+                    Usuario user = (Usuario) UsuarioServices.getInstance().selectByID(request.cookie("user"));
+                    request.session(true).attribute("usuario", user);
+                    Main.loggedInUser = user;
+                    Main.login = "Cerrar Session";
+                }
+            }
+        });
+
         before("/login",(request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
             if(usuario != null)
