@@ -171,11 +171,13 @@ public class ComentarioServices extends DatabaseServices
         Connection con = null;
         try
         {
+            ID = getNewID();
             Comentario c = (Comentario) o;
+            c.setId(ID);
             con = getConnection();
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO COMENTARIOS VALUES(?, ?, ?, ?)");
-            ps.setLong(1, getNewID());
+            ps.setLong(1, c.getId());
             ps.setString(2, c.getComentario());
             ps.setString(3, c.getAutor().getUsername());
             ps.setLong(4, c.getArticulo().getId());
@@ -192,9 +194,12 @@ public class ComentarioServices extends DatabaseServices
         return true;
     }
 
+    private static long ID;
+
     public boolean insertComment(Comentario c, Articulo a)
     {
         insert(c);
+        c.setId(ID);
         Connection con = null;
 
         try

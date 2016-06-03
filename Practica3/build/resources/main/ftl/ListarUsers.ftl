@@ -24,7 +24,7 @@
                                 <tbody>
 
                                     <#list users as e>
-                                    <tr onclick="document.location='\\zonaAdmin\\deleteUser?id=${e.username}';">
+                                    <tr onclick="document.location='/zonaAdmin/deleteUser?id=${e.username}';">
                                         <div class="row">
                                             <div class="col-lg-9 col-md-9">
                                                 <td id="username">${e.username}</td>

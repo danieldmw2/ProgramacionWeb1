@@ -7,6 +7,7 @@ import domain.Usuario;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -27,6 +28,39 @@ public abstract class DatabaseServices
             e.printStackTrace();
         }
         return toReturn;
+    }
+
+    public static void cleanUp()
+    {
+        Connection con = null;
+        try
+        {
+            con = DriverManager.getConnection("jdbc:h2:~/practica3", "user", "admin");
+
+            PreparedStatement ps = con.prepareStatement("DELETE FROM ARTICULO_COMENTARIO");
+            ps.execute();
+            ps = con.prepareStatement("DELETE FROM COMENTARIOS");
+            ps.execute();
+            ps = con.prepareStatement("DELETE FROM ARTICULO_ETIQUETA");
+            ps.execute();
+            ps = con.prepareStatement("DELETE FROM ETIQUETAS");
+            ps.execute();
+            ps = con.prepareStatement("DELETE FROM ARTICULOS");
+            ps.execute();
+            ps = con.prepareStatement("DELETE FROM USUARIOS");
+            ps.execute();
+            ps = con.prepareStatement("INSERT INTO USUARIOS VALUES('USER', 'USER', 'USER', 'ADMIN', 'T', 'T')");
+            ps.execute();
+            ps = con.prepareStatement("UPDATE IDENTIFICADORES SET ID_ARTICULO = 1, ID_ETIQUETA = 1, ID_COMENTARIO = 1");
+            ps.execute();
+
+            con.close();
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     protected abstract boolean createTable();

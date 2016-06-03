@@ -46,6 +46,8 @@ public class Main
             try
             {
                 ArrayList<Object> articulos = ArticuloServices.getInstance().select();
+                Collections.sort(articulos, (Object a, Object b)->((Articulo)a).getFecha().compareTo(((Articulo)a).getFecha()));
+                Collections.reverse(articulos);
                 map = new HashMap<>();
                 map.put("articulos", articulos);
                 map.put("title", "Let's Blog a bit!");
@@ -59,6 +61,7 @@ public class Main
             ModelAndView mv = new ModelAndView(map, "home.ftl");
             return mv;
         }, freeMarker);
+
 
 
         //Articulo mostrandose
@@ -75,6 +78,7 @@ public class Main
                 if (a != null) {
                     map = new HashMap<>();
                     map.put("title", "Article");
+                    map.put("readmore", id);
                     map.put("postTitle", a.getTitulo());
                     map.put("autor", a.getAutor().getUsername());
                     map.put("tags", a.getListaEtiquetas());
@@ -115,8 +119,10 @@ public class Main
             UsuarioServices.getInstance().insert(usuario);
 
             loggedInUser = usuario;
-
             req.session().attribute("usuario", usuario);
+            res.cookie("user", loggedInUser.getUsername());
+            login = "Cerrar Sesión";
+
             res.redirect("/home");
             return modelAndView(null, "");
         });
@@ -184,17 +190,37 @@ public class Main
             System.out.println(req.queryParams("username"));
             HashMap<String, Object> map = new HashMap<String, Object>();
             loggedInUser = (Usuario)UsuarioServices.getInstance().selectByID(req.queryParams("username"));
-            req.session(true).attribute("usuario", loggedInUser);
-            res.cookie("user", loggedInUser.getUsername()); // TODO Donde se haga el logout esto debe ser eliminado o ser igualado a nada
-
-            login = "Cerrar Sesión";
-            map.put("home", "Home");
-            map.put("registro", "¡Regístrate!");
-            map.put("iniciarSesion", login);
+            if(loggedInUser.getPassword().equals(req.queryParams("password")))
+            {
+                req.session(true).attribute("usuario", loggedInUser);
+                res.cookie("user", loggedInUser.getUsername());
+                login = "Cerrar Sesión";
+            }
+            else
+                loggedInUser = null;
 
             res.redirect("/home");
             return new ModelAndView(null, "");
         }, freeMarker);
+
+
+        get("/logout", (req, res) ->
+        {
+
+            HashMap<String, Object> map = new HashMap<String, Object>();
+
+            login = "Iniciar Sesión";
+
+            map.put("usuario", loggedInUser.getUsername());
+            req.session(true).attribute("usuario", null);
+            res.cookie("user", "");
+            loggedInUser = null;
+            map.put("home", "Home");
+            map.put("registro", "¡Regístrate!");
+            map.put("iniciarSesion", login);
+            res.redirect("/home");
+            return new ModelAndView(null,"");
+        },freeMarker);
 
 
         get("/modificarArticulo", (req, res) ->
@@ -249,11 +275,32 @@ public class Main
 
         post("/borrarArticuloPost", (req, res) ->
         {
+            System.out.println(req.queryParams("borrarArticulo"));
             Articulo a = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(req.queryParams("borrarArticulo")));
             ArticuloServices.getInstance().delete(a);
 
             res.redirect("/home");
             return new ModelAndView(null, "");
         }, freeMarker);
+
+        post("/agregarComentario", (req, res) ->
+        {
+            String s = req.queryParams("commentcontent");
+            System.out.println(s);
+            Articulo a = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(req.queryParams("readmore")));
+            Comentario c = new Comentario(1, s, a.getAutor(), a);
+
+            ComentarioServices.getInstance().insertComment(c, a);
+
+            res.redirect("/post?readmore=" + req.queryParams("readmore"));
+            return null;
+        });
+
+        get("/", (request, response) -> {
+            DatabaseServices.cleanUp();
+            response.redirect("/home");
+            return null;
+        });
+
     }
 }

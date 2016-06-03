@@ -53,12 +53,14 @@
                         <a href="/home"><span class="glyphicon glyphicon-home"></span>  Home</a>
                     </li>
                     <li>
-                        <!-- Not yet implemented -->
                         <a href="/registration"><span class="glyphicon glyphicon-user"></span> ¡Regístrate!</a>
                     </li>
                     <li>
-                        <!-- Not yet implemented -->
-                        <a href="/login"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}</a>
+                        <#if iniciarSesion == "Cerrar Sesión">
+                                <a href="/logout"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}</a>
+                        <#else>
+                            <a href="/login"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}</a>
+                        </#if>
                     </li>
                 </ul>
             </form>

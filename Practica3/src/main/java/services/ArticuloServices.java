@@ -142,10 +142,11 @@ public class ArticuloServices extends DatabaseServices
         try
         {
             Articulo a = (Articulo) o;
+            a.setId(getNewID());
             con = getConnection();
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO ARTICULOS VALUES(?, ?, ?, ?, ?)");
-            ps.setLong(1, getNewID());
+            ps.setLong(1, a.getId());
             ps.setString(2, a.getTitulo());
             ps.setString(3, a.getCuerpo());
             ps.setString(4, a.getAutor().getUsername());
@@ -180,7 +181,11 @@ public class ArticuloServices extends DatabaseServices
             Articulo a = (Articulo) o;
             con = getConnection();
 
-            PreparedStatement ps = con.prepareStatement("UPDATE ARTICULOS SET ID = ?, TITULO = ?, CUERPO = ?, " +
+            PreparedStatement ps = con.prepareStatement("DELETE FROM ARTICULO_ETIQUETA WHERE ID_ARTICULO = ?");
+            ps.setLong(1, a.getId());
+            ps.execute();
+
+            ps = con.prepareStatement("UPDATE ARTICULOS SET ID = ?, TITULO = ?, CUERPO = ?, " +
                     "USERNAME = ?, FECHA = ? WHERE ID = ?");
             ps.setLong(1, a.getId());
             ps.setString(2, a.getTitulo());
@@ -188,6 +193,9 @@ public class ArticuloServices extends DatabaseServices
             ps.setString(4, a.getAutor().getUsername());
             ps.setDate(5, new java.sql.Date(a.getFecha().getTime()));
             ps.setLong(6, a.getId());
+
+            for(int i = 0; i < a.getListaEtiquetas().size(); i++)
+                EtiquetaServices.getInstance().insertTag(a.getListaEtiquetas().get(i), a);
 
             ps.execute();
         }
@@ -210,7 +218,22 @@ public class ArticuloServices extends DatabaseServices
             Articulo a = (Articulo) o;
             con = getConnection();
 
-            PreparedStatement ps = con.prepareStatement("DELETE FROM ARTICULO WHERE ID = ?");
+            PreparedStatement ps = con.prepareStatement("DELETE FROM ARTICULO_ETIQUETA WHERE ID_ARTICULO = ?");
+            ps.setLong(1, a.getId());
+
+            ps.execute();
+
+            ps = con.prepareStatement("DELETE FROM COMENTARIOS WHERE ID_ARTICULO = ?");
+            ps.setLong(1, a.getId());
+
+            ps.execute();
+
+            ps = con.prepareStatement("DELETE FROM ARTICULO_COMENTARIO WHERE ID_ARTICULO = ?");
+            ps.setLong(1, a.getId());
+
+            ps.execute();
+
+            ps = con.prepareStatement("DELETE FROM ARTICULOS WHERE ID = ?");
             ps.setLong(1, a.getId());
 
             ps.execute();

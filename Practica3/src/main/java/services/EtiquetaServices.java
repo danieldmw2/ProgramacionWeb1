@@ -54,7 +54,6 @@ public class EtiquetaServices extends DatabaseServices
         }
         catch(SQLException e)
         {
-            e.printStackTrace();
             return false;
         }
 
@@ -182,11 +181,13 @@ public class EtiquetaServices extends DatabaseServices
         Connection con = null;
         try
         {
+            ID = getNewID();
             Etiqueta u = (Etiqueta) o;
+            u.setId(ID);
             con = getConnection();
 
             PreparedStatement ps = con.prepareStatement("INSERT INTO ETIQUETAS VALUES(?, ?)");
-            ps.setLong(1, getNewID());
+            ps.setLong(1, u.getId());
             ps.setString(2, u.getEtiqueta());
 
             ps.execute();
@@ -201,13 +202,18 @@ public class EtiquetaServices extends DatabaseServices
         return true;
     }
 
+    private static long ID;
+
     public boolean insertTag(Etiqueta e, Articulo a)
     {
         Connection con = null;
         Etiqueta etiqueta = selectByName(e.getEtiqueta());
 
         if(etiqueta == null)
+        {
             insert(e);
+            e.setId(ID);
+        }
         else
             e = etiqueta;
 

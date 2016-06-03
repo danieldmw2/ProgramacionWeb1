@@ -23,7 +23,7 @@ public class Filtros
                     Usuario user = (Usuario) UsuarioServices.getInstance().selectByID(request.cookie("user"));
                     request.session(true).attribute("usuario", user);
                     Main.loggedInUser = user;
-                    Main.login = "Cerrar Session";
+                    Main.login = "Cerrar Sesión";
                 }
             }
         });
@@ -42,7 +42,7 @@ public class Filtros
 
             if(usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
-            else if(!art.getAutor().getUsername().equals(usuario.getUsername()) || !usuario.isAdministrator())
+            else if(!art.getAutor().getUsername().toLowerCase().equals(usuario.getUsername().toLowerCase()) && !usuario.isAdministrator())
                 halt(401, "Tiene que ser el autor del post o administrador del sistema para poder modificarlo");
         });
 

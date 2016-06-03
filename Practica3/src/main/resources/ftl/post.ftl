@@ -37,9 +37,10 @@
             <!-- Comments Form -->
             <div class="well">
                 <h4>Leave a comment:</h4>
-                <form role="form">
+                <form role="form" method="POST" action="/agregarComentario">
                     <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" name="commentcontent" rows="3"></textarea>
+                        <input type="hidden" name="readmore" value="${readmore}">
                     </div>
                     <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span> Post</button>
                 </form>

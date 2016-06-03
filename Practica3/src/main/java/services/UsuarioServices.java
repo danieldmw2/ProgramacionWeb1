@@ -1,5 +1,6 @@
 package services;
 
+import domain.Articulo;
 import domain.Usuario;
 
 import java.sql.*;
@@ -19,7 +20,7 @@ public class UsuarioServices extends DatabaseServices
 
     public static UsuarioServices getInstance()
     {
-        if(instance == null)
+        if (instance == null)
             instance = new UsuarioServices();
 
         return instance;
@@ -43,8 +44,7 @@ public class UsuarioServices extends DatabaseServices
         try
         {
             getConnection().createStatement().execute(statement);
-        }
-        catch(SQLException e)
+        } catch (SQLException e)
         {
             return false;
         }
@@ -63,7 +63,7 @@ public class UsuarioServices extends DatabaseServices
             PreparedStatement ps = con.prepareStatement("SELECT * FROM USUARIOS");
 
             ResultSet rs = ps.executeQuery();
-            while(rs.next())
+            while (rs.next())
             {
                 toReturn.add(new Usuario(
                         rs.getString("username"),
@@ -76,8 +76,7 @@ public class UsuarioServices extends DatabaseServices
 
 
             con.close();
-        }
-        catch (SQLException e)
+        } catch (SQLException e)
         {
             return null;
         }
@@ -108,8 +107,7 @@ public class UsuarioServices extends DatabaseServices
                     rs.getString("autor").equals("T"));
 
             con.close();
-        }
-        catch (SQLException e)
+        } catch (SQLException e)
         {
             return null;
         }
@@ -119,7 +117,7 @@ public class UsuarioServices extends DatabaseServices
 
     public boolean insert(Object o)
     {
-        if(!(o instanceof Usuario))
+        if (!(o instanceof Usuario))
             return false;
 
         Connection con = null;
@@ -134,13 +132,12 @@ public class UsuarioServices extends DatabaseServices
             ps.setString(3, u.getApellidos());
             ps.setString(4, u.getPassword());
             ps.setString(5, u.isAdministrator() ? "T" : "F");
-            ps.setString(6, u.isAutor()  ? "T" : "F");
+            ps.setString(6, u.isAutor() ? "T" : "F");
 
             ps.execute();
 
             con.close();
-        }
-        catch (SQLException e)
+        } catch (SQLException e)
         {
             return false;
         }
@@ -150,7 +147,7 @@ public class UsuarioServices extends DatabaseServices
 
     public boolean update(Object o)
     {
-        if(!(o instanceof Usuario))
+        if (!(o instanceof Usuario))
             return false;
 
         Connection con = null;
@@ -166,14 +163,13 @@ public class UsuarioServices extends DatabaseServices
             ps.setString(3, u.getApellidos());
             ps.setString(4, u.getPassword());
             ps.setString(5, u.isAdministrator() ? "T" : "F");
-            ps.setString(6, u.isAutor()  ? "T" : "F");
+            ps.setString(6, u.isAutor() ? "T" : "F");
             ps.setString(7, u.getUsername());
 
             ps.execute();
 
             con.close();
-        }
-        catch (SQLException e)
+        } catch (SQLException e)
         {
             return false;
         }
@@ -183,7 +179,7 @@ public class UsuarioServices extends DatabaseServices
 
     public boolean delete(Object o)
     {
-        if(!(o instanceof Usuario))
+        if (!(o instanceof Usuario))
             return false;
 
         Connection con = null;
@@ -192,14 +188,21 @@ public class UsuarioServices extends DatabaseServices
             Usuario u = (Usuario) o;
             con = getConnection();
 
-            PreparedStatement ps = con.prepareStatement("DELETE FROM USUARIOS WHERE LOWER (USERNAME) = LOWER (?)");
+            PreparedStatement ps = con.prepareStatement("SELECT A.* FROM ARTICULOS A, USUARIOS U WHERE LOWER(A.USERNAME) = LOWER(?)");
             ps.setString(1, u.getUsername());
+            ResultSet rs = ps.executeQuery();
 
+            while (rs.next())
+            {
+                ArticuloServices.getInstance().delete(new Articulo(rs.getLong("id"),null,null,null,null,null,null));
+            }
+
+            ps = con.prepareStatement("DELETE FROM USUARIOS WHERE LOWER (USERNAME) = LOWER (?)");
+            ps.setString(1, u.getUsername());
             ps.execute();
 
             con.close();
-        }
-        catch (SQLException e)
+        } catch (SQLException e)
         {
             return false;
         }
