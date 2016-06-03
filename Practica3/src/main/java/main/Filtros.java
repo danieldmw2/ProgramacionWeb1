@@ -1,0 +1,71 @@
+package main;
+
+import domain.Articulo;
+import domain.Usuario;
+import services.ArticuloServices;
+
+import static spark.Spark.before;
+import static spark.Spark.halt;
+
+/**
+ * Created by Daniel's Laptop on 6/2/2016.
+ */
+public class Filtros
+{
+    public void aplicarFiltros()
+    {
+        before("/login",(request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+            if(usuario != null)
+            {
+                response.redirect("/home");
+            }
+        });
+
+        before("/modificarArticulo",(request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+            Articulo art = (Articulo) ArticuloServices.getInstance().selectByID(Integer.parseInt(request.queryParams("articulo")));
+
+            if(usuario == null)
+                halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
+            else if(art.getAutor().getUsername().equals(usuario.getUsername()) || usuario.isAdministrator())
+                halt(401, "Tiene que ser el autor del post o administrador del sistema para poder modificarlo");
+        });
+
+        before("/borrarArticuloPost",(request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+            Articulo art = (Articulo) ArticuloServices.getInstance().selectByID(Integer.parseInt(request.queryParams("articulo")));
+
+            if(usuario == null)
+                halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
+            else if(art.getAutor().getUsername().equals(usuario.getUsername()) || usuario.isAdministrator())
+                halt(401, "Tiene que ser el autor del post o administrador del sistema para poder borrarlo");
+        });
+
+        before("/articleCreation",(request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+
+            if(usuario == null)
+                halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
+            else if(usuario.isAutor() || usuario.isAdministrator())
+                halt(401, "Tiene que ser el autor del post o administrador del sistema para poder crear un articulo");
+        });
+
+        before("/agregarComentario",(request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+
+            if(usuario == null)
+                halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
+        });
+
+        before("/zonaAdmin/*", (request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+
+            if(usuario == null)
+                halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
+            else if(usuario.isAdministrator())
+                halt(401, "Tiene que ser administrador del sistema para poder entrar a esta area");
+        });
+
+    }
+}
