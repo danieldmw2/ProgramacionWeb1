@@ -7,6 +7,8 @@ import domain.Comentario;
 import domain.Etiqueta;
 import domain.Usuario;
 import freemarker.template.Template;
+import main.Filtros;
+import main.ZonaAdmin;
 import services.*;
 import spark.ModelAndView;
 import freemarker.template.Configuration;
@@ -40,6 +42,9 @@ public class Main
         FreeMarkerEngine freeMarker = new FreeMarkerEngine();
         freeMarker.setConfiguration(configuration);
 
+        Filtros.aplicarFiltros();
+        ZonaAdmin.crearZonaAdmin(freeMarker);
+
         //Pagina principal de la aplicacion, muestra los diferentes articulos de los mas recientes a los mas antiguos
         //Solo se muestran 70 caracteres del texto (excluyendo el titulo del articulo), y se incluye un enlace para el post completo
         //Se visualizan todas las etiquetas del articulo
@@ -60,7 +65,6 @@ public class Main
                 e.printStackTrace();
             }
             ModelAndView mv = new ModelAndView(map, "home.ftl");
-            System.out.println(mv.toString());
             return mv;
         }, freeMarker);
 
@@ -99,16 +103,13 @@ public class Main
 
         post("/registrationPost", (req, res) ->
         {
-            System.out.println(req.queryParams("autor"));
             boolean esAutor = false;
 
-            if(req.queryParams("autor").equals("on"))
+            if(req.queryParams("autor") != null)
                 esAutor = true;
-            else
-                esAutor = false;
 
             Usuario usuario = new Usuario(req.queryParams("username"), req.queryParams("name"),
-                    req.queryParams("apellidos"), req.queryParams("password"), esAutor, false);
+                    req.queryParams("apellidos"), req.queryParams("password"), false, esAutor);
             UsuarioServices.getInstance().insert(usuario);
 
             loggedInUser = usuario;
@@ -141,7 +142,6 @@ public class Main
         //Se utiliza para insertar los articulos
         post("/articleCreationPost", (req, res) ->
         {
-            System.out.println(req.queryParams("titulo") + " " + req.queryParams("cuerpo") + " " + req.queryParams("etiquetas"));
             String[] sa = req.queryParams("etiquetas").split(",");
             ArrayList<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
             ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
@@ -166,7 +166,7 @@ public class Main
         get("/login", (req, res) ->
         {
             loggedInUser = null;
-            req.session().attribute("loggedInUser", loggedInUser);
+            req.session().attribute("usuario", loggedInUser);
             login = "Iniciar Sesión";
 
             HashMap<String, Object> map = new HashMap<>();

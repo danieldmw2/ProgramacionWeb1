@@ -8,7 +8,7 @@
         <!-- Blog Post Content Column -->
         <div class="col-lg-8">
 
-            <form role="form" method="POST" action="/registrationPost" class="inline">
+            <form role="form" method="POST" action="registrationPost" class="inline">
 
                 <div class="post-preview">
                     <h3 class="post-title">Para registrarse favor de llenar los campos que se presentan a continuacion (Campos con <span style="color: red">*</span> son mandatorios):</h3>
