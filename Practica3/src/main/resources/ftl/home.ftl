@@ -25,7 +25,7 @@
                     </i>
                     <br />
 
-                    <button name="${articulo.id}">Read More <span class="glyphicon glyphicon-chevron-right"></span></button>
+                    <button name="readmore" value="${articulo.id}">Read More <span class="glyphicon glyphicon-chevron-right"></span></button>
 
                     <h4>Tags:</h4>
                     <ul class="list-inline list-tags">
@@ -35,7 +35,7 @@
                     </ul>
 
                     <button class="btn btn-primary">Editar Articulo</button>
-                    <button class="btn btn-primary">Eliminar Articulo</button>
+                    <button name="borrarArticulo" value="${articulo.id}" class="btn btn-primary">Eliminar Articulo</button>
 
                 </div>
                 <hr>

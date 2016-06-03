@@ -24,6 +24,8 @@ import static spark.Spark.*;
 public class Main
 {
     static Usuario loggedInUser = null;
+    static String login = "Iniciar Sesión";
+
     public static void main(String[] args)
     {
         staticFiles.location("/public");
@@ -42,19 +44,19 @@ public class Main
             try
             {
                 ArrayList<Object> articulos = ArticuloServices.getInstance().select();
-
                 map = new HashMap<>();
                 map.put("articulos", articulos);
                 map.put("title", "Let's Blog a bit!");
-                map.put("house", "Home");
+                map.put("home", "Home");
                 map.put("registro", "¡Regístrate!");
-                map.put("login", "Iniciar Sesión");
+                map.put("iniciarSesion", login);
             } catch (Exception e)
             {
                 e.printStackTrace();
             }
-
-            return new ModelAndView(map, "home.ftl");
+            ModelAndView mv = new ModelAndView(map, "home.ftl");
+            System.out.println(mv.toString());
+            return mv;
         }, freeMarker);
 
 
@@ -64,14 +66,10 @@ public class Main
             HashMap<String, Object> map = null;
             try {
 
-                String id = "";
-                for (String s : req.queryParams())
-                    id = s;
+                String id = req.queryParams("readmore");
 
                 Articulo a  = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(id));
                 ArrayList<Comentario> listComentarios = ComentarioServices.getInstance().select(a);
-
-
 
                 if (a != null) {
                     map = new HashMap<>();
@@ -82,6 +80,9 @@ public class Main
                     map.put("fecha", a.getFecha());
                     map.put("contenido", a.getCuerpo());
                     map.put("comentarios", listComentarios);
+                    map.put("home", "Home");
+                    map.put("registro", "¡Regístrate!");
+                    map.put("iniciarSesion", login);
                 }
             } catch (Exception e)
             {
@@ -93,13 +94,26 @@ public class Main
 
         post("/registrationPost", (req, res) ->
         {
+            System.out.println(req.queryParams("autor"));
+            boolean esAutor = false;
+
+            if(req.queryParams("autor").equals("on"))
+                esAutor = true;
+            else
+                esAutor = false;
+
             Usuario usuario = new Usuario(req.queryParams("username"), req.queryParams("name"),
-                    req.queryParams("apellidos"), req.queryParams("password"), false, false);
+                    req.queryParams("apellidos"), req.queryParams("password"), esAutor, false);
             UsuarioServices.getInstance().insert(usuario);
+
+            loggedInUser = usuario;
+
+            req.session().attribute("loggedInUser", loggedInUser);
             res.redirect("/home");
             return modelAndView(null, "");
         });
 
+        //Es la interfaz que se utiliza para crear articulos
         get("/articleCreation", (req, res) ->
         {
             HashMap<String, Object> map = null;
@@ -107,6 +121,9 @@ public class Main
             {
                 map = new HashMap<String, Object>();
                 map.put("title", "Article");
+                map.put("home", "Home");
+                map.put("registro", "¡Regístrate!");
+                map.put("iniciarSesion", login);
 
             } catch (Exception e)
             {
@@ -115,13 +132,22 @@ public class Main
             return new ModelAndView(map,"articleCreation.ftl");
         }, freeMarker);
 
+
+        //Se utiliza para insertar los articulos
         post("/articleCreationPost", (req, res) ->
         {
-            String[] sa = req.queryParams("tags").split(",");
-            long id = ArticuloServices.getInstance().select().size()+1;
+            System.out.println(req.queryParams("titulo") + " " + req.queryParams("cuerpo") + " " + req.queryParams("etiquetas"));
+            String[] sa = req.queryParams("etiquetas").split(",");
+            ArrayList<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
+            ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
+            for(int i = 0; i<sa.length; i++)
+            {
+                etiquetas.add(new Etiqueta(i, sa[i]));
+            }
+
             try
             {
-                ArticuloServices.getInstance().insert(new Articulo(id, req.queryParams("titulo"),req.queryParams("cuerpo"),loggedInUser, new Date(), null, null));
+                ArticuloServices.getInstance().insert(new Articulo(1, req.queryParams("titulo"),req.queryParams("cuerpo"),loggedInUser, new Date(), comentarios,etiquetas));
             } catch(Exception e)
             {
                 e.printStackTrace();
@@ -134,20 +160,29 @@ public class Main
 
         get("/login", (req, res) ->
         {
-            List<Object> list = new ArrayList<>();
-            list.add(new Object());
-            list.add(new Object());
+            loggedInUser = null;
+            req.session().attribute("loggedInUser", loggedInUser);
+            login = "Iniciar Sesión";
+
             HashMap<String, Object> map = new HashMap<>();
             map.put("title", "Article");
-            map.put("items", list);
-            map.put("postTitle", "Hello my friends, I am dying.");
-            map.put("user", "Ariel Salce");
+            map.put("home", "Home");
+            map.put("registro", "¡Regístrate!");
+            map.put("iniciarSesion", login);
             return new ModelAndView(map,"login.ftl");
         }, freeMarker);
 
         post("/loginPost", (req, res) ->
         {
-            if(req.queryParams("username").equals(loggedInUser.getUsername()))
+            System.out.println(req.queryParams("username"));
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            loggedInUser = (Usuario)UsuarioServices.getInstance().selectByID(req.queryParams("username"));
+            req.session(true).attribute("usuario", loggedInUser);
+
+            login = "Cerrar Sesión";
+            map.put("home", "Home");
+            map.put("registro", "¡Regístrate!");
+            map.put("iniciarSesion", login);
 
             res.redirect("/home");
             return new ModelAndView(null, "");
@@ -155,13 +190,11 @@ public class Main
 
         get("/registration", (req, res)->
         {
-            List<Object> list = new ArrayList<>();
-            list.add(new Object());
-            list.add(new Object());
             HashMap<String, Object> map = new HashMap<>();
             map.put("title", "Article");
-            map.put("items", list);
-            map.put("user", "Ariel Salce");
+            map.put("home", "Home");
+            map.put("registro", "¡Regístrate!");
+            map.put("iniciarSesion", login);
             return new ModelAndView(map, "registration.ftl");
         }, freeMarker);
 

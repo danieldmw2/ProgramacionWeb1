@@ -58,7 +58,7 @@
                     </li>
                     <li>
                         <!-- Not yet implemented -->
-                        <a href="/login"><span class="glyphicon glyphicon-log-in"></span> Iniciar Sesión</a>
+                        <a href="/login"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}</a>
                     </li>
                 </ul>
             </form>

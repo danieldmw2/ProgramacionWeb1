@@ -8,15 +8,15 @@
         <!-- Blog Post Content Column -->
         <div class="col-lg-8">
 
-            <form role="form" action="post" class="inline">
+            <form role="form" method="POST" action="/loginPost" class="inline">
 
                 <div class="row">
 
                     <div class="col-lg-offset-4 col-lg-4 col-md-offset-4 col-md-4 col-sm-offset-4 col-col-sm-6 col-xs-12">
-                        <strong>Nombre:</strong>
+                        <strong>Nombre de Usuario:</strong>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
-                        <input name="name" type="text" required>
+                        <input name="username" type="text" required>
                     </div>
                 </div>
 
