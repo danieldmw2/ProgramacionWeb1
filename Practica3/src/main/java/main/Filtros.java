@@ -38,7 +38,7 @@ public class Filtros
 
         before("/modificarArticulo",(request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
-            Articulo art = (Articulo) ArticuloServices.getInstance().selectByID(Integer.parseInt(request.queryParams("articulo")));
+            Articulo art = (Articulo) ArticuloServices.getInstance().selectByID(Integer.parseInt(request.queryParams("modificarArticulo")));
 
             if(usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
@@ -48,7 +48,7 @@ public class Filtros
 
         before("/borrarArticuloPost",(request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
-            Articulo art = (Articulo) ArticuloServices.getInstance().selectByID(Integer.parseInt(request.queryParams("articulo")));
+            Articulo art = (Articulo) ArticuloServices.getInstance().selectByID(Integer.parseInt(request.queryParams("borrarArticulo")));
 
             if(usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
