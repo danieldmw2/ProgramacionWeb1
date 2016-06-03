@@ -21,7 +21,12 @@
                         ${articulo.titulo}
                     </h2>
                     <i class="post-subtitle">
-                        ${articulo.cuerpo?substring(0,70) + "..."}
+                        <#assign cuerpo=articulo.cuerpo>
+                        <#if cuerpo?length &lt; 70>
+                            ${cuerpo}
+                        <#else>
+                            ${cuerpo?substring(0,70) + "..."}
+                        </#if>
                     </i>
                     <br />
 

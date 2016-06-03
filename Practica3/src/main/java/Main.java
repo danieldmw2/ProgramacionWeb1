@@ -18,8 +18,10 @@ import spark.template.freemarker.FreeMarkerEngine;
 import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.util.*;
+//import spark.debug.
 
 import static spark.Spark.*;
+import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main
 {
@@ -29,6 +31,9 @@ public class Main
     public static void main(String[] args)
     {
         staticFiles.location("/public");
+
+        // Add this line to your project to enable the debug screen
+        enableDebugScreen();
 
         Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/ftl");
