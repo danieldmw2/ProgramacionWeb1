@@ -25,7 +25,7 @@
                         <strong>Contraseña:</strong>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                        <input name="password" type="text" required>
+                        <input name="password" type="password" required>
                     </div>
                 </div>
 

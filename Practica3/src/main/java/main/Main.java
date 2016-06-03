@@ -1,4 +1,4 @@
-/**
+package main; /**
  * Created by Daniel's Laptop on 5/29/2016.
  */
 
@@ -6,17 +6,11 @@ import domain.Articulo;
 import domain.Comentario;
 import domain.Etiqueta;
 import domain.Usuario;
-import freemarker.template.Template;
 import services.*;
 import spark.ModelAndView;
 import freemarker.template.Configuration;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 import spark.template.freemarker.FreeMarkerEngine;
 
-import java.io.StringWriter;
-import java.lang.reflect.Array;
 import java.util.*;
 //import spark.debug.
 
@@ -25,8 +19,8 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Main
 {
-    static Usuario loggedInUser = null;
-    static String login = "Iniciar Sesión";
+    public static Usuario loggedInUser = null;
+    public static String login = "Iniciar Sesión";
 
     public static void main(String[] args)
     {
@@ -39,6 +33,9 @@ public class Main
         configuration.setClassForTemplateLoading(Main.class, "/ftl");
         FreeMarkerEngine freeMarker = new FreeMarkerEngine();
         freeMarker.setConfiguration(configuration);
+
+        Filtros.aplicarFiltros();
+        ZonaAdmin.crearZonaAdmin(freeMarker);
 
         //Pagina principal de la aplicacion, muestra los diferentes articulos de los mas recientes a los mas antiguos
         //Solo se muestran 70 caracteres del texto (excluyendo el titulo del articulo), y se incluye un enlace para el post completo
@@ -60,7 +57,6 @@ public class Main
                 e.printStackTrace();
             }
             ModelAndView mv = new ModelAndView(map, "home.ftl");
-            System.out.println(mv.toString());
             return mv;
         }, freeMarker);
 
@@ -109,21 +105,18 @@ public class Main
 
         post("/registrationPost", (req, res) ->
         {
-            System.out.println(req.queryParams("autor"));
             boolean esAutor = false;
 
-            if(req.queryParams("autor").equals("on"))
+            if(req.queryParams("autor") != null)
                 esAutor = true;
-            else
-                esAutor = false;
 
             Usuario usuario = new Usuario(req.queryParams("username"), req.queryParams("name"),
-                    req.queryParams("apellidos"), req.queryParams("password"), esAutor, false);
+                    req.queryParams("apellidos"), req.queryParams("password"), false, esAutor);
             UsuarioServices.getInstance().insert(usuario);
 
             loggedInUser = usuario;
 
-            req.session().attribute("loggedInUser", loggedInUser);
+            req.session().attribute("usuario", usuario);
             res.redirect("/home");
             return modelAndView(null, "");
         });
@@ -151,7 +144,6 @@ public class Main
         //Se utiliza para insertar los articulos
         post("/articleCreationPost", (req, res) ->
         {
-            System.out.println(req.queryParams("titulo") + " " + req.queryParams("cuerpo") + " " + req.queryParams("etiquetas"));
             String[] sa = req.queryParams("etiquetas").split(",");
             ArrayList<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
             ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
@@ -176,7 +168,7 @@ public class Main
         get("/login", (req, res) ->
         {
             loggedInUser = null;
-            req.session().attribute("loggedInUser", loggedInUser);
+            req.session().attribute("usuario", loggedInUser);
             login = "Iniciar Sesión";
 
             HashMap<String, Object> map = new HashMap<>();
@@ -193,6 +185,7 @@ public class Main
             HashMap<String, Object> map = new HashMap<String, Object>();
             loggedInUser = (Usuario)UsuarioServices.getInstance().selectByID(req.queryParams("username"));
             req.session(true).attribute("usuario", loggedInUser);
+            res.cookie("user", loggedInUser.getUsername()); // TODO Donde se haga el logout esto debe ser eliminado o ser igualado a nada
 
             login = "Cerrar Sesión";
             map.put("home", "Home");

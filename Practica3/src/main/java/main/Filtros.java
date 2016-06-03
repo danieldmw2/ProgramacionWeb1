@@ -3,6 +3,7 @@ package main;
 import domain.Articulo;
 import domain.Usuario;
 import services.ArticuloServices;
+import services.UsuarioServices;
 
 import static spark.Spark.before;
 import static spark.Spark.halt;
@@ -12,8 +13,21 @@ import static spark.Spark.halt;
  */
 public class Filtros
 {
-    public void aplicarFiltros()
+    public static void aplicarFiltros()
     {
+        before("/*", (request, response) -> {
+            if(Main.loggedInUser == null)
+            {
+                if(request.cookie("user") != null && !request.cookie("user").equals(""))
+                {
+                    Usuario user = (Usuario) UsuarioServices.getInstance().selectByID(request.cookie("user"));
+                    request.session(true).attribute("usuario", user);
+                    Main.loggedInUser = user;
+                    Main.login = "Cerrar Session";
+                }
+            }
+        });
+
         before("/login",(request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
             if(usuario != null)
@@ -28,7 +42,7 @@ public class Filtros
 
             if(usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
-            else if(art.getAutor().getUsername().equals(usuario.getUsername()) || usuario.isAdministrator())
+            else if(!art.getAutor().getUsername().equals(usuario.getUsername()) || !usuario.isAdministrator())
                 halt(401, "Tiene que ser el autor del post o administrador del sistema para poder modificarlo");
         });
 
@@ -38,7 +52,7 @@ public class Filtros
 
             if(usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
-            else if(art.getAutor().getUsername().equals(usuario.getUsername()) || usuario.isAdministrator())
+            else if(!art.getAutor().getUsername().equals(usuario.getUsername()) && !usuario.isAdministrator())
                 halt(401, "Tiene que ser el autor del post o administrador del sistema para poder borrarlo");
         });
 
@@ -47,8 +61,8 @@ public class Filtros
 
             if(usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
-            else if(usuario.isAutor() || usuario.isAdministrator())
-                halt(401, "Tiene que ser el autor del post o administrador del sistema para poder crear un articulo");
+            else if(!usuario.isAutor() && !usuario.isAdministrator())
+                halt(401, "Tiene que ser autor o administrador del sistema para poder crear un articulo");
         });
 
         before("/agregarComentario",(request, response) -> {
@@ -63,7 +77,7 @@ public class Filtros
 
             if(usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
-            else if(usuario.isAdministrator())
+            else if(!usuario.isAdministrator())
                 halt(401, "Tiene que ser administrador del sistema para poder entrar a esta area");
         });
 

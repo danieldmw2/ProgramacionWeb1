@@ -1,6 +1,6 @@
 <#import "master.ftl" as layout/>
 <!DOCTYPE html>
-<@layout.master title="Hello">
+<@layout.master title="ListarUsuario">
 
 <div class="container-fluid">
     <div class="row">
@@ -24,15 +24,15 @@
                                 <tbody>
 
                                     <#list users as e>
-                                    <tr onclick=\"document.location='\\ZonaAdmin\\deleteUser?id=${e.username}';\">
+                                    <tr onclick="document.location='\\zonaAdmin\\deleteUser?id=${e.username}';">
                                         <div class="row">
                                             <div class="col-lg-9 col-md-9">
                                                 <td id="username">${e.username}</td>
                                                 <td id="nombre">${e.nombre}</td>
                                                 <td id="apellidos">${e.apellidos}</td>
                                                 <td id="password">${e.password}</td>
-                                                <td id="autor">${e.autor}</td>
-                                                <td id="admin">${e.administrador}</td>
+                                                <td id="autor">${e.autor?c}</td>
+                                                <td id="admin">${e.administrator?c}</td>
                                             </div>
                                         </div>
                                     </tr>
