@@ -21,6 +21,7 @@ public class Main
 {
     public static Usuario loggedInUser = null;
     public static String login = "Iniciar Sesión";
+    public static int pager = 5;
 
     public static void main(String[] args)
     {
@@ -55,6 +56,7 @@ public class Main
                 map.put("home", "Home");
                 map.put("registro", "¡Regístrate!");
                 map.put("iniciarSesion", login);
+                map.put("numPaginacion", pager);
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -306,6 +308,42 @@ public class Main
             response.redirect("/home");
             return null;
         });
+
+        //Para mostrar los articulos cuando se cliquea una etiqueta especifica.
+        get("/mostrarArticulosEtiqueta", (request, response) -> {
+
+            int id = Integer.parseInt(request.queryParams("idetiqueta"));
+            ArrayList<Articulo> listaFinal = new ArrayList<Articulo>();
+            ArrayList<Object> lista = ArticuloServices.getInstance().select();
+            HashMap<String, Object> map = new HashMap<>();
+            for(Object a: lista)
+            {
+                for(Etiqueta e: ((Articulo)a).getListaEtiquetas())
+                {
+                    if(e.getId() == id)
+                    {
+                        listaFinal.add( ((Articulo)a) );
+                    }
+                }
+            }
+
+            map.put("articulos", listaFinal);
+            map.put("iniciarSesion", login);
+            //System.out.println(listaFinal.size() + " Nombres " + listaFinal.get(0) + ", " + listaFinal.get(1));
+            return new ModelAndView(map,"articulosPorEtiqueta.ftl");
+        }, freeMarker);
+
+        //Para la paginacion
+        post("/paginacionPost", (request, response) ->
+        {
+
+            pager += 5;
+
+            response.redirect("/home");
+            return null;
+        });
+
+
 
     }
 }
