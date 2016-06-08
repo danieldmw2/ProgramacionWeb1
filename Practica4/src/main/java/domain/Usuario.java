@@ -1,18 +1,31 @@
 package domain;
 
+import services.UsuarioServices;
+
+import javax.persistence.*;
+import static spark.Spark.*;
+import static spark.debug.DebugScreen.enableDebugScreen;
+
 /**
  * Created by Daniel's Laptop on 5/31/2016.
  */
+
+@Entity
 public class Usuario
 {
-    private String username;
-    private String nombre;
-    private String apellidos;
-    private String password;
-    private boolean administrator;
-    private boolean autor;
+    @Id private String username;
+    @Column(nullable = false) private String nombre;
+    @Column(nullable = false) private String apellidos;
+    @Column(nullable = false) private String password;
+    @Column(nullable = false) private Boolean administrator;
+    @Column(nullable = false) private Boolean autor;
 
-    public Usuario(String username, String nombre, String apellidos, String password, boolean administrator, boolean autor)
+    public Usuario()
+    {
+
+    }
+
+    public Usuario(String username, String nombre, String apellidos, String password, Boolean administrator, Boolean autor)
     {
         this.username = username;
         this.nombre = nombre;
@@ -62,7 +75,7 @@ public class Usuario
         this.password = password;
     }
 
-    public boolean isAdministrator()
+    public Boolean isAdministrator()
     {
         return administrator;
     }
@@ -72,7 +85,7 @@ public class Usuario
         this.administrator = administrator;
     }
 
-    public boolean isAutor()
+    public Boolean isAutor()
     {
         return autor;
     }

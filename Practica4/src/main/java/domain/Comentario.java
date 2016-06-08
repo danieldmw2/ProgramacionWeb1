@@ -1,19 +1,25 @@
 package domain;
 
+import javax.persistence.*;
+
 /**
  * Created by Daniel's Laptop on 5/31/2016.
  */
+@Entity
 public class Comentario
 {
-    private long id;
-    private String comentario;
-    private Usuario autor;
-    private Articulo articulo;
+    @Id @GeneratedValue private Long id;
+    @Column(nullable = false) private String comentario;
+    @OneToOne(optional = false) private Usuario autor;
+    @OneToOne(optional = false) private Articulo articulo;
 
-    public Comentario(long id, String comentario, Usuario autor, Articulo articulo)
+    public  Comentario()
     {
 
-        this.id = id;
+    }
+
+    public Comentario( String comentario, Usuario autor, Articulo articulo)
+    {
         this.comentario = comentario;
         this.autor = autor;
         this.articulo = articulo;

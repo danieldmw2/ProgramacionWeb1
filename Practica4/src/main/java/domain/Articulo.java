@@ -1,25 +1,30 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.List;
 import java.util.Date;
+import javax.persistence.*;
 
 /**
  * Created by Daniel's Laptop on 5/31/2016.
  */
+@Entity
 public class Articulo
 {
-    private long id;
-    private String titulo;
-    private String cuerpo;
-    private Usuario autor;
-    private Date fecha;
-    private ArrayList<Comentario> listaComentarios;
-    private ArrayList<Etiqueta> listaEtiquetas;
+    @Id @GeneratedValue private Long id;
+    @Column(nullable = false) private String titulo;
+    @Column(nullable = false) private String cuerpo;
+    @OneToOne(optional = false) private Usuario autor;
+    @Column(nullable = false) private Date fecha;
+    @OneToMany private List<Comentario> listaComentarios;
+    @OneToMany private List<Etiqueta> listaEtiquetas;
 
-    public Articulo(long id, String titulo, String cuerpo, Usuario autor, Date fecha, ArrayList<Comentario> listaComentarios, ArrayList<Etiqueta> listaEtiquetas)
+    public Articulo()
     {
-        this.id = id;
+
+    }
+
+    public Articulo(String titulo, String cuerpo, Usuario autor, Date fecha, List<Comentario> listaComentarios, List<Etiqueta> listaEtiquetas)
+    {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
@@ -78,22 +83,22 @@ public class Articulo
         this.fecha = fecha;
     }
 
-    public ArrayList<Comentario> getListaComentarios()
+    public List<Comentario> getListaComentarios()
     {
         return listaComentarios;
     }
 
-    public void setListaComentarios(ArrayList<Comentario> listaComentarios)
+    public void setListaComentarios(List<Comentario> listaComentarios)
     {
         this.listaComentarios = listaComentarios;
     }
 
-    public ArrayList<Etiqueta> getListaEtiquetas()
+    public List<Etiqueta> getListaEtiquetas()
     {
         return listaEtiquetas;
     }
 
-    public void setListaEtiquetas(ArrayList<Etiqueta> listaEtiquetas)
+    public void setListaEtiquetas(List<Etiqueta> listaEtiquetas)
     {
         this.listaEtiquetas = listaEtiquetas;
     }

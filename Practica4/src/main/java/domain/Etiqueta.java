@@ -1,16 +1,23 @@
 package domain;
 
+import javax.persistence.*;
+
 /**
  * Created by Daniel's Laptop on 5/31/2016.
  */
+@Entity
 public class Etiqueta
 {
-    private long id;
-    private String etiqueta;
+    @Id @GeneratedValue private Long id;
+    @Column(unique = true, nullable = false) private String etiqueta;
 
-    public Etiqueta(long id, String etiqueta)
+    public Etiqueta()
     {
-        this.id = id;
+
+    }
+
+    public Etiqueta(String etiqueta)
+    {
         this.etiqueta = etiqueta;
     }
 

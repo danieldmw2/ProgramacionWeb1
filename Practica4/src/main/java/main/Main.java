@@ -1,4 +1,6 @@
-package main; /**
+package main;
+
+/**
  * Created by Daniel's Laptop on 5/29/2016.
  */
 
@@ -12,7 +14,6 @@ import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.*;
-//import spark.debug.
 
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
@@ -29,7 +30,6 @@ public class Main
 
         // Add this line to your project to enable the debug screen
         enableDebugScreen();
-        DatabaseServices.startUp();
 
         Configuration configuration = new Configuration();
         configuration.setClassForTemplateLoading(Main.class, "/ftl");
@@ -47,7 +47,7 @@ public class Main
             HashMap<String, Object> map = null;
             try
             {
-                ArrayList<Object> articulos = ArticuloServices.getInstance().select();
+                List<Articulo> articulos = ArticuloServices.getInstance().select();
                 Collections.sort(articulos, (Object a, Object b)->((Articulo)a).getFecha().compareTo(((Articulo)a).getFecha()));
                 Collections.reverse(articulos);
                 map = new HashMap<>();
@@ -57,6 +57,7 @@ public class Main
                 map.put("registro", "¡Regístrate!");
                 map.put("iniciarSesion", login);
                 map.put("numPaginacion", pager);
+                
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -76,7 +77,6 @@ public class Main
                 String id = req.queryParams("readmore");
 
                 Articulo a  = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(id));
-                ArrayList<Comentario> listComentarios = ComentarioServices.getInstance().select(a);
 
                 if (a != null) {
                     map = new HashMap<>();
@@ -87,7 +87,7 @@ public class Main
                     map.put("tags", a.getListaEtiquetas());
                     map.put("fecha", a.getFecha());
                     map.put("contenido", a.getCuerpo());
-                    map.put("comentarios", listComentarios);
+                    map.put("comentarios", a.getListaComentarios());
                     map.put("home", "Home");
                     map.put("registro", "¡Regístrate!");
                     map.put("iniciarSesion", login);
@@ -158,12 +158,12 @@ public class Main
             ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
             for(int i = 0; i<sa.length; i++)
             {
-                etiquetas.add(new Etiqueta(i, sa[i]));
+                etiquetas.add(new Etiqueta(sa[i]));
             }
 
             try
             {
-                ArticuloServices.getInstance().insert(new Articulo(1, req.queryParams("titulo"),req.queryParams("cuerpo"),loggedInUser, new Date(), comentarios,etiquetas));
+                ArticuloServices.getInstance().insert(new Articulo(req.queryParams("titulo"),req.queryParams("cuerpo"),loggedInUser, new Date(), comentarios,etiquetas));
             } catch(Exception e)
             {
                 e.printStackTrace();
@@ -262,11 +262,11 @@ public class Main
 
             ArrayList<Etiqueta> ets = new ArrayList<Etiqueta>();
             for(int i = 0; i < ss.length ; i++)
-                ets.add(new Etiqueta(1, ss[i]));
+                ets.add(new Etiqueta(ss[i]));
 
             Articulo a1 = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(id));
 
-            Articulo a = new Articulo(Integer.parseInt(id), req.queryParams("titulo"), req.queryParams("cuerpo"),
+            Articulo a = new Articulo(req.queryParams("titulo"), req.queryParams("cuerpo"),
                     a1.getAutor(), a1.getFecha(), new ArrayList<Comentario>(), ets);
 
             ArticuloServices.getInstance().update(a);
@@ -291,16 +291,13 @@ public class Main
             String s = req.queryParams("commentcontent");
             System.out.println(s);
             Articulo a = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(req.queryParams("readmore")));
-            Comentario c = new Comentario(1, s, loggedInUser, a);
-
-            ComentarioServices.getInstance().insertComment(c, a);
+            a.getListaComentarios().add(new Comentario(s, loggedInUser, a));
 
             res.redirect("/post?readmore=" + req.queryParams("readmore"));
             return null;
         });
 
         get("/", (request, response) -> {
-            DatabaseServices.cleanUp();
             response.cookie("user", "");
             request.session(true).attribute("usuario", null);
             login = "Iniciar Sesión";
@@ -314,7 +311,7 @@ public class Main
 
             int id = Integer.parseInt(request.queryParams("idetiqueta"));
             ArrayList<Articulo> listaFinal = new ArrayList<Articulo>();
-            ArrayList<Object> lista = ArticuloServices.getInstance().select();
+            List<Articulo> lista = ArticuloServices.getInstance().select();
             HashMap<String, Object> map = new HashMap<>();
             for(Object a: lista)
             {
