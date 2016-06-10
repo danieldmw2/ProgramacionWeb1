@@ -31,8 +31,8 @@
                                                 <td id="nombre">${e.nombre}</td>
                                                 <td id="apellidos">${e.apellidos}</td>
                                                 <td id="password">${e.password}</td>
-                                                <td id="autor">${e.autor?c}</td>
-                                                <td id="admin">${e.administrator?c}</td>
+                                                <td id="autor">${e.isAutor()?c}</td>
+                                                <td id="admin">${e.isAdministrator()?c}</td>
                                             </div>
                                         </div>
                                     </tr>

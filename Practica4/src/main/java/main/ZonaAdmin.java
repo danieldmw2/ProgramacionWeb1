@@ -19,7 +19,7 @@ public class ZonaAdmin
         get("/zonaAdmin/users", (request, response) -> {
 
             HashMap<String, Object> map = new HashMap<String, Object>();
-
+            System.out.println(UsuarioServices.getInstance().select().get(0).isAutor());
             map.put("users", UsuarioServices.getInstance().select());
             map.put("title", "ListarUsuario");
             map.put("home", "Home");
@@ -53,6 +53,7 @@ public class ZonaAdmin
         });
 
         get("/zonaAdmin/deleteUser", (request, response) -> {
+            System.out.println("lol");
             UsuarioServices.getInstance().delete(UsuarioServices.getInstance().selectByID(request.queryParams("id")));
             response.redirect("/zonaAdmin/users");
             return null;

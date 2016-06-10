@@ -39,6 +39,9 @@ public class Main
         Filtros.aplicarFiltros();
         ZonaAdmin.crearZonaAdmin(freeMarker);
 
+        if(UsuarioServices.getInstance().selectByID("USER") == null)
+            UsuarioServices.getInstance().insert(new Usuario("USER", "USER", "USER", "ADMIN", true, true));
+
         //Pagina principal de la aplicacion, muestra los diferentes articulos de los mas recientes a los mas antiguos
         //Solo se muestran 70 caracteres del texto (excluyendo el titulo del articulo), y se incluye un enlace para el post completo
         //Se visualizan todas las etiquetas del articulo
@@ -47,8 +50,9 @@ public class Main
             HashMap<String, Object> map = null;
             try
             {
+
                 List<Articulo> articulos = ArticuloServices.getInstance().select();
-                Collections.sort(articulos, (Object a, Object b)->((Articulo)a).getFecha().compareTo(((Articulo)a).getFecha()));
+                Collections.sort(articulos, (Object a, Object b)->((Articulo)a).getFecha().compareTo(((Articulo)b).getFecha()));
                 Collections.reverse(articulos);
 
                 int page = req.queryParams("p") != null ? Integer.parseInt(req.queryParams("p")) : 1;
@@ -217,6 +221,7 @@ public class Main
             System.out.println(req.queryParams("username"));
             HashMap<String, Object> map = new HashMap<String, Object>();
             loggedInUser = (Usuario)UsuarioServices.getInstance().selectByID(req.queryParams("username"));
+            System.out.println(loggedInUser);
             if(loggedInUser.getPassword().equals(req.queryParams("password")))
             {
                 req.session(true).attribute("usuario", loggedInUser);
@@ -368,7 +373,6 @@ public class Main
                 idArticulo = req.queryParams("idArticulo");
                 Articulo a = ArticuloServices.getInstance().selectByID(Long.parseLong(idArticulo));
                 Integer i = 0;
-                System.out.print(a.getTitulo());
 
                 i = a.getLikes() + 1;
                 a.setLikes(i);
@@ -380,7 +384,6 @@ public class Main
                 idArticulo = req.queryParams("idArticulo2");
                 Articulo a = ArticuloServices.getInstance().selectByID(Long.parseLong(idArticulo));
                 Integer i = 0;
-                System.out.print(a.getTitulo());
 
                 i = a.getDislikes() + 1;
                 a.setDislikes(i);
@@ -401,7 +404,7 @@ public class Main
                 idComentario = req.queryParams("idComentario");
 
                 Comentario c = ComentarioServices.getInstance().selectByID(Long.parseLong(idComentario));
-                System.out.print(c.getId());
+
                 Integer i = 0;
 
                 i = c.getLikes() + 1;
