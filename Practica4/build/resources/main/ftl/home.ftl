@@ -34,7 +34,7 @@
                         <h4>Tags:</h4>
                         <ul class="list-inline list-tags">
                             <#list articulo.listaEtiquetas as etiqueta>
-                                <li><button name="idetiqueta" value="${etiqueta.id}" formaction="/mostrarArticulosEtiqueta" class="btn-danger"><span class="btn-xs">${etiqueta.etiqueta}</span></button></li>
+                                <li><button name="idetiqueta" value="${etiqueta.etiqueta}" formaction="/mostrarArticulosEtiqueta" class="btn-danger"><span class="btn-xs">${etiqueta.etiqueta}</span></button></li>
                             </#list>
                         </ul>
 

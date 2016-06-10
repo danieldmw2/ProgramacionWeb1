@@ -57,7 +57,7 @@ public class Main
                 map.put("registro", "¡Regístrate!");
                 map.put("iniciarSesion", login);
                 map.put("numPaginacion", pager);
-                
+
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -75,8 +75,7 @@ public class Main
             try {
 
                 String id = req.queryParams("readmore");
-
-                Articulo a  = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(id));
+                Articulo a  = ArticuloServices.getInstance().selectByID(Long.parseLong(id));
 
                 if (a != null) {
                     map = new HashMap<>();
@@ -154,19 +153,29 @@ public class Main
         post("/articleCreationPost", (req, res) ->
         {
             String[] sa = req.queryParams("etiquetas").split(",");
-            ArrayList<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
-            ArrayList<Comentario> comentarios = new ArrayList<Comentario>();
+            List<Etiqueta> etiquetas = new ArrayList<Etiqueta>();
+            List<Comentario> comentarios = new ArrayList<Comentario>();
+            List<Etiqueta> todas = EtiquetaServices.getInstance().select();
+            ArrayList<String> aux = new ArrayList<String>();
+            for(int i = 0; i<todas.size(); i++)
+                aux.add(todas.get(i).getEtiqueta().toLowerCase());
             for(int i = 0; i<sa.length; i++)
             {
-                etiquetas.add(new Etiqueta(sa[i]));
+                Etiqueta e = new Etiqueta(sa[i]);
+                if(aux.contains(e.getEtiqueta().toLowerCase()))
+                    EtiquetaServices.getInstance().insert(e);
+
+                etiquetas.add(e);
             }
 
+            Articulo art = new Articulo(req.queryParams("titulo"),req.queryParams("cuerpo"),loggedInUser, new Date(), comentarios,etiquetas);
             try
             {
-                ArticuloServices.getInstance().insert(new Articulo(req.queryParams("titulo"),req.queryParams("cuerpo"),loggedInUser, new Date(), comentarios,etiquetas));
-            } catch(Exception e)
+                ArticuloServices.getInstance().insert(art);
+            }
+            catch(Exception e)
             {
-                e.printStackTrace();
+                ArticuloServices.getInstance().update(art);
             }
 
             res.redirect("/home");
@@ -229,7 +238,7 @@ public class Main
         get("/modificarArticulo", (req, res) ->
         {
             String id = req.queryParams("modificarArticulo");
-            Articulo a = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(id));
+            Articulo a = ArticuloServices.getInstance().selectByID(Long.parseLong(id));
             System.out.println(a.getAutor().getUsername());
             HashMap<String, Object> map = new HashMap<>();
             map.put("title", "Article");
@@ -264,13 +273,12 @@ public class Main
             for(int i = 0; i < ss.length ; i++)
                 ets.add(new Etiqueta(ss[i]));
 
-            Articulo a1 = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(id));
+            Articulo a1 = ArticuloServices.getInstance().selectByID(Long.parseLong(id));
+            a1.setCuerpo(req.queryParams("cuerpo"));
+            a1.setTitulo(req.queryParams("titulo"));
+            a1.setListaEtiquetas(ets);
 
-            Articulo a = new Articulo(req.queryParams("titulo"), req.queryParams("cuerpo"),
-                    a1.getAutor(), a1.getFecha(), new ArrayList<Comentario>(), ets);
-
-            ArticuloServices.getInstance().update(a);
-            System.out.println(a.getAutor().getUsername());
+            ArticuloServices.getInstance().update(a1);
 
             res.redirect("/home");
             return new ModelAndView(null,"");
@@ -279,7 +287,11 @@ public class Main
         post("/borrarArticuloPost", (req, res) ->
         {
             System.out.println(req.queryParams("borrarArticulo"));
-            Articulo a = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(req.queryParams("borrarArticulo")));
+            Articulo a = ArticuloServices.getInstance().selectByID(Long.parseLong(req.queryParams("borrarArticulo")));
+            
+            for(Comentario c : a.getListaComentarios())
+                ComentarioServices.getInstance().delete(c);
+
             ArticuloServices.getInstance().delete(a);
 
             res.redirect("/home");
@@ -290,8 +302,10 @@ public class Main
         {
             String s = req.queryParams("commentcontent");
             System.out.println(s);
-            Articulo a = (Articulo)ArticuloServices.getInstance().selectByID(Integer.parseInt(req.queryParams("readmore")));
-            a.getListaComentarios().add(new Comentario(s, loggedInUser, a));
+            Articulo a = ArticuloServices.getInstance().selectByID(Long.parseLong(req.queryParams("readmore")));
+
+            Comentario c = new Comentario(s, loggedInUser, a);
+            ComentarioServices.getInstance().insert(c);
 
             res.redirect("/post?readmore=" + req.queryParams("readmore"));
             return null;
@@ -309,17 +323,17 @@ public class Main
         //Para mostrar los articulos cuando se cliquea una etiqueta especifica.
         get("/mostrarArticulosEtiqueta", (request, response) -> {
 
-            int id = Integer.parseInt(request.queryParams("idetiqueta"));
+            String id = request.queryParams("idetiqueta");
             ArrayList<Articulo> listaFinal = new ArrayList<Articulo>();
             List<Articulo> lista = ArticuloServices.getInstance().select();
             HashMap<String, Object> map = new HashMap<>();
-            for(Object a: lista)
+            for(Articulo a: lista)
             {
-                for(Etiqueta e: ((Articulo)a).getListaEtiquetas())
+                for(Etiqueta e: a.getListaEtiquetas())
                 {
-                    if(e.getId() == id)
+                    if(e.getEtiqueta().toLowerCase().equals(id.toLowerCase()))
                     {
-                        listaFinal.add( ((Articulo)a) );
+                        listaFinal.add(a);
                     }
                 }
             }
@@ -333,7 +347,6 @@ public class Main
         //Para la paginacion
         post("/paginacionPost", (request, response) ->
         {
-
             pager += 5;
 
             response.redirect("/home");

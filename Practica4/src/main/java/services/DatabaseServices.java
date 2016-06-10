@@ -1,5 +1,7 @@
 package services;
 
+import domain.Usuario;
+
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.*;
@@ -46,6 +48,7 @@ public class DatabaseServices<T>
         {
             em.getTransaction().rollback();
             System.out.println(ex);
+            throw ex;
         }
         finally
         {
@@ -79,7 +82,8 @@ public class DatabaseServices<T>
         em.getTransaction().begin();
         try
         {
-            em.remove(entidad);
+            em.remove(em.contains(entidad) ? entidad : em.merge(entidad));
+            //em.remove(entidad);
             em.getTransaction().commit();
         }
         catch (Exception ex)

@@ -10,8 +10,8 @@ public class Comentario
 {
     @Id @GeneratedValue private Long id;
     @Column(nullable = false) private String comentario;
-    @OneToOne(optional = false) private Usuario autor;
-    @OneToOne(optional = false) private Articulo articulo;
+    @OneToOne private Usuario autor;
+    @OneToOne private Articulo articulo;
 
     public  Comentario()
     {

@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Etiqueta
 {
     @Id @GeneratedValue private Long id;
-    @Column(unique = true, nullable = false) private String etiqueta;
+    private String etiqueta;
 
     public Etiqueta()
     {
