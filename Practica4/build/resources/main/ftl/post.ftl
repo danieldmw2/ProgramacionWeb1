@@ -30,6 +30,11 @@
             <!-- Post Content -->
             <p class="lead">${contenido}</p>
 
+            <form role="form" method="POST">
+                <button type="submit" class="btn btn-primary" name="idArticulo" value="${readmore}" formaction="/valoracionArticulo"><span class="glyphicon glyphicon-thumbs-up"></span> ${likearticulo}</button>
+                <button type="submit" class="btn btn-primary" name="idArticulo2" value="${readmore}" formaction="/valoracionArticulo"><span class="glyphicon glyphicon-thumbs-down"></span> ${dislikearticulo}</button>
+            </form>
+
             <hr>
 
             <!-- Blog Comments -->
@@ -51,16 +56,21 @@
             <!-- Posted Comments -->
 
             <#list comentarios as c>
-            <!-- Comment -->
-            <div class="media">
-                <a class="pull-left" href="#">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">${c.autor.username}
-                    </h4>
-                    ${c.comentario}
+                <!-- Comment -->
+                <div class="media">
+                    <a class="pull-left" href="#">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">${c.autor.username}
+                        </h4>
+                            ${c.comentario}
+                        <form method="POST" role="form">
+                            <input type="hidden" name="readmore" value="${readmore}">
+                            <button type="submit" class="btn btn-primary" name="idComentario" value="${c.id}" formaction="/valoracionComentario"><span class="glyphicon glyphicon-thumbs-up"></span> ${c.likes}</button>
+                            <button type="submit" class="btn btn-primary" name="idComentario2" value="${c.id}" formaction="/valoracionComentario"><span class="glyphicon glyphicon-thumbs-down"></span> ${c.dislikes}</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
             </#list>
 
         </div>
@@ -91,3 +101,5 @@
     <hr>
 
 </@layout.master>
+
+

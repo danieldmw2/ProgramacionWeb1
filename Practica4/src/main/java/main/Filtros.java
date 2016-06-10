@@ -16,9 +16,9 @@ public class Filtros
     public static void aplicarFiltros()
     {
         before("/*", (request, response) -> {
-            if(Main.loggedInUser == null)
+            if (Main.loggedInUser == null)
             {
-                if(request.cookie("user") != null && !request.cookie("user").equals(""))
+                if (request.cookie("user") != null && !request.cookie("user").equals(""))
                 {
                     Usuario user = UsuarioServices.getInstance().selectByID(request.cookie("user"));
                     request.session(true).attribute("usuario", user);
@@ -28,58 +28,71 @@ public class Filtros
             }
         });
 
-        before("/login",(request, response) -> {
+        before("/login", (request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
-            if(usuario != null)
+            if (usuario != null)
             {
                 response.redirect("/home");
             }
         });
 
-        before("/modificarArticulo",(request, response) -> {
+        before("/modificarArticulo", (request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
             Articulo art = ArticuloServices.getInstance().selectByID(Long.parseLong(request.queryParams("modificarArticulo")));
 
-            if(usuario == null)
+            if (usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
-            else if(!art.getAutor().getUsername().toLowerCase().equals(usuario.getUsername().toLowerCase()) && !usuario.isAdministrator())
+            else if (!art.getAutor().getUsername().toLowerCase().equals(usuario.getUsername().toLowerCase()) && !usuario.isAdministrator())
                 halt(401, "Tiene que ser el autor del post o administrador del sistema para poder modificarlo");
         });
 
-        before("/borrarArticuloPost",(request, response) -> {
+        before("/borrarArticuloPost", (request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
             Articulo art = ArticuloServices.getInstance().selectByID(Long.parseLong((request.queryParams("borrarArticulo"))));
 
-            if(usuario == null)
+            if (usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
-            else if(!art.getAutor().getUsername().equals(usuario.getUsername()) && !usuario.isAdministrator())
+            else if (!art.getAutor().getUsername().equals(usuario.getUsername()) && !usuario.isAdministrator())
                 halt(401, "Tiene que ser el autor del post o administrador del sistema para poder borrarlo");
         });
 
-        before("/articleCreation",(request, response) -> {
+        before("/articleCreation", (request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
 
-            if(usuario == null)
+            if (usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
-            else if(!usuario.isAutor() && !usuario.isAdministrator())
+            else if (!usuario.isAutor() && !usuario.isAdministrator())
                 halt(401, "Tiene que ser autor o administrador del sistema para poder crear un articulo");
         });
 
-        before("/agregarComentario",(request, response) -> {
+        before("/agregarComentario", (request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
 
-            if(usuario == null)
+            if (usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
         });
 
         before("/zonaAdmin/*", (request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
 
-            if(usuario == null)
+            if (usuario == null)
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
-            else if(!usuario.isAdministrator())
+            else if (!usuario.isAdministrator())
                 halt(401, "Tiene que ser administrador del sistema para poder entrar a esta area");
         });
 
+        before("/valoracionArticulo", (request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+
+            if (usuario == null)
+                halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
+        });
+
+        before("/valoracionComentario", (request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+
+            if (usuario == null)
+                halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
+        });
     }
 }

@@ -1,19 +1,20 @@
 package domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Daniel's Laptop on 5/31/2016.
  */
 @Entity
-public class Comentario
+public class Comentario implements Serializable
 {
     @Id @GeneratedValue private Long id;
     @Column(nullable = false) private String comentario;
     @OneToOne private Usuario autor;
     @OneToOne private Articulo articulo;
-    @Column(nullable = false) private Integer likes;
-    @Column(nullable = false) private Integer dislikes;
+    @Column private int likes;
+    @Column private int dislikes;
     @Transient Float ratio;
 
 

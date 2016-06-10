@@ -99,6 +99,8 @@ public class Main
                     map.put("tags", a.getListaEtiquetas());
                     map.put("fecha", a.getFecha());
                     map.put("contenido", a.getCuerpo());
+                    map.put("likearticulo", a.getLikes());
+                    map.put("dislikearticulo", a.getDislikes());
                     map.put("comentarios", a.getListaComentarios());
                     map.put("home", "Home");
                     map.put("registro", "¡Regístrate!");
@@ -357,7 +359,73 @@ public class Main
             return new ModelAndView(map,"articulosPorEtiqueta.ftl");
         }, freeMarker);
 
+        //Aqui se le da el valor positivo o negativo al articulo
+        post("/valoracionArticulo", (req, res) ->
+        {
+            String idArticulo = "";
+            if(req.queryParams("idArticulo") != null)
+            {
+                idArticulo = req.queryParams("idArticulo");
+                Articulo a = ArticuloServices.getInstance().selectByID(Long.parseLong(idArticulo));
+                Integer i = 0;
+                System.out.print(a.getTitulo());
 
+                i = a.getLikes() + 1;
+                a.setLikes(i);
+
+                ArticuloServices.getInstance().update(a);
+            }
+            else
+            {
+                idArticulo = req.queryParams("idArticulo2");
+                Articulo a = ArticuloServices.getInstance().selectByID(Long.parseLong(idArticulo));
+                Integer i = 0;
+                System.out.print(a.getTitulo());
+
+                i = a.getDislikes() + 1;
+                a.setDislikes(i);
+
+                ArticuloServices.getInstance().update(a);
+            }
+
+            res.redirect("/post?readmore=" + idArticulo);
+            return null;
+        });
+
+        //Aqui se tiene la valoracion positiva o negativa de los comentarios
+        post("/valoracionComentario", (req, res) ->
+        {
+            String idComentario = "";
+            if(req.queryParams("idComentario") != null)
+            {
+                idComentario = req.queryParams("idComentario");
+
+                Comentario c = ComentarioServices.getInstance().selectByID(Long.parseLong(idComentario));
+                System.out.print(c.getId());
+                Integer i = 0;
+
+                i = c.getLikes() + 1;
+                c.setLikes(i);
+
+                ComentarioServices.getInstance().update(c);
+
+            }
+            else
+            {
+                idComentario = req.queryParams("idComentario2");
+                Comentario c = ComentarioServices.getInstance().selectByID(Long.parseLong(idComentario));
+                Integer i = 0;;
+
+                i = c.getDislikes() + 1;
+                c.setDislikes(i);
+
+                ComentarioServices.getInstance().update(c);
+
+            }
+
+            res.redirect("/post?readmore=" + req.queryParams("readmore"));
+            return null;
+        });
 
     }
 }

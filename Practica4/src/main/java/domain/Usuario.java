@@ -3,6 +3,8 @@ package domain;
 import services.UsuarioServices;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
@@ -11,7 +13,7 @@ import static spark.debug.DebugScreen.enableDebugScreen;
  */
 
 @Entity
-public class Usuario
+public class Usuario implements Serializable
 {
     @Id private String username;
     @Column(nullable = false) private String nombre;

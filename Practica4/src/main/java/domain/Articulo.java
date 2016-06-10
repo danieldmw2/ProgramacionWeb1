@@ -4,6 +4,7 @@ import services.ArticuloServices;
 import services.ComentarioServices;
 import services.UsuarioServices;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -15,7 +16,7 @@ import static spark.debug.DebugScreen.enableDebugScreen;
  * Created by Daniel's Laptop on 5/31/2016.
  */
 @Entity
-public class Articulo
+public class Articulo implements Serializable
 {
     @Id @GeneratedValue private Long id;
     @Column(nullable = false) private String titulo;
@@ -24,39 +25,9 @@ public class Articulo
     @Column(nullable = false) private Date fecha;
     @Transient private List<Comentario> listaComentarios;
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}) private List<Etiqueta> listaEtiquetas;
-
-    public static void main(String[] args)
-    {
-        enableDebugScreen();
-        get("/", (request, response) -> {
-            Usuario user = new Usuario("danieldmw2", "Daniel", "Perez", "culo123", true, true);
-            UsuarioServices.getInstance().insert(user);
-            UsuarioServices.getInstance().insert(new Usuario("arielsalcepk", "Ariel", "Salce", "culo123", true, true));
-
-            Articulo articulo = new Articulo();
-            articulo.setTitulo("Stack Overflow");
-            articulo.setCuerpo("Stack Overflow me ahorra muchas noches de dolor sufriendo por tu amor");
-            articulo.setAutor(user);
-            articulo.setFecha(new Date());
-
-            //ArrayList<Comentario> listC = new ArrayList<Comentario>();
-//            listC.add(new Comentario("Super sexo", user, articulo));
-//            listC.add(new Comentario("Te de Campana", UsuarioServices.getInstance().selectByID("arielsalcepk"), articulo));
-//            listC.add(new Comentario("Si tu te fuiste con el quedate con el, que si tu me lo das yo no lo cojo", user, articulo));
-//            //articulo.setListaComentarios(listC);
-
-            ArrayList<Etiqueta> listE = new ArrayList<Etiqueta>();
-            listE.add(new Etiqueta("Stack"));
-            listE.add(new Etiqueta("Overflow"));
-            listE.add(new Etiqueta("PUCMM"));
-            listE.add(new Etiqueta("Flow"));
-            listE.add(new Etiqueta("Java"));
-            articulo.setListaEtiquetas(listE);
-
-            ArticuloServices.getInstance().insert(articulo);
-            return "Done Deal";
-        });
-    }
+    @Column private int likes;
+    @Column private int dislikes;
+    @Transient Float ratio;
 
     public Articulo()
     {
@@ -70,6 +41,36 @@ public class Articulo
         this.fecha = fecha;
         this.listaComentarios = listaComentarios;
         this.listaEtiquetas = listaEtiquetas;
+    }
+
+    public Float getRatio()
+    {
+        return ratio;
+    }
+
+    public void setRatio(Float ratio)
+    {
+        this.ratio = ratio;
+    }
+
+    public Integer getDislikes()
+    {
+        return dislikes;
+    }
+
+    public void setDislikes(Integer dislikes)
+    {
+        this.dislikes = dislikes;
+    }
+
+    public Integer getLikes()
+    {
+        return likes;
+    }
+
+    public void setLikes(Integer likes)
+    {
+        this.likes = likes;
     }
 
     public long getId()

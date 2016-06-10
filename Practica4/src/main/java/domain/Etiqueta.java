@@ -1,12 +1,13 @@
 package domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Daniel's Laptop on 5/31/2016.
  */
 @Entity
-public class Etiqueta
+public class Etiqueta implements Serializable
 {
     @Id @GeneratedValue private Long id;
     private String etiqueta;
