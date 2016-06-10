@@ -12,6 +12,10 @@ public class Comentario
     @Column(nullable = false) private String comentario;
     @OneToOne private Usuario autor;
     @OneToOne private Articulo articulo;
+    @Column(nullable = false) private Integer likes;
+    @Column(nullable = false) private Integer dislikes;
+    @Transient Float ratio;
+
 
     public  Comentario()
     {
@@ -23,6 +27,8 @@ public class Comentario
         this.comentario = comentario;
         this.autor = autor;
         this.articulo = articulo;
+        this.dislikes = 0;
+        this.likes = 0;
     }
 
     public long getId()
@@ -63,5 +69,36 @@ public class Comentario
     public void setArticulo(Articulo articulo)
     {
         this.articulo = articulo;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public Integer getLikes()
+    {
+        return likes;
+    }
+
+    public void setLikes(Integer likes)
+    {
+        this.likes = likes;
+    }
+
+    public Integer getDislikes()
+    {
+        return dislikes;
+    }
+
+    public void setDislikes(Integer dislikes)
+    {
+        this.dislikes = dislikes;
+    }
+
+    public Float getRatio()
+    {
+        ratio = Float.valueOf(likes/dislikes);
+        return ratio;
     }
 }
