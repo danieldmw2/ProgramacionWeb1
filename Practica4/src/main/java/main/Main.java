@@ -50,13 +50,26 @@ public class Main
                 List<Articulo> articulos = ArticuloServices.getInstance().select();
                 Collections.sort(articulos, (Object a, Object b)->((Articulo)a).getFecha().compareTo(((Articulo)a).getFecha()));
                 Collections.reverse(articulos);
+
+                int page = req.queryParams("p") != null ? Integer.parseInt(req.queryParams("p")) : 1;
+                ArrayList<Articulo> articles = new ArrayList<Articulo>();
+                for (int i = 0; i < 5; i++)
+                {
+                    int index = i + ((page - 1) * 5);
+
+                    if (index < articulos.size())
+                        articles.add(articulos.get(index));
+                    else
+                        break;
+                }
+
                 map = new HashMap<>();
-                map.put("articulos", articulos);
+                map.put("articulos", articles);
                 map.put("title", "Let's Blog a bit!");
                 map.put("home", "Home");
                 map.put("registro", "¡Regístrate!");
                 map.put("iniciarSesion", login);
-                map.put("numPaginacion", pager);
+                map.put("page", (page + 1));
 
             } catch (Exception e)
             {
@@ -288,7 +301,7 @@ public class Main
         {
             System.out.println(req.queryParams("borrarArticulo"));
             Articulo a = ArticuloServices.getInstance().selectByID(Long.parseLong(req.queryParams("borrarArticulo")));
-            
+
             for(Comentario c : a.getListaComentarios())
                 ComentarioServices.getInstance().delete(c);
 
@@ -343,15 +356,6 @@ public class Main
             //System.out.println(listaFinal.size() + " Nombres " + listaFinal.get(0) + ", " + listaFinal.get(1));
             return new ModelAndView(map,"articulosPorEtiqueta.ftl");
         }, freeMarker);
-
-        //Para la paginacion
-        post("/paginacionPost", (request, response) ->
-        {
-            pager += 5;
-
-            response.redirect("/home");
-            return null;
-        });
 
 
 

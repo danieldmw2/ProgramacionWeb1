@@ -51,7 +51,7 @@
             <!-- Pager -->
             <ul class="pager">
                 <li class="next">
-                    <button nameformaction="">Older Posts →</a>
+                    <a href="/home?p=${page}">Older Posts →</a>
                 </li>
             </ul>
         </div>
