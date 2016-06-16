@@ -14,7 +14,7 @@ import static spark.Spark.*;
 
 public class ZonaAdmin
 {
-    public static void crearZonaAdmin(FreeMarkerEngine freeMarker)
+    public static void create(FreeMarkerEngine freeMarker)
     {
         get("/zonaAdmin/users", (request, response) -> {
 

@@ -10,7 +10,7 @@
         <class>domain.Etiqueta</class>
         <class>domain.Comentario</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/practica5" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/practica4" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.user" value="user" />
             <property name="javax.persistence.jdbc.password" value="admin" />
@@ -28,7 +28,7 @@
         <class>domain.Etiqueta</class>
         <class>domain.Comentario</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/practica5" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/practica4" />
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="javax.persistence.jdbc.user" value="user" />
             <property name="javax.persistence.jdbc.password" value="admin" />
