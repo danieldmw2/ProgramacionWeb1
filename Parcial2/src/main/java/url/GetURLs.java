@@ -65,12 +65,33 @@ public class GetURLs
 
         get("/home", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            return new ModelAndView(model, "test.ftl");
+            int page = request.queryParams("p") != null ? Integer.parseInt(request.queryParams("p")) : 1;
+            model.put("page", (page + 1));
+
+            //Change this way to a more efficient way later.
+            List<Album> aux = AlbumServices.getInstance().select();
+            List<Album> albumes = new ArrayList<Album>();
+
+            for (int i = 0; i < 5; i++)
+            {
+                int index = i + ((page - 1) * 5);
+
+                if (index < aux.size())
+                    albumes.add(aux.get(index));
+                else
+                    break;
+            }
+
+            model.put("albumes", albumes);
+            model.put("iniciarSesion", "Iniciar Sesión");
+            return new ModelAndView(model, "home.ftl");
         }, freeMarker);
 
         get("/upload", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            return new ModelAndView(model, "test.ftl");
+            model.put("iniciarSesion", "Iniciar Sesión");
+            model.put("imageNumber", 0);
+            return new ModelAndView(model, "createAlbum.ftl");
         }, freeMarker);
 
         get("/edit", (request, response) -> {

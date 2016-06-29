@@ -35,6 +35,7 @@ public class Album implements Serializable
         views = 0l;
         date = new Date();
         interaction = new ArrayList<>();
+        listaEtiquetas = new ArrayList<>();
     }
 
     public Album(Usuario usuario, List<Image> images, Integer likes, Integer dislikes, Date date, List<Comentario> listaComentarios)

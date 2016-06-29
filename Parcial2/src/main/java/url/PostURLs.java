@@ -43,6 +43,8 @@ public class PostURLs
             album.setUsuario(loggedInUser);
             album.setDescripcion(request.queryParams("description"));
 
+            System.out.print(request.queryParams("tags"));
+            System.out.print(request.queryParams("image-0"));
             for(String tag : request.queryParams("tags").split(","))
                 album.getListaEtiquetas().add(new Etiqueta(tag));
 
