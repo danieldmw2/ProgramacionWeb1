@@ -2,6 +2,7 @@ package domain;
 
 import services.AlbumServices;
 import services.ComentarioServices;
+import services.EtiquetaServices;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,29 +19,34 @@ public class Album implements Serializable
     @Id @GeneratedValue private Long id;
     @OneToOne private Usuario usuario;
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}) private List<Image> images;
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE}) private List<Usuario> interaction;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE}) private List<Usuario> interaction;
     @Column(nullable = false) private Integer likes;
     @Column(nullable = false) private Integer dislikes;
     @Column(nullable = false) private Date date;
+    @Column(nullable = false, columnDefinition = "VARCHAR(1000)") private String descripcion;
     @Transient private List<Comentario> listaComentarios;
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}) private List<Etiqueta> listaEtiquetas;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}) private List<Etiqueta> listaEtiquetas;
+    private Long views;
 
     public Album()
     {
         likes = 0;
         dislikes = 0;
+        views = 0l;
         date = new Date();
+        interaction = new ArrayList<>();
     }
 
-    public Album(Usuario usuario, List<Image> images, List<Usuario> interaction, Integer likes, Integer dislikes, Date date, List<Comentario> listaComentarios)
+    public Album(Usuario usuario, List<Image> images, Integer likes, Integer dislikes, Date date, List<Comentario> listaComentarios)
     {
         this.usuario = usuario;
         this.images = images;
-        this.interaction = interaction;
+        this.interaction = new ArrayList<>();
         this.likes = likes;
         this.dislikes = dislikes;
         this.date = date;
         this.listaComentarios = listaComentarios;
+        this.views = 0l;
     }
 
     public Long getId()
@@ -123,11 +129,20 @@ public class Album implements Serializable
         return listaEtiquetas;
     }
 
-    public void setListaEtiquetas(List<Etiqueta> listaEtiquetas)
+    public void setListaEtiquetas(List<Etiqueta> etiquetas)
     {
-        this.listaEtiquetas = listaEtiquetas;
+        this.listaEtiquetas = etiquetas;
     }
 
+    public String getDescripcion()
+    {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion)
+    {
+        this.descripcion = descripcion;
+    }
 
     public void addLike(Usuario usuario)
     {
@@ -139,13 +154,23 @@ public class Album implements Serializable
         AlbumServices.getInstance().update(this);
     }
 
+    public Long getViews()
+    {
+        return views;
+    }
+
     public void addDislike(Usuario usuario)
     {
-        if(this.interaction.contains(usuario))
+        if (this.interaction.contains(usuario))
             return;
 
         this.dislikes++;
         this.interaction.add(usuario);
         AlbumServices.getInstance().update(this);
+    }
+
+    public void addView()
+    {
+        views++;
     }
 }

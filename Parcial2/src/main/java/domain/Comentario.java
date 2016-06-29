@@ -19,7 +19,7 @@ public class Comentario implements Serializable
     @OneToOne private Usuario autor;
     @OneToOne private Album album;
     @Column(nullable = false) private Date date;
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE}) private List<Usuario> interaction;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE}) private List<Usuario> interaction;
     @Column(nullable = false) private Integer likes;
     @Column(nullable = false) private Integer dislikes;
 

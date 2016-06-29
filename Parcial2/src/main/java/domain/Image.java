@@ -22,6 +22,8 @@ public class Image implements Serializable
 
     @Basic(fetch = FetchType.EAGER)
     @Lob @Column(nullable=false, columnDefinition="BLOB") private byte[] image;
+    @OneToOne private Album album;
+    private Long views;
 
     @Transient
     private String base;
@@ -30,9 +32,9 @@ public class Image implements Serializable
     {
     }
 
-    public Image(String filename) throws IOException
+    public Image(String filename, Album album) throws IOException
     {
-        this.filename = filename;
+        this.filename = filename.substring(filename.lastIndexOf("\\") + 1);
         File imgPath = new File(filename);
         BufferedImage bufferedImage = ImageIO.read(imgPath);
 
@@ -40,6 +42,8 @@ public class Image implements Serializable
         ImageIO.write(bufferedImage, "png", baos);
         this.image = baos.toByteArray();
         this.base = Base64.encode(image);
+        this.album = album;
+        this.views = 0l;
     }
 
     public Long getId()
@@ -70,6 +74,27 @@ public class Image implements Serializable
 
     public String getBase()
     {
+        base = Base64.encode(image);
         return base;
+    }
+
+    public Album getAlbum()
+    {
+        return album;
+    }
+
+    public void setAlbum(Album album)
+    {
+        this.album = album;
+    }
+
+    public Long getViews()
+    {
+        return views;
+    }
+
+    public void addView()
+    {
+        views++;
     }
 }
