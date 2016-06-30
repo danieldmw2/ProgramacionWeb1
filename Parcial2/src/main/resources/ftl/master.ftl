@@ -22,6 +22,15 @@
 
 <body style="padding-top: 65px">
 
+<script language="javascript">
+    var redirect = function(url) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+        form.submit();
+    };
+</script>
+
 <div class="container">
     <div class="row">
         <nav class="navbar navbar-inverse navbar-custom navbar-fixed-top">
@@ -55,12 +64,7 @@
                             </li>
                             <li>
                                 <#if iniciarSesion == "Cerrar Sesión">
-                                    <script language="javascript">
-                                        function DoPost(){
-                                            $.post("/logout");  //Your values here..
-                                        }
-                                    </script>
-                                        <a href="javascript:DoPost()" ><span class="glyphicon glyphicon-log-out"></span> ${iniciarSesion}</a>
+                                    <a href="javascript:redirect('/logout')" ><span class="glyphicon glyphicon-log-out"></span> ${iniciarSesion}</a>
                                 <#else>
                                     <a href="/sign-in"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}
                                     </a>

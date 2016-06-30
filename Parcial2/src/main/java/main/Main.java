@@ -10,6 +10,7 @@ import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 import freemarker.template.Configuration;
 import services.*;
+import url.Filtros;
 import url.GetURLs;
 import url.PostURLs;
 
@@ -47,5 +48,6 @@ public class Main
 
         GetURLs.create(freeMarker);
         PostURLs.create(freeMarker);
+        Filtros.aplicarFiltros();
     }
 }

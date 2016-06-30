@@ -24,9 +24,15 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="well">
-                            <a href="image/${image.id}">localhost:4567/image/${image.id}</a>
+                            <button class="btn btn-danger" onclick="copyToClipboard('http://localhost:4567/image/${image.id}')">Get Link</button>
+
+                            <script>
+                                function copyToClipboard(text) {
+                                    window.prompt("Copia el texto: Ctrl+C, Enter", text);
+                                }
+                            </script>
                         </div>
                     </div>
                 </div>

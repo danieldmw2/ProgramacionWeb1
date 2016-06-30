@@ -54,18 +54,17 @@
                                 <a href="/sign-up"><span class="glyphicon glyphicon-user"></span> ¡Regístrate!</a>
                             </li>
                             <li>
-                                <script language="javascript">
-                                    document.forms["myForm"].submit();
-                                </script>
                                 <#if iniciarSesion == "Cerrar Sesión">
                                     <script language="javascript">
-
-                                        function DoPost(){
-                                            $.post("/logout");  //Your values here..
-                                        }
-
+                                        var redirect = function(url) {
+                                            var form = document.createElement('form');
+                                            form.method = 'POST';
+                                            form.action = url;
+                                            form.submit();
+                                        };
                                     </script>
-                                        <a href="javascript:DoPost()" ><span class="glyphicon glyphicon-log-out"></span> ${iniciarSesion}</a>
+
+                                    <a href="javascript:redirect('/logout')" ><span class="glyphicon glyphicon-log-out"></span> ${iniciarSesion}</a>
                                 <#else>
                                     <a href="/sign-in"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}
                                     </a>
