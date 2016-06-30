@@ -6,17 +6,38 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
         <form method="GET" action="/upload">
-            <button class="btn btn-primary">Crear Album</button>
+            <button class="btn btn-primary">Agregar Imagen</button>
         </form>
 
-        <#list albumes as album>
-            <p>${album.descripcion}</p>
+        <br />
+        <#list images as image>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="well">
+                            <#if image.usuario?has_content>
+                                <strong>${image.titulo}</strong> publicado por <strong>${image.usuario.username}</strong>
+                            <#else>
+                                <strong>${image.titulo}</strong> publicado por <strong>Anon</strong>
+                            </#if>
+                            <a href="image/${image.id}"><img class="thumbnail img-responsive" src="data:image/png;base64,${image.base}"></a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="well">
+                            <a href="\image\${image.id}">localhost:4567/image/${image.id}</a>
+                        </div>
+                    </div>
+                </div>
+
+
         </#list>
 
             <!-- Pager -->
             <ul class="pager">
                 <li class="next">
-                    <a href="/home?p=${page}">Older Posts →</a>
+                    <a href="/home?p=${page}">Publicaciones más antiguas →</a>
                 </li>
             </ul>
 

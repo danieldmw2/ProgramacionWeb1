@@ -26,16 +26,17 @@ public class GetURLs
             String[] url = request.url().split("/");
 
             Image image = ImageServices.getInstance().selectByID(Long.parseLong(url[4]));
+            model.put("titulo", image.getTitulo());
+            model.put("descripcion", image.getDescripcion());
             model.put("comentarios", image.getListaComentarios());
             model.put("etiquetas", image.getListaEtiquetas());
-            model.put("album", image);
             model.put("iniciarSesion", login);
 
             image.addView();
             ImageServices.getInstance().update(image);
 
-            model.put("images", image);
-            return new ModelAndView(model, "album.ftl");
+            model.put("image", image);
+            return new ModelAndView(model, "postImage.ftl");
         }, freeMarker);
 
         get("/home", (request, response) -> {
@@ -57,28 +58,27 @@ public class GetURLs
                     break;
             }
 
-            model.put("albumes", images);
-            model.put("iniciarSesion", "Iniciar Sesión");
+            model.put("images", images);
+            model.put("iniciarSesion", login);
             return new ModelAndView(model, "home.ftl");
         }, freeMarker);
 
         get("/upload", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             model.put("iniciarSesion", "Iniciar Sesión");
-            model.put("imageNumber", 0);
-            return new ModelAndView(model, "createAlbum.ftl");
+            return new ModelAndView(model, "createImage.ftl");
         }, freeMarker);
 
         get("/edit", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            Image album = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
-            model.put("album", album);
+            Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+            model.put("album", image);
             return new ModelAndView(model, "test.ftl");
         }, freeMarker);
 
         get("/sign-up", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            model.put("iniciarSesion", "Iniciar Sesión");
+            model.put("iniciarSesion", login);
             return new ModelAndView(model, "registration.ftl");
         }, freeMarker);
 

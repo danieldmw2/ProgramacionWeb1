@@ -26,7 +26,7 @@ public class Image implements Serializable
     @Column(nullable = false) private String filename;
     @OneToOne private Usuario usuario;
     @Column(nullable = false, columnDefinition = "VARCHAR(1000)") private String descripcion;
-
+    @Column(nullable = false) private String titulo;
     @Basic(fetch = FetchType.EAGER)
     @Lob @Column(nullable=false, columnDefinition="BLOB") private byte[] image;
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL}) private List<Etiqueta> listaEtiquetas;
@@ -49,7 +49,7 @@ public class Image implements Serializable
         listaEtiquetas = new ArrayList<>();
     }
 
-    public Image(String filename, String descripcion, Usuario usuario) throws IOException
+    public Image(String filename, String descripcion, String titulo,Usuario usuario) throws IOException
     {
         this.filename = filename.substring(filename.lastIndexOf("\\") + 1);
         File imgPath = new File(filename);
@@ -62,6 +62,7 @@ public class Image implements Serializable
 
         this.usuario = usuario;
         this.descripcion = descripcion;
+        this.titulo = titulo;
 
         this.likes = 0;
         this.dislikes = 0;
@@ -181,6 +182,16 @@ public class Image implements Serializable
     public void setDescripcion(String descripcion)
     {
         this.descripcion = descripcion;
+    }
+
+    public String getTitulo()
+    {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo)
+    {
+        this.titulo = titulo;
     }
 
     public void addLike(Usuario usuario)

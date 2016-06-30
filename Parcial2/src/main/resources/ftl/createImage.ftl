@@ -4,7 +4,18 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <form role="form" method="POST" action="/insertAlbum" class="inline">
+            <form role="form" method="POST" action="/insertImage" class="inline">
+
+                <div class="row">
+                    <div class="col-lg-1 col-md-1 col-sm-3 col-xs-12">
+                        Título:<span style="color: red">*</span>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                        <input name="title" type="text" required></input>
+                    </div>
+                </div>
+
+                <br/>
                 <div class="row">
                     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-12">
                         Descripción:<span style="color: red">*</span>
@@ -28,11 +39,11 @@
                 <br/>
                 <div class="row">
                     <div class="col-lg-1 col-md-1 col-sm-3 col-xs-12">
-                        Images:<span style="color: red">*</span>
+                        Image:<span style="color: red">*</span>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
 
-                        <input name="image-${imageNumber}" type="file" required>
+                        <input name="image" type="file" required>
                     </div>
                 </div>
 

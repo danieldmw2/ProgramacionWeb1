@@ -29,7 +29,7 @@ import java.util.List;
 public class Main
 {
     public static Usuario loggedInUser;
-    public static String login;
+    public static String login = "Iniciar Sesión";
 
 
     public static void main(String[] args)

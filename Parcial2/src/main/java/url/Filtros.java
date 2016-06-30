@@ -1,7 +1,8 @@
 package url;
 
-import domain.Usuario;
+import domain.*;
 import main.Main;
+import services.ImageServices;
 import services.UsuarioServices;
 
 import static spark.Spark.before;
@@ -50,8 +51,8 @@ public class Filtros
 
             if (usuario != null)
             {
-                Album album = AlbumServices.getInstance().selectByID(request.queryParams("id"));
-                if(!usuario.isAdministrator() && !album.getUsuario().getUsername().equals(usuario.getUsername()))
+                Image image = ImageServices.getInstance().selectByID(request.queryParams("id"));
+                if(!usuario.isAdministrator() && !image.getUsuario().getUsername().equals(usuario.getUsername()))
                     halt(401, "Tiene que ser administrador del sistema o autor del post para hacer esta accion");
             }
             else
@@ -67,13 +68,13 @@ public class Filtros
                 halt(401, "Tiene que ser administrador del sistema para poder entrar a esta area");
         });
 
-        before("/deleteAlbum", (request, response) -> {
+        before("/deleteImage", (request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
 
             if (usuario != null)
             {
-                Album album = AlbumServices.getInstance().selectByID(request.queryParams("id"));
-                if(!usuario.isAdministrator() && !album.getUsuario().getUsername().equals(usuario.getUsername()))
+                Image image = ImageServices.getInstance().selectByID(request.queryParams("id"));
+                if(!usuario.isAdministrator() && !image.getUsuario().getUsername().equals(usuario.getUsername()))
                     halt(401, "Tiene que ser administrador del sistema o autor del album para hacer esta accion");
             }
             else

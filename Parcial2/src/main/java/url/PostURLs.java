@@ -36,7 +36,8 @@ public class PostURLs
         });
 
         post("/insertImage", (request, response) -> {
-            Image image = new Image(request.queryParams("image"), request.queryParams("description"), loggedInUser);
+            System.out.println(request.queryParams("image"));
+            Image image = new Image("C:\\" + request.queryParams("image"), request.queryParams("description"), request.queryParams("title"),loggedInUser);
 
             for(String tag : request.queryParams("tags").split(","))
                 image.getListaEtiquetas().add(new Etiqueta(tag));
