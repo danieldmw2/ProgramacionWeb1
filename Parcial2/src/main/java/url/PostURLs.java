@@ -1,20 +1,16 @@
 package url;
 
 import domain.*;
-import services.AlbumServices;
 import services.ComentarioServices;
+import services.ImageServices;
 import services.UsuarioServices;
-import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
 
 import static main.Main.loggedInUser;
 import static main.Main.login;
 import static spark.Spark.post;
-import static spark.Spark.redirect;
 
 /**
  * Created by Daniel's Laptop on 6/25/2016.
@@ -39,44 +35,34 @@ public class PostURLs
             return null;
         });
 
-        post("/insertAlbum", (request, response) -> {
-            Album album = new Album();
+        post("/insertImage", (request, response) -> {
+            Image image = new Image(request.queryParams("image"), request.queryParams("description"), loggedInUser);
 
-            album.setUsuario(loggedInUser);
-            album.setDescripcion(request.queryParams("description"));
-
-            System.out.print(request.queryParams("tags"));
-            System.out.print(request.queryParams("image-0"));
             for(String tag : request.queryParams("tags").split(","))
-                album.getListaEtiquetas().add(new Etiqueta(tag));
+                image.getListaEtiquetas().add(new Etiqueta(tag));
 
-            for (int i = 1; i < 11; i++)
-                if (request.queryParams("image-" + i) != null)
-                    album.getImages().add(new Image(request.queryParams("image-" + i), album));
+            ImageServices.getInstance().insert(image);
+            response.redirect("/home");
+            return null;
+        });
 
-            AlbumServices.getInstance().insert(album);
+        post("/editImage", (request, response) -> {
+            Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+            image.setDescripcion(request.queryParams("description"));
+            image.setListaEtiquetas(new ArrayList<>());
+
+            for(String tag : request.queryParams("tags").split(","))
+                image.getListaEtiquetas().add(new Etiqueta(tag));
+
+            ImageServices.getInstance().update(image);
 
             response.redirect("/home");
             return null;
         });
 
-        post("/editAlbum", (request, response) -> {
-            Album album = AlbumServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
-            album.setDescripcion(request.queryParams("description"));
-            album.setListaEtiquetas(new ArrayList<>());
-
-            for(String tag : request.queryParams("tags").split(","))
-                album.getListaEtiquetas().add(new Etiqueta(tag));
-
-            AlbumServices.getInstance().update(album);
-
-            response.redirect("/home");
-            return null;
-        });
-
-        post("/deleteAlbum", (request, response) -> {
-            Album album = AlbumServices.getInstance().selectByID(request.queryParams("id"));
-            AlbumServices.getInstance().delete(album);
+        post("/deleteImage", (request, response) -> {
+            Image image = ImageServices.getInstance().selectByID(request.queryParams("id"));
+            ImageServices.getInstance().delete(image);
 
             response.redirect("/home");
             return null;
@@ -126,16 +112,16 @@ public class PostURLs
         });
 
         post("/insertComment", (request, response) -> {
-            Album album = AlbumServices.getInstance().selectByID(Long.parseLong(request.queryParams("idAlbum")));
+            Image album = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("idImage")));
 
             Comentario c = new Comentario();
-            c.setAlbum(album);
+            c.setImage(album);
             c.setAutor(loggedInUser);
             c.setComentario(request.queryParams("comentario"));
 
             ComentarioServices.getInstance().insert(c);
 
-            response.redirect("/album/" + request.queryParams("idAlbum"));
+            response.redirect("/image/" + request.queryParams("idImage"));
             return null;
         });
 
@@ -144,7 +130,7 @@ public class PostURLs
             c.setComentario(request.queryParams("comentario"));
 
             ComentarioServices.getInstance().update(c);
-            response.redirect("/album/" + request.queryParams("idAlbum"));
+            response.redirect("/image/" + request.queryParams("idImage"));
             return null;
         });
 
@@ -152,7 +138,7 @@ public class PostURLs
             Comentario c = ComentarioServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
             ComentarioServices.getInstance().delete(c);
 
-            response.redirect("/album/" + request.queryParams("idAlbum"));
+            response.redirect("/image/" + request.queryParams("idImage"));
             return null;
         });
 
@@ -165,20 +151,20 @@ public class PostURLs
                 c.addDislike(loggedInUser);
 
             ComentarioServices.getInstance().update(c);
-            response.redirect("/album/" + request.queryParams("idAlbum"));
+            response.redirect("/image/" + request.queryParams("idImage"));
             return null;
         });
 
-        post("/likeAlbum", (request, response) -> {
-            Album album = AlbumServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+        post("/likeImage", (request, response) -> {
+            Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
 
             if(request.queryParams("like") != null)
-                album.addLike(loggedInUser);
+                image.addLike(loggedInUser);
             else
-                album.addDislike(loggedInUser);
+                image.addDislike(loggedInUser);
 
-            AlbumServices.getInstance().update(album);
-            response.redirect("/album/" + request.queryParams("id"));
+            ImageServices.getInstance().update(image);
+            response.redirect("/image/" + request.queryParams("id"));
             return null;
         });
 

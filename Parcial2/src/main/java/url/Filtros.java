@@ -1,9 +1,7 @@
 package url;
 
-import domain.Album;
 import domain.Usuario;
 import main.Main;
-import services.AlbumServices;
 import services.UsuarioServices;
 
 import static spark.Spark.before;

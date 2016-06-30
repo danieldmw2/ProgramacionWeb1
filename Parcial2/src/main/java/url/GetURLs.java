@@ -5,19 +5,11 @@ import static main.Main.login;
 import static spark.Spark.get;
 
 import domain.*;
-import services.AlbumServices;
-import services.ComentarioServices;
 import services.ImageServices;
 import services.UsuarioServices;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
-import javax.imageio.ImageIO;
-import javax.persistence.Query;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.*;
 
 /**
@@ -28,39 +20,22 @@ public class GetURLs
     public static void create(FreeMarkerEngine freeMarker)
     {
         // localhost;4567/album/"AlbumID" or localhost;4567/album/"AlbumID"/"Image Filename"
-        // Max 10 Images per Album
-        get("/album/*", (request, response) -> {
+        get("/image/*", (request, response) -> {
             HashMap<String, Object> model = new HashMap<String, Object>();
 
             String[] url = request.url().split("/");
 
-            Album album = AlbumServices.getInstance().selectByID(Long.parseLong(url[4]));
-            model.put("comentarios", album.getListaComentarios());
-            model.put("etiquetas", album.getListaEtiquetas());
-            model.put("album", album);
-            model.put("iniciarSesion", "Login");
+            Image image = ImageServices.getInstance().selectByID(Long.parseLong(url[4]));
+            model.put("comentarios", image.getListaComentarios());
+            model.put("etiquetas", image.getListaEtiquetas());
+            model.put("album", image);
+            model.put("iniciarSesion", login);
 
-            if(url.length > 5)
-            {
-                Image image = new Image();
+            image.addView();
+            ImageServices.getInstance().update(image);
 
-                for(Image i : album.getImages())
-                    if(i.getFilename().equals(url[5]))
-                        image = i;
-
-                image.addView();
-                ImageServices.getInstance().update(image);
-
-                model.put("image", image);
-                return new ModelAndView(model, "images.ftl"); // TODO FTL
-            }
-            HashSet<Image> hs = new HashSet<>(album.getImages());
-
-            album.addView();
-            AlbumServices.getInstance().update(album);
-
-            model.put("images", hs);
-            return new ModelAndView(model, "album.ftl"); // TODO FTL
+            model.put("images", image);
+            return new ModelAndView(model, "album.ftl");
         }, freeMarker);
 
         get("/home", (request, response) -> {
@@ -69,20 +44,20 @@ public class GetURLs
             model.put("page", (page + 1));
 
             //Change this way to a more efficient way later.
-            List<Album> aux = AlbumServices.getInstance().select();
-            List<Album> albumes = new ArrayList<>();
+            List<Image> aux = ImageServices.getInstance().select();
+            List<Image> images = new ArrayList<>();
 
             for (int i = 0; i < 5; i++)
             {
                 int index = i + ((page - 1) * 5);
 
                 if (index < aux.size())
-                    albumes.add(aux.get(index));
+                    images.add(aux.get(index));
                 else
                     break;
             }
 
-            model.put("albumes", albumes);
+            model.put("albumes", images);
             model.put("iniciarSesion", "Iniciar Sesión");
             return new ModelAndView(model, "home.ftl");
         }, freeMarker);
@@ -96,7 +71,7 @@ public class GetURLs
 
         get("/edit", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            Album album = AlbumServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+            Image album = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
             model.put("album", album);
             return new ModelAndView(model, "test.ftl");
         }, freeMarker);

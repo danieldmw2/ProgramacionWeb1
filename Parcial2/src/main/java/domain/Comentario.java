@@ -17,7 +17,7 @@ public class Comentario implements Serializable
     @Id @GeneratedValue private Long id;
     @Column(nullable = false, columnDefinition = "VARCHAR(1000)") private String comentario;
     @OneToOne private Usuario autor;
-    @OneToOne private Album album;
+    @OneToOne private Image image;
     @Column(nullable = false) private Date date;
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE}) private List<Usuario> interaction;
     @Column(nullable = false) private Integer likes;
@@ -31,11 +31,11 @@ public class Comentario implements Serializable
         this.dislikes = 0;
     }
 
-    public Comentario(String comentario, Usuario autor, Album album)
+    public Comentario(String comentario, Usuario autor, Image image)
     {
         this.comentario = comentario;
         this.autor = autor;
-        this.album = album;
+        this.image = image;
         this.date = new Date();
         this.interaction = new ArrayList<>();
         this.likes = 0;
@@ -72,14 +72,14 @@ public class Comentario implements Serializable
         this.autor = autor;
     }
 
-    public Album getAlbum()
+    public Image getImage()
     {
-        return album;
+        return image;
     }
 
-    public void setAlbum(Album album)
+    public void setImage(Image image)
     {
-        this.album = album;
+        this.image = image;
     }
 
     public Date getDate()
