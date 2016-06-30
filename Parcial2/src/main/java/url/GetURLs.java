@@ -95,7 +95,10 @@ public class GetURLs
         get("/zonaAdmin", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             model.put("users", UsuarioServices.getInstance().select());
-            return new ModelAndView(model, "test.ftl");
+            model.put("iniciarSesion", login);
+            return new ModelAndView(model, "listUsers.ftl");
         }, freeMarker);
+
+
     }
 }

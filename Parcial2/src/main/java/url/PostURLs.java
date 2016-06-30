@@ -29,8 +29,6 @@ public class PostURLs
 
             UsuarioServices.getInstance().insert(newUser);
 
-            loggedInUser = newUser;
-
             response.redirect("/home");
             return null;
         });
@@ -109,6 +107,7 @@ public class PostURLs
             request.session(true).attribute("usuario", null);
             response.cookie("user", "");
             loggedInUser = null;
+            response.redirect("/home");
             return null;
         });
 

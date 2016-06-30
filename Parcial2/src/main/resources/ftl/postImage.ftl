@@ -47,7 +47,7 @@
                         <textarea class="form-control" name="commentcontent" rows="3"></textarea>
                         <input type="hidden" name="image.id" value="${image.id}">
                     </div>
-                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span> Post</button>
+                    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span> Publicar comentario</button>
                 </form>
             </div>
 
@@ -80,12 +80,12 @@
 
             <!-- Blog Categories Well -->
             <div class="well">
-                <h4>Tags:</h4>
+                <h4>Etiquetas:</h4>
                 <div class="row">
                     <div class="col-lg-6">
                         <ul class="list-inline list-tags">
-                            <#list etiquetas as tag>
-                                <li><button class="btn-danger"><span class="btn-xs">${tag.etiqueta}</span></button></li>
+                            <#list etiquetas as etiqueta>
+                                <li><button class="btn-danger"><span class="btn-xs">${etiqueta.etiqueta}</span></button></li>
                             </#list>
                         </ul>
                     </div>

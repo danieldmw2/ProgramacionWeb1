@@ -26,10 +26,14 @@
 
                     <div class="col-lg-4">
                         <div class="well">
-                            <a href="\image\${image.id}">localhost:4567/image/${image.id}</a>
+                            <a href="image/${image.id}">localhost:4567/image/${image.id}</a>
                         </div>
                     </div>
                 </div>
+
+                <form method="GET" action="/upload">
+                    <button class="btn btn-primary">Editar</button>
+                </form>
 
 
         </#list>

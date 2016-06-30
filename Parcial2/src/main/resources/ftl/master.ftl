@@ -48,12 +48,19 @@
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
+                                <a href="/zonaAdmin"><span class="glyphicon glyphicon-floppy-save"></span> Administración</a>
+                            </li>
+                            <li>
                                 <a href="/sign-up"><span class="glyphicon glyphicon-user"></span> ¡Regístrate!</a>
                             </li>
                             <li>
                                 <#if iniciarSesion == "Cerrar Sesión">
-                                    <a href="/logout"><span class="glyphicon glyphicon-log-out"></span> ${iniciarSesion}
-                                    </a>
+                                    <script language="javascript">
+                                        function DoPost(){
+                                            $.post("/logout");  //Your values here..
+                                        }
+                                    </script>
+                                        <a href="javascript:DoPost()" ><span class="glyphicon glyphicon-log-out"></span> ${iniciarSesion}</a>
                                 <#else>
                                     <a href="/sign-in"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}
                                     </a>
