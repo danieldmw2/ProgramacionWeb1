@@ -33,6 +33,8 @@ public class PostURLs
 
             UsuarioServices.getInstance().insert(newUser);
 
+            loggedInUser = newUser;
+
             response.redirect("/home");
             return null;
         });

@@ -70,7 +70,7 @@ public class GetURLs
 
             //Change this way to a more efficient way later.
             List<Album> aux = AlbumServices.getInstance().select();
-            List<Album> albumes = new ArrayList<Album>();
+            List<Album> albumes = new ArrayList<>();
 
             for (int i = 0; i < 5; i++)
             {
@@ -103,7 +103,8 @@ public class GetURLs
 
         get("/sign-up", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            return new ModelAndView(model, "test.ftl");
+            model.put("iniciarSesion", "Iniciar Sesión");
+            return new ModelAndView(model, "registration.ftl");
         }, freeMarker);
 
         get("/sign-in", (request, response) -> {
@@ -112,8 +113,8 @@ public class GetURLs
             loggedInUser = null;
             request.session().attribute("usuario", loggedInUser);
             login = "Iniciar Sesión";
-
-            return new ModelAndView(model, "test.ftl");
+            model.put("iniciarSesion", login);
+            return new ModelAndView(model, "login.ftl");
         }, freeMarker);
 
         get("/zonaAdmin", (request, response) -> {

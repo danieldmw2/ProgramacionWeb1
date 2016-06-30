@@ -10,7 +10,7 @@
         </form>
 
         <#list albumes as album>
-            <img src="data:image/png;base64,${album.getImages().get(0).getBase()}"></a>
+            <p>${album.descripcion}</p>
         </#list>
 
             <!-- Pager -->

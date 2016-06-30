@@ -55,7 +55,7 @@
                                     <a href="/logout"><span class="glyphicon glyphicon-log-out"></span> ${iniciarSesion}
                                     </a>
                                 <#else>
-                                    <a href="/login"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}
+                                    <a href="/sign-in"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}
                                     </a>
                                 </#if>
                             </li>
