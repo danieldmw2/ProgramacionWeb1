@@ -23,10 +23,29 @@
 <body style="padding-top: 65px">
 
 <script language="javascript">
+
+    function copyToClipboard(text) {
+        window.prompt("Copia el texto: Ctrl+C, Enter", text);
+    }
+
     var redirect = function(url) {
         var form = document.createElement('form');
         form.method = 'POST';
         form.action = url;
+        form.submit();
+    };
+
+    var redirectWithData = function(url, name, value) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+
+        var input = document.createElement('input');
+        input.name = name;
+        input.value = value;
+        input.type = 'hidden';
+
+        form.appendChild(input);
         form.submit();
     };
 </script>

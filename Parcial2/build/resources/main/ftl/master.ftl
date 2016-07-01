@@ -22,6 +22,34 @@
 
 <body style="padding-top: 65px">
 
+<script language="javascript">
+
+    function copyToClipboard(text) {
+        window.prompt("Copia el texto: Ctrl+C, Enter", text);
+    }
+
+    var redirect = function(url) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+        form.submit();
+    };
+
+    var redirectWithData = function(url, name, value) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+
+        var input = document.createElement('input');
+        input.name = name;
+        input.value = value;
+        input.type = 'hidden';
+
+        form.appendChild(input);
+        form.submit();
+    };
+</script>
+
 <div class="container">
     <div class="row">
         <nav class="navbar navbar-inverse navbar-custom navbar-fixed-top">
@@ -55,15 +83,6 @@
                             </li>
                             <li>
                                 <#if iniciarSesion == "Cerrar Sesión">
-                                    <script language="javascript">
-                                        var redirect = function(url) {
-                                            var form = document.createElement('form');
-                                            form.method = 'POST';
-                                            form.action = url;
-                                            form.submit();
-                                        };
-                                    </script>
-
                                     <a href="javascript:redirect('/logout')" ><span class="glyphicon glyphicon-log-out"></span> ${iniciarSesion}</a>
                                 <#else>
                                     <a href="/sign-in"><span class="glyphicon glyphicon-log-in"></span> ${iniciarSesion}

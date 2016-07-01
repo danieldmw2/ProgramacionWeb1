@@ -60,7 +60,7 @@ public class PostURLs
         });
 
         post("/deleteImage", (request, response) -> {
-            Image image = ImageServices.getInstance().selectByID(request.queryParams("id"));
+            Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
             ImageServices.getInstance().delete(image);
 
             response.redirect("/home");
@@ -71,7 +71,7 @@ public class PostURLs
             Usuario user = UsuarioServices.getInstance().selectByID(request.queryParams("username"));
             UsuarioServices.getInstance().delete(user);
 
-            response.redirect("/home");
+            response.redirect("/zonaAdmin");
             return null;
         });
 
@@ -81,7 +81,7 @@ public class PostURLs
 
             UsuarioServices.getInstance().update(user);
 
-            response.redirect("/home");
+            response.redirect("/zonaAdmin");
             return null;
         });
 

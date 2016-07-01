@@ -73,7 +73,7 @@ public class GetURLs
             HashMap<String, Object> model = new HashMap<>();
             Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
             model.put("album", image);
-            return new ModelAndView(model, "test.ftl");
+            return new ModelAndView(model, "test.ftl"); // TODO
         }, freeMarker);
 
         get("/sign-up", (request, response) -> {

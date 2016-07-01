@@ -26,21 +26,14 @@
 
                     <div class="col-lg-3">
                         <div class="well">
-                            <button class="btn btn-danger" onclick="copyToClipboard('http://localhost:4567/image/${image.id}')">Get Link</button>
-
-                            <script>
-                                function copyToClipboard(text) {
-                                    window.prompt("Copia el texto: Ctrl+C, Enter", text);
-                                }
-                            </script>
+                            <button class="btn btn-success" onclick="copyToClipboard('http://localhost:4567/image/${image.id}')">Get Link</button>
                         </div>
                     </div>
                 </div>
 
-                <form method="GET" action="/upload">
-                    <button class="btn btn-primary">Editar</button>
-                </form>
-
+                <button class="btn btn-primary" onclick="document.location = '/edit?id=${image.id}'">Editar</button>
+                <button class="btn btn-danger" onclick="javascript:redirectWithData('/deleteImage', 'id', '${image.id}')">Borrar</button>
+                <br><br>
 
         </#list>
 

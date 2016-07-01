@@ -68,6 +68,13 @@ public class Filtros
                 halt(401, "Tiene que ser administrador del sistema para poder entrar a esta area");
         });
 
+        before("/zonaAdmin/deleteUser", (request, response) -> {
+            String user = request.queryParams("username");
+
+            if(user.equalsIgnoreCase("user"))
+                halt(401, "El usuario predeterminado no puede ser borrado");
+        });
+
         before("/deleteImage", (request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
 
