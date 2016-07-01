@@ -7,6 +7,7 @@ import services.UsuarioServices;
 import spark.template.freemarker.FreeMarkerEngine;
 
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import static main.Main.loggedInUser;
 import static main.Main.login;
@@ -17,47 +18,78 @@ import static spark.Spark.post;
  */
 public class PostURLs
 {
+    public static boolean invalid = false;
+
+    public static boolean isValidEmail(String email)
+    {
+        if(email == null)
+            return false;
+        else
+            return Pattern.compile("^.+@.+\\..+$").matcher(email).matches();
+    }
+
+
     public static void create(FreeMarkerEngine freeMarker)
     {
         post("/insertUser", (request, response) -> {
-            Usuario newUser = new Usuario();
 
-            newUser.setUsername(request.queryParams("username"));
-            newUser.setEmail(request.queryParams("email"));
-            newUser.setPassword(request.queryParams("password"));
-            newUser.setAdministrator(false);
+            if(!request.queryParams("username").isEmpty() && !request.queryParams("email").isEmpty()
+                    && !request.queryParams("password").isEmpty())
+            {
+                if(isValidEmail(request.queryParams("email")))
+                {
+                    Usuario newUser = new Usuario();
 
-            UsuarioServices.getInstance().insert(newUser);
+                    newUser.setUsername(request.queryParams("username"));
+                    newUser.setEmail(request.queryParams("email"));
+                    newUser.setPassword(request.queryParams("password"));
+                    newUser.setAdministrator(false);
 
-            response.redirect("/home");
-            return null;
+                    UsuarioServices.getInstance().insert(newUser);
+
+                    response.redirect("/home");
+                    return null;
+                }
+            }
+
+            return "El formulario recibido por el servidor fue invalido.";
         });
 
         post("/insertImage", (request, response) -> {
-            System.out.println(request.queryParams("image"));
-            Image image = new Image("C:\\" + request.queryParams("image"), request.queryParams("description"), request.queryParams("title"),loggedInUser);
+            if(!request.queryParams("image").isEmpty() && !request.queryParams("description").isEmpty() &&
+                    !request.queryParams("title").isEmpty())
+            {
+                Image image = new Image("C:\\" + request.queryParams("image"), request.queryParams("description"), request.queryParams("title"), loggedInUser);
 
-            for(String tag : request.queryParams("tags").split(","))
-                image.getListaEtiquetas().add(new Etiqueta(tag));
+                for (String tag : request.queryParams("tags").split(","))
+                    image.getListaEtiquetas().add(new Etiqueta(tag));
 
-            ImageServices.getInstance().insert(image);
-            response.redirect("/home");
-            return null;
+                ImageServices.getInstance().insert(image);
+                response.redirect("/home");
+                return null;
+            }
+            return "El formulario recibido por el servidor fue invalido.";
         });
 
         post("/editImage", (request, response) -> {
-            Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
-            image.setDescripcion(request.queryParams("description"));
-            image.setTitulo(request.queryParams("title"));
-            image.setListaEtiquetas(new ArrayList<>());
+            if(!request.queryParams("description").isEmpty() && !request.queryParams("title").isEmpty())
+            {
 
-            for(String tag : request.queryParams("tags").split(","))
-                image.getListaEtiquetas().add(new Etiqueta(tag));
 
-            ImageServices.getInstance().update(image);
+                Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+                image.setDescripcion(request.queryParams("description"));
+                image.setTitulo(request.queryParams("title"));
+                image.setListaEtiquetas(new ArrayList<>());
 
-            response.redirect("/home");
-            return null;
+                for (String tag : request.queryParams("tags").split(","))
+                    image.getListaEtiquetas().add(new Etiqueta(tag));
+
+                ImageServices.getInstance().update(image);
+
+                response.redirect("/home");
+                return null;
+            }
+            return "El formulario recibido por el servidor fue invalido.";
         });
 
         post("/deleteImage", (request, response) -> {
@@ -87,19 +119,21 @@ public class PostURLs
         });
 
         post("/login", (request, response) -> {
-            loggedInUser = UsuarioServices.getInstance().selectByID(request.queryParams("username"));
-            System.out.println(loggedInUser);
-            if (loggedInUser.getPassword().equals(request.queryParams("password")))
+            if(!request.queryParams("username").isEmpty() && !request.queryParams("password").isEmpty())
             {
-                request.session(true).attribute("usuario", loggedInUser);
-                response.cookie("user", loggedInUser.getUsername());
-                login = "Cerrar Sesión";
-            }
-            else
-                loggedInUser = null;
+                loggedInUser = UsuarioServices.getInstance().selectByID(request.queryParams("username"));
+                if (loggedInUser.getPassword().equals(request.queryParams("password")))
+                {
+                    request.session(true).attribute("usuario", loggedInUser);
+                    response.cookie("user", loggedInUser.getUsername());
+                    login = "Cerrar Sesión";
+                } else
+                    loggedInUser = null;
 
-            response.redirect("/home");
-            return null;
+                response.redirect("/home");
+                return null;
+            }
+            return "El formulario recibido por el servidor fue invalido.";
         });
 
         post("/logout", (request, response) -> {
@@ -113,17 +147,22 @@ public class PostURLs
         });
 
         post("/insertComment", (request, response) -> {
-            Image album = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("idImage")));
 
-            Comentario c = new Comentario();
-            c.setImage(album);
-            c.setAutor(loggedInUser);
-            c.setComentario(request.queryParams("comentario"));
+            if(!request.queryParams("comentario").isEmpty())
+            {
+                Image album = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("idImage")));
 
-            ComentarioServices.getInstance().insert(c);
+                Comentario c = new Comentario();
+                c.setImage(album);
+                c.setAutor(loggedInUser);
+                c.setComentario(request.queryParams("comentario"));
 
-            response.redirect("/image/" + request.queryParams("idImage"));
-            return null;
+                ComentarioServices.getInstance().insert(c);
+
+                response.redirect("/image/" + request.queryParams("idImage"));
+                return null;
+            }
+            return "El formulario enviado al servidor fue invalido.";
         });
 
         post("/editComment", (request, response) -> {

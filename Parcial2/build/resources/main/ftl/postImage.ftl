@@ -49,7 +49,7 @@
                 <h4>Comenta:</h4>
                 <form role="form" method="POST" action="/insertComment">
                     <div class="form-group">
-                        <textarea class="form-control" name="comentario" rows="3"></textarea>
+                        <textarea class="form-control" name="comentario" rows="3" required></textarea>
                         <input type="hidden" name="idImage" value="${image.id}">
                     </div>
                     <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span> Publicar comentario</button>
