@@ -65,7 +65,7 @@ public class GetURLs
 
         get("/upload", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
-            model.put("iniciarSesion", "Iniciar Sesión");
+            model.put("iniciarSesion", login);
             return new ModelAndView(model, "createImage.ftl");
         }, freeMarker);
 
