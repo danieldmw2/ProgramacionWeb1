@@ -34,6 +34,12 @@ public class Filtros
                 response.redirect("/home");
         });
 
+        before("/login", (request, response) -> {
+            Usuario usuario = UsuarioServices.getInstance().selectByID(request.queryParams("username"));
+            if (usuario == null)
+                response.redirect("/home");
+        });
+
         before("/upload", (request, response) -> {
             Usuario usuario = request.session(true).attribute("usuario");
 
@@ -41,6 +47,10 @@ public class Filtros
             {
                 Usuario user = new Usuario("Anon", "Anon@Anon.com", "", false);
                 request.session(true).attribute("usuario", user);
+
+                if(UsuarioServices.getInstance().selectByID(user.getUsername()) == null)
+                    UsuarioServices.getInstance().insert(user);
+
                 Main.loggedInUser = user;
                 Main.login = "Cerrar Sesión";
             }
