@@ -22,6 +22,9 @@
                     Publicado por <a>Anon</a>
                 </#if>
             </p>
+            <p class="lead">
+                Visto ${image.views} veces
+            </p>
 
             <hr>
 
@@ -48,7 +51,6 @@
                     <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span> Publicar comentario</button>
                 </form>
             </div>
-
             <hr>
 
             <!-- Posted Comments -->
@@ -85,7 +87,6 @@
                         </ul>
                     </div>
                 </div>
-                <!-- /.row -->
             </div>
 
         </div>
