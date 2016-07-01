@@ -94,6 +94,10 @@ public class PostURLs
 
         post("/deleteImage", (request, response) -> {
             Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+
+            for(Comentario c : image.getListaComentarios())
+                ComentarioServices.getInstance().delete(c);
+
             ImageServices.getInstance().delete(image);
 
             response.redirect("/home");
