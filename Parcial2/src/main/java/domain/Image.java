@@ -36,7 +36,10 @@ public class Image implements Serializable
     @Column(nullable = false) private Date date;
     private Long views;
 
+
     @Transient private String base;
+    @Transient private Double bandwidthTotal;
+    @Transient private float bandwidth;
     @Transient private List<Comentario> listaComentarios;
 
     public Image()
@@ -67,6 +70,8 @@ public class Image implements Serializable
         this.likes = 0;
         this.dislikes = 0;
         this.views = 0l;
+        this.bandwidthTotal = ((this.views.doubleValue() * this.image.length)/1024)/1024;
+        this.bandwidth = this.image.length/1024;
         this.date = new Date();
         this.interaction = new ArrayList<>();
         this.listaEtiquetas = new ArrayList<>();
@@ -209,6 +214,8 @@ public class Image implements Serializable
         return views;
     }
 
+
+
     public void addDislike(Usuario usuario)
     {
         if (this.interaction.contains(usuario))
@@ -222,5 +229,15 @@ public class Image implements Serializable
     public void addView()
     {
         views++;
+        bandwidthTotal = ((views.doubleValue()* image.length)/1024)/1024;
+        bandwidth = image.length/1024;
+    }
+
+    public float getBandwidth() {
+        return bandwidth;
+    }
+
+    public Double getBandwidthTotal() {
+        return bandwidthTotal;
     }
 }

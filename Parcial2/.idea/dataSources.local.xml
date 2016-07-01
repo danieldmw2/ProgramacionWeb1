@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="H2 - parcial2" uuid="eb0bb187-97d4-4286-ba8f-731d7cfb8493">
+      <secret-storage>master_key</secret-storage>
+      <user-name>user</user-name>
+    </data-source>
+  </component>
+</project>

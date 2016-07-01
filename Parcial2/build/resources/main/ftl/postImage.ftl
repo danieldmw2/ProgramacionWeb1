@@ -25,6 +25,10 @@
             <p class="lead">
                 Visto ${image.views} veces
             </p>
+            <p class="lead">
+                Bandwidth Actual: ${image.bandwidth}Kb
+                Bandwidth Total: ${image.bandwidthTotal}Mb
+            </p>
 
             <hr>
 
