@@ -48,6 +48,7 @@ public class PostURLs
         post("/editImage", (request, response) -> {
             Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
             image.setDescripcion(request.queryParams("description"));
+            image.setTitulo(request.queryParams("title"));
             image.setListaEtiquetas(new ArrayList<>());
 
             for(String tag : request.queryParams("tags").split(","))

@@ -29,7 +29,7 @@ public class GetURLs
             model.put("titulo", image.getTitulo());
             model.put("descripcion", image.getDescripcion());
             model.put("comentarios", image.getListaComentarios());
-            model.put("etiquetas", image.getListaEtiquetas());
+            model.put("etiquetas", new HashSet<>(image.getListaEtiquetas()));
             model.put("iniciarSesion", login);
 
             image.addView();
@@ -72,8 +72,14 @@ public class GetURLs
         get("/edit", (request, response) -> {
             HashMap<String, Object> model = new HashMap<>();
             Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
-            model.put("album", image);
-            return new ModelAndView(model, "test.ftl"); // TODO
+            String tags="";
+            for(Etiqueta e: image.getListaEtiquetas()){
+                tags += e.getEtiqueta() +",";
+            }
+            model.put("image", image);
+            model.put("etiquetas", tags.substring(0,tags.length()-1));
+            model.put("iniciarSesion", login);
+            return new ModelAndView(model, "editImage.ftl"); // TODO
         }, freeMarker);
 
         get("/sign-up", (request, response) -> {
