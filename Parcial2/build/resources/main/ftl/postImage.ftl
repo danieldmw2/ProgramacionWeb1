@@ -30,11 +30,9 @@
             <!-- Post Content -->
             <p class="lead">${descripcion}</p>
 
-            <form role="form" method="POST">
-                <button type="submit" class="btn btn-primary" name="idArticulo" value="${image.id}" formaction="/valoracionArticulo"><span class="glyphicon glyphicon-thumbs-up"></span> ${image.likes}</button>
-                <button type="submit" class="btn btn-primary" name="idArticulo2" value="${image.id}" formaction="/valoracionArticulo"><span class="glyphicon glyphicon-thumbs-down"></span> ${image.dislikes}</button>
-            </form>
 
+            <button class="btn btn-primary" onclick="javascript:redirectWithData('/likeImage', 'id', '${image.id}')"><span class="glyphicon glyphicon-thumbs-up"></span> ${image.likes}</button>
+            <button class="btn btn-primary" onclick="javascript:redirectWithData('/dislikeImage', 'id', '${image.id}')"><span class="glyphicon glyphicon-thumbs-down"></span> ${image.dislikes}</button>
             <hr>
 
             <!-- Blog Comments -->
@@ -42,10 +40,10 @@
             <!-- Comments Form -->
             <div class="well">
                 <h4>Comenta:</h4>
-                <form role="form" method="POST" action="/agregarComentario">
+                <form role="form" method="POST" action="/insertComment">
                     <div class="form-group">
-                        <textarea class="form-control" name="commentcontent" rows="3"></textarea>
-                        <input type="hidden" name="image.id" value="${image.id}">
+                        <textarea class="form-control" name="comentario" rows="3"></textarea>
+                        <input type="hidden" name="idImage" value="${image.id}">
                     </div>
                     <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-comment"></span> Publicar comentario</button>
                 </form>
@@ -64,11 +62,8 @@
                         <h4 class="media-heading">${c.autor.username}
                         </h4>
                     ${c.comentario}
-                        <form method="POST" role="form">
-                            <input type="hidden" name="image.id" value="${image.id}">
-                            <button type="submit" class="btn btn-primary" name="idComentario" value="${c.id}" formaction="/valoracionComentario"><span class="glyphicon glyphicon-thumbs-up"></span> ${c.likes}</button>
-                            <button type="submit" class="btn btn-primary" name="idComentario2" value="${c.id}" formaction="/valoracionComentario"><span class="glyphicon glyphicon-thumbs-down"></span> ${c.dislikes}</button>
-                        </form>
+                        <button class="btn btn-primary" onclick="javascript:commentLike('/likeComment', '${c.id}', '${image.id}')"><span class="glyphicon glyphicon-thumbs-up"></span> ${c.likes}</button>
+                        <button class="btn btn-primary" onclick="javascript:commentLike('/dislikeComment', '${c.id}', '${image.id}')"><span class="glyphicon glyphicon-thumbs-down"></span> ${c.dislikes}</button>
                     </div>
                 </div>
             </#list>

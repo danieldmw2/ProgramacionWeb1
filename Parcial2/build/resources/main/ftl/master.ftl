@@ -48,6 +48,26 @@
         form.appendChild(input);
         form.submit();
     };
+
+    var commentLike = function(url, id, imageID) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+
+        var input = document.createElement('input');
+        input.name = 'id';
+        input.value = id;
+        input.type = 'hidden';
+
+        var input2 = document.createElement('input');
+        input2.name = 'idImage';
+        input2.value = imageID;
+        input2.type = 'hidden';
+
+        form.appendChild(input);
+        form.appendChild(input2);
+        form.submit();
+    };
 </script>
 
 <div class="container">

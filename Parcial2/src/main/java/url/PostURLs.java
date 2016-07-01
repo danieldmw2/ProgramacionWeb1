@@ -144,11 +144,16 @@ public class PostURLs
 
         post("/likeComment", (request, response) -> {
             Comentario c = ComentarioServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+            c.addLike(loggedInUser);
 
-            if(request.queryParams("like") != null)
-                c.addLike(loggedInUser);
-            else
-                c.addDislike(loggedInUser);
+            ComentarioServices.getInstance().update(c);
+            response.redirect("/image/" + request.queryParams("idImage"));
+            return null;
+        });
+
+        post("/dislikeComment", (request, response) -> {
+            Comentario c = ComentarioServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+            c.addDislike(loggedInUser);
 
             ComentarioServices.getInstance().update(c);
             response.redirect("/image/" + request.queryParams("idImage"));
@@ -157,11 +162,16 @@ public class PostURLs
 
         post("/likeImage", (request, response) -> {
             Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+            image.addLike(loggedInUser);
 
-            if(request.queryParams("like") != null)
-                image.addLike(loggedInUser);
-            else
-                image.addDislike(loggedInUser);
+            ImageServices.getInstance().update(image);
+            response.redirect("/image/" + request.queryParams("id"));
+            return null;
+        });
+
+        post("/dislikeImage", (request, response) -> {
+            Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
+            image.addDislike(loggedInUser);
 
             ImageServices.getInstance().update(image);
             response.redirect("/image/" + request.queryParams("id"));

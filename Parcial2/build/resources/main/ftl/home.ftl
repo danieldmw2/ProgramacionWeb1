@@ -36,7 +36,6 @@
                 <br><br>
 
         </#list>
-
             <!-- Pager -->
             <ul class="pager">
                 <li class="next">

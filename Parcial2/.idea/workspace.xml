@@ -28,22 +28,8 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
         <projects_view>
-          <tree_state>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Parcial2" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-            </PATH>
-          </tree_state>
+          <tree_state />
         </projects_view>
       </state>
     </system>
@@ -53,20 +39,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/main/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="50" column="33" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="GetURLs.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/url/GetURLs.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1428">
+            <state relative-caret-position="1598">
               <caret line="94" column="18" selection-start-line="94" selection-start-column="14" selection-end-line="94" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -88,8 +64,8 @@
       <file leaf-file-name="master.ftl" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/ftl/master.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+            <state relative-caret-position="1139">
+              <caret line="67" column="31" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -105,21 +81,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home.ftl" pinned="false" current-in-tab="true">
+      <file leaf-file-name="home.ftl" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/ftl/home.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="33" column="44" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="44" />
+            <state relative-caret-position="629">
+              <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PostURLs.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/url/PostURLs.java">
+      <file leaf-file-name="postImage.ftl" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/ftl/postImage.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="73" column="41" selection-start-line="73" selection-start-column="41" selection-end-line="73" selection-end-column="41" />
+            <state relative-caret-position="221">
+              <caret line="65" column="108" selection-start-line="65" selection-start-column="108" selection-end-line="65" selection-end-column="108" />
               <folding />
             </state>
           </provider>
@@ -128,19 +104,34 @@
       <file leaf-file-name="Image.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/domain/Image.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1904">
-              <caret line="170" column="0" selection-start-line="170" selection-start-column="0" selection-end-line="170" selection-end-column="0" />
+            <state relative-caret-position="697">
+              <caret line="54" column="8" selection-start-line="54" selection-start-column="8" selection-end-line="60" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Usuario.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/domain/Usuario.java">
+      <file leaf-file-name="PostURLs.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/url/PostURLs.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="2482">
+              <caret line="146" column="36" selection-start-line="146" selection-start-column="36" selection-end-line="146" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Comentario.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/domain/Comentario.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="850">
+              <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+              <folding>
+                <element signature="e#1713#1714#0" expanded="true" />
+                <element signature="e#1741#1742#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -150,9 +141,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1122">
               <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -212,6 +201,11 @@
                 <option name="description" value="Assembles main classes." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="classes" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays all buildscript dependencies declared in root project 'Parcial2'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="buildEnvironment" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Generates Gradle wrapper files. [incubating]" />
@@ -325,7 +319,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="2934688208936" />
+        <entry key="$PROJECT_DIR$" value="2932923664633" />
         <entry key="$PROJECT_DIR$/../../sparkjava-websocket" value="2932223618535" />
       </map>
     </option>
@@ -348,6 +342,125 @@
               <option name="name" value="Parcial2" />
               <option name="projectBuildClasspath">
                 <list>
+                  <option value="C:/gradle-2.13/src/announce" />
+                  <option value="C:/gradle-2.13/src/antlr" />
+                  <option value="C:/gradle-2.13/src/base-services" />
+                  <option value="C:/gradle-2.13/src/base-services-groovy" />
+                  <option value="C:/gradle-2.13/src/build-comparison" />
+                  <option value="C:/gradle-2.13/src/build-init" />
+                  <option value="C:/gradle-2.13/src/cli" />
+                  <option value="C:/gradle-2.13/src/code-quality" />
+                  <option value="C:/gradle-2.13/src/core" />
+                  <option value="C:/gradle-2.13/src/dependency-management" />
+                  <option value="C:/gradle-2.13/src/diagnostics" />
+                  <option value="C:/gradle-2.13/src/ear" />
+                  <option value="C:/gradle-2.13/src/ide" />
+                  <option value="C:/gradle-2.13/src/ide-native" />
+                  <option value="C:/gradle-2.13/src/installation-beacon" />
+                  <option value="C:/gradle-2.13/src/internal-integ-testing" />
+                  <option value="C:/gradle-2.13/src/internal-testing" />
+                  <option value="C:/gradle-2.13/src/ivy" />
+                  <option value="C:/gradle-2.13/src/jacoco" />
+                  <option value="C:/gradle-2.13/src/javascript" />
+                  <option value="C:/gradle-2.13/src/jetty" />
+                  <option value="C:/gradle-2.13/src/language-groovy" />
+                  <option value="C:/gradle-2.13/src/language-java" />
+                  <option value="C:/gradle-2.13/src/language-jvm" />
+                  <option value="C:/gradle-2.13/src/language-native" />
+                  <option value="C:/gradle-2.13/src/language-scala" />
+                  <option value="C:/gradle-2.13/src/launcher" />
+                  <option value="C:/gradle-2.13/src/maven" />
+                  <option value="C:/gradle-2.13/src/messaging" />
+                  <option value="C:/gradle-2.13/src/model-core" />
+                  <option value="C:/gradle-2.13/src/model-groovy" />
+                  <option value="C:/gradle-2.13/src/native" />
+                  <option value="C:/gradle-2.13/src/open-api" />
+                  <option value="C:/gradle-2.13/src/osgi" />
+                  <option value="C:/gradle-2.13/src/platform-base" />
+                  <option value="C:/gradle-2.13/src/platform-jvm" />
+                  <option value="C:/gradle-2.13/src/platform-native" />
+                  <option value="C:/gradle-2.13/src/platform-play" />
+                  <option value="C:/gradle-2.13/src/plugin-development" />
+                  <option value="C:/gradle-2.13/src/plugin-use" />
+                  <option value="C:/gradle-2.13/src/plugins" />
+                  <option value="C:/gradle-2.13/src/publish" />
+                  <option value="C:/gradle-2.13/src/reporting" />
+                  <option value="C:/gradle-2.13/src/resources" />
+                  <option value="C:/gradle-2.13/src/resources-http" />
+                  <option value="C:/gradle-2.13/src/resources-s3" />
+                  <option value="C:/gradle-2.13/src/resources-sftp" />
+                  <option value="C:/gradle-2.13/src/scala" />
+                  <option value="C:/gradle-2.13/src/signing" />
+                  <option value="C:/gradle-2.13/src/sonar" />
+                  <option value="C:/gradle-2.13/src/test-kit" />
+                  <option value="C:/gradle-2.13/src/testing-base" />
+                  <option value="C:/gradle-2.13/src/testing-jvm" />
+                  <option value="C:/gradle-2.13/src/testing-native" />
+                  <option value="C:/gradle-2.13/src/tooling-api" />
+                  <option value="C:/gradle-2.13/src/tooling-api-builders" />
+                  <option value="C:/gradle-2.13/src/ui" />
+                  <option value="C:/gradle-2.13/src/wrapper" />
+                  <option value="C:/gradle-2.13/lib/ant-1.9.6.jar" />
+                  <option value="C:/gradle-2.13/lib/ant-launcher-1.9.6.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-base-services-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-base-services-groovy-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-cli-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-core-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-docs-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-installation-beacon-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-launcher-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-messaging-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-model-core-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-model-groovy-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-native-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-open-api-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-resources-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-tooling-api-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-ui-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/gradle-wrapper-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/groovy-all-2.4.4.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-announce-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-antlr-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-build-comparison-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-build-init-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-code-quality-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-dependency-management-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-diagnostics-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-ear-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-ide-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-ide-native-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-ivy-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-jacoco-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-javascript-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-jetty-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-language-groovy-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-language-java-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-language-jvm-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-language-native-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-language-scala-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-maven-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-osgi-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-platform-base-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-platform-jvm-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-platform-native-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-platform-play-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-plugin-development-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-plugin-use-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-plugins-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-publish-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-reporting-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-resources-http-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-resources-s3-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-resources-sftp-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-scala-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-signing-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-sonar-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-test-kit-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-testing-base-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-testing-jvm-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-testing-native-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/gradle-tooling-api-builders-2.13.jar" />
+                  <option value="C:/gradle-2.13/lib/plugins/ivy-2.2.0.jar" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/java" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/groovy" />
                 </list>
@@ -383,12 +496,13 @@
         <option value="$PROJECT_DIR$/src/main/java/domain/Comentario.java" />
         <option value="$PROJECT_DIR$/src/main/java/main/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/url/Filtros.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/ftl/master.ftl" />
-        <option value="$PROJECT_DIR$/src/main/resources/ftl/home.ftl" />
         <option value="$PROJECT_DIR$/src/main/resources/ftl/test.ftl" />
         <option value="$PROJECT_DIR$/src/main/java/url/GetURLs.java" />
-        <option value="$PROJECT_DIR$/src/main/java/url/PostURLs.java" />
         <option value="$PROJECT_DIR$/src/main/resources/ftl/listUsers.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/ftl/home.ftl" />
+        <option value="$PROJECT_DIR$/src/main/java/url/PostURLs.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/ftl/master.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/ftl/postImage.ftl" />
       </list>
     </option>
   </component>
@@ -436,7 +550,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -649,8 +763,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -662,7 +776,6 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -1147,17 +1260,19 @@
       <workItem from="1467248941602" duration="1132000" />
       <workItem from="1467320769375" duration="3149000" />
       <workItem from="1467328092447" duration="29000" />
-      <workItem from="1467331081350" duration="1870000" />
-      <workItem from="1467344409361" duration="93000" />
+      <workItem from="1467331081350" duration="2111000" />
+      <workItem from="1467335388829" duration="128000" />
+      <workItem from="1467336149729" duration="1705000" />
+      <workItem from="1467346798670" duration="138000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67236000" />
+    <option name="totallyTimeSpent" value="69355000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1172,9 +1287,9 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25037935" sideWeight="0.50855744" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.49144253" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1186,7 +1301,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34477124" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3529412" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1243,7 +1358,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/ftl/images.ftl" />
     <entry file="file://$PROJECT_DIR$/src/main/java/domain/Image.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1466,13 +1580,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/domain/Album.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/domain/Comentario.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/domain/Etiqueta.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1480,19 +1587,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/domain/Image.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1904">
-          <caret line="170" column="0" selection-start-line="170" selection-start-column="0" selection-end-line="170" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/domain/Usuario.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1508,9 +1606,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1122">
           <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1524,19 +1620,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/url/GetURLs.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
+        <state relative-caret-position="1598">
           <caret line="94" column="18" selection-start-line="94" selection-start-column="14" selection-end-line="94" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/url/PostURLs.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="73" column="41" selection-start-line="73" selection-start-column="41" selection-end-line="73" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1548,18 +1636,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/ftl/master.ftl">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/ftl/home.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+        <state relative-caret-position="629">
+          <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/ftl/home.ftl">
+    <entry file="file://$PROJECT_DIR$/src/main/java/domain/Comentario.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="33" column="44" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="44" />
+        <state relative-caret-position="850">
+          <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+          <folding>
+            <element signature="e#1713#1714#0" expanded="true" />
+            <element signature="e#1741#1742#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/url/PostURLs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2482">
+          <caret line="146" column="36" selection-start-line="146" selection-start-column="36" selection-end-line="146" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/domain/Image.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="54" column="8" selection-start-line="54" selection-start-column="8" selection-end-line="60" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/ftl/master.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1139">
+          <caret line="67" column="31" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/ftl/postImage.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="65" column="108" selection-start-line="65" selection-start-column="108" selection-end-line="65" selection-end-column="108" />
           <folding />
         </state>
       </provider>
