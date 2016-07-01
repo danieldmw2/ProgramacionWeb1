@@ -51,7 +51,7 @@ public class Filtros
 
             if (usuario != null)
             {
-                Image image = ImageServices.getInstance().selectByID(request.queryParams("id"));
+                Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
                 if(!usuario.isAdministrator() && !image.getUsuario().getUsername().equals(usuario.getUsername()))
                     halt(401, "Tiene que ser administrador del sistema o autor del post para hacer esta accion");
             }
