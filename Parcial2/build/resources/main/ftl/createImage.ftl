@@ -42,7 +42,6 @@
                         Image:<span style="color: red">*</span>
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-
                         <input name="image" type="file" required>
                     </div>
                 </div>

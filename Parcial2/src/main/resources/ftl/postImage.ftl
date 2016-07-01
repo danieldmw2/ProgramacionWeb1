@@ -70,6 +70,7 @@
                     ${c.comentario}
                         <button class="btn btn-primary" onclick="javascript:commentLike('/likeComment', '${c.id}', '${image.id}')"><span class="glyphicon glyphicon-thumbs-up"></span> ${c.likes}</button>
                         <button class="btn btn-primary" onclick="javascript:commentLike('/dislikeComment', '${c.id}', '${image.id}')"><span class="glyphicon glyphicon-thumbs-down"></span> ${c.dislikes}</button>
+                        <button class="btn btn-primary" onclick="javascript:commentLike('/deleteComment', '${c.id}', '${image.id}')"><span class="glyphicon glyphicon-remove"></span> Borrar</button>
                     </div>
                 </div>
             </#list>

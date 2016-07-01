@@ -44,16 +44,7 @@ public class Filtros
             Usuario usuario = request.session(true).attribute("usuario");
 
             if (usuario == null)
-            {
-                Usuario user = new Usuario("Anon", "Anon@Anon.com", "", false);
-                request.session(true).attribute("usuario", user);
-
-                if(UsuarioServices.getInstance().selectByID(user.getUsername()) == null)
-                    UsuarioServices.getInstance().insert(user);
-
-                Main.loggedInUser = user;
-                Main.login = "Cerrar Sesión";
-            }
+                request.session(true).attribute("usuario", createAnon());
         });
 
         before("/edit", (request, response) -> {
@@ -98,5 +89,37 @@ public class Filtros
                 halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
         });
 
+        before("/insertComment", (request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+
+            if (usuario == null)
+                request.session(true).attribute("usuario", createAnon());
+
+        });
+
+        before("/deleteComment", (request, response) -> {
+            Usuario usuario = request.session(true).attribute("usuario");
+            if (usuario != null)
+            {
+                if(!usuario.isAdministrator())
+                    halt(401, "Tiene que ser administrador del sistema o autor del album para hacer esta accion");
+            }
+            else
+                halt(401, "Tiene que tener algun usuario en session para hacer esta accion");
+        });
+
+    }
+
+    public static Usuario createAnon()
+    {
+        Usuario user = new Usuario("Anon", "Anon@Anon.com", "", false);
+
+        if(UsuarioServices.getInstance().selectByID(user.getUsername()) == null)
+            UsuarioServices.getInstance().insert(user);
+
+        Main.loggedInUser = user;
+        Main.login = "Cerrar Sesión";
+
+        return  user;
     }
 }

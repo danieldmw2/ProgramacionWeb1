@@ -73,7 +73,7 @@ public class GetURLs
             HashMap<String, Object> model = new HashMap<>();
             Image image = ImageServices.getInstance().selectByID(Long.parseLong(request.queryParams("id")));
             String tags="";
-            for(Etiqueta e: image.getListaEtiquetas()){
+            for(Etiqueta e: new HashSet<>(image.getListaEtiquetas())){
                 tags += e.getEtiqueta() +",";
             }
             model.put("image", image);
