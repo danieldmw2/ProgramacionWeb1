@@ -54,7 +54,7 @@ public class AsignaturaServices
     }
 
     @WebMethod
-    public List<Asignatura> select(int matricula)
+    public List<Asignatura> selectAsignaturas(int matricula)
     {
         for(Estudiante e : estudiantes)
             if(e.getMatricula() == matricula)
