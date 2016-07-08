@@ -46,32 +46,10 @@ public class AsignaturaServices
                     if (estudiantes.get(i).getAsignaturas().get(j).getCodigo().equals(codigo))
                     {
                         estudiantes.get(i).getAsignaturas().remove(j);
-                        j--;
+                        return;
                     }
                 }
             }
         }
-    }
-
-    @WebMethod
-    public List<Asignatura> selectAsignaturas(int matricula)
-    {
-        for(Estudiante e : estudiantes)
-            if(e.getMatricula() == matricula)
-                return e.getAsignaturas();
-
-        return new ArrayList<>();
-    }
-
-    @WebMethod
-    public Asignatura selectByIDs(int matricula, String codigo)
-    {
-        for(Estudiante e : estudiantes)
-            if(e.getMatricula() == matricula)
-                for (Asignatura a : e.getAsignaturas())
-                    if(a.getCodigo().equals(codigo))
-                        return a;
-
-        return null;
     }
 }

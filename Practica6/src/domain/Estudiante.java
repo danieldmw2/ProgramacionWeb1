@@ -57,6 +57,11 @@ public class Estudiante
         return asignaturas;
     }
 
+    public void setAsignaturas(List<Asignatura> asignaturas)
+    {
+        this.asignaturas = asignaturas;
+    }
+
     public void addAsignatura(Asignatura asignatura)
     {
         if(asignaturas == null)
@@ -68,10 +73,5 @@ public class Estudiante
     public void clearAsignaturas()
     {
         asignaturas = null;
-    }
-
-    public void setAsignaturas(List<Asignatura> asignaturas)
-    {
-        this.asignaturas = asignaturas;
     }
 }

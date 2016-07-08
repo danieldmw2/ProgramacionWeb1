@@ -58,4 +58,9 @@ public class EstudianteServices
 
         return null;
     }
+
+    @WebMethod
+    public String test(){
+        return "Ok";
+    }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class Server
 {
-    public static ArrayList<Estudiante> estudiantes;
+    public static ArrayList<Estudiante> estudiantes = new ArrayList<>();
 
     public static void main(String[] argv) throws Exception
     {
