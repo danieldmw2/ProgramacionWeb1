@@ -57,9 +57,12 @@ while seleccion < 3:
                 print "\tNombre: " + estudiante.nombre
                 print "\tCarrera: " + estudiante.carrera
 
-                for i in range(0, len(estudiante.asignaturas)):
-                    print "\tAsignatura #" + str(i + 1) + ": " + estudiante.asignaturas[i].codigo + " - " + estudiante.asignaturas[i].nombre
-
+                try:
+                    for i in range(0, len(estudiante.asignaturas)):
+                        print "\tAsignatura #" + str(i + 1) + ": " + estudiante.asignaturas[i].codigo + " - " + estudiante.asignaturas[i].nombre
+                except AttributeError:
+                    print ""
+                    
                 seleccion = input("\nPresione 1 para terminar\nPresione 2 para ver el siguiente estudiante\nSeleccion: ")
 
                 if(seleccion == 1):
@@ -74,8 +77,11 @@ while seleccion < 3:
             print "Nombre: " + estudiante.nombre
             print "Carrera: " + estudiante.carrera
 
-            for i in range(0, len(estudiante.asignaturas)):
-                print "Asignatura #" + str(i + 1) + ": " + estudiante.asignaturas[i].codigo + " - " + estudiante.asignaturas[i].nombre
+            try:
+                for i in range(0, len(estudiante.asignaturas)):
+                    print "Asignatura #" + str(i + 1) + ": " + estudiante.asignaturas[i].codigo + " - " + estudiante.asignaturas[i].nombre
+            except AttributeError:
+                print ""
 
             raw_input("\nPresione Enter para continuar")
 
