@@ -1,7 +1,10 @@
 package webservices;
 
+import domain.Asignatura;
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import java.util.ArrayList;
 
 /**
  * Created by Daniel's Laptop on 7/7/2016.
@@ -28,14 +31,14 @@ public class AsignaturaServices
     }
 
     @WebMethod
-    public void select()
+    public ArrayList<Asignatura> select()
     {
-
+        return new ArrayList<>();
     }
 
     @WebMethod
-    public void selectByIDs(int matricula, String codigo)
+    public Asignatura selectByIDs(int matricula, String codigo)
     {
-
+        return new Asignatura("1", "2");
     }
 }

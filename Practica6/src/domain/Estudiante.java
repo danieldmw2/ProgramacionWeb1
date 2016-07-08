@@ -1,5 +1,6 @@
 package domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,5 +68,10 @@ public class Estudiante
     public void clearAsignaturas()
     {
         asignaturas = null;
+    }
+
+    public void setAsignaturas(List<Asignatura> asignaturas)
+    {
+        this.asignaturas = asignaturas;
     }
 }

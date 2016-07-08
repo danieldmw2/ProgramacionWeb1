@@ -1,5 +1,8 @@
 package example;
 
+import domain.Asignatura;
+import domain.Estudiante;
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.namespace.QName;
@@ -23,12 +26,20 @@ public class HelloWorld
         return result;
     }
 
+//    @WebMethod
+//    public Asignatura sayHello()
+//    {
+//        Asignatura e = new Asignatura("ASDAS", "asdAS");
+//        System.out.println(e);
+//        return e;
+//    }
+
     @WebMethod
-    public String sayHello()
+    public Estudiante sayHello()
     {
-        String result = "Hello";
-        System.out.println(result);
-        return result;
+        Estudiante e = new Estudiante(20090707, "asdasd", "asdasdasdas");
+        System.out.println(e);
+        return e;
     }
 
     public static void main(String[] argv) throws Exception
